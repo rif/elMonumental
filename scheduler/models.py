@@ -1,3 +1,7 @@
 from django.db import models
 
-# Create your models here.
+class MatchDay(models.Model);
+	pass
+
+class Player(models.Model):
+	pass
