@@ -2,21 +2,22 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{{ MEDIA_URL }}style.css" type="text/css" media="screen" />
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
 
 <body>
     <div id="sidebar">
         {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog/">Blog</a></li>
-        </ul>
         {% endblock %}
     </div>
 
     <div id="content">
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        {% else %}
+        <p>Welcome, new user. Please <a href="{% url login-link %}">log in</a> or <a href="{% url login-link %}">sign up.</a></p>
+        {% endif %}
         {% block content %}{% endblock %}
     </div>
 </body>
