@@ -7,3 +7,10 @@ urlpatterns = patterns('',
     (r'^', include('scheduler.urls')),
     (r'^admin/', include(admin.site.urls)),
 )
+# if we're in DEBUG mode, allow django to serve media
+# This is considered inefficient and isn't secure.
+from django.conf import settings
+if settings.DEBUG:
+    urlpatterns += patterns('',
+        (r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
+    )
