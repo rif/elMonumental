@@ -4,6 +4,6 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    (r'', include('elMonumental.scheduler.urls')),
+    (r'^', include('scheduler.urls')),
     (r'^admin/', include(admin.site.urls)),
 )

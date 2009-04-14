@@ -1,4 +1,7 @@
 # Django settings for elMonumental project.
+import os
+def rel(*x):
+    return os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -26,6 +29,8 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = ''
 
+LOGOUT_URL = '/'
+
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
@@ -50,7 +55,7 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'elMonumental.urls'
 
 TEMPLATE_DIRS = (
-    '/home/rif/1/prog/webframeworks/elMonumental/templates/',
+    rel('templates'),
 )
 
 INSTALLED_APPS = (
@@ -58,5 +63,5 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.admin',
-    'elMonumental.scheduler',
+    'scheduler',
 )
