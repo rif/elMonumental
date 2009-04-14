@@ -14,9 +14,9 @@
 
     <div id="content">
         {% if user.is_authenticated %}
-        <p>Welcome, {{ user.username }}. Thanks for logging in.</p>
+        <p class="login">Welcome, {{ user.username }}. </p>
         {% else %}
-        <p>Welcome, new user. Please <a href="{% url login-link %}">log in</a> or <a href="{% url login-link %}">sign up.</a></p>
+        <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url login-link %}">sign up.</a></p>
         {% endif %}
         {% block content %}{% endblock %}
     </div>

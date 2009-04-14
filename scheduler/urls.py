@@ -1,6 +1,14 @@
 from django.conf.urls.defaults import *
 
+from models import MatchDay
+
+info = {
+    'queryset': MatchDay.objects.all(),
+}
+
 urlpatterns = patterns('',
-    (r'^$', 'scheduler.views.index'),
+    url(r'^$', 'django.views.generic.list_detail.object_list', info, name='matchday-list'),
+    url(r'^attend/(?P<object_id>\d+)/$', 'scheduler.views.attend', name='matchday-attend'),
+    url(r'^(?P<object_id>\d+)/$', 'django.views.generic.list_detail.object_detail', info, name='matchday-detail'),
     url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'scheduler/login.html', 'next':'/'}, name='login-link'),
 )
