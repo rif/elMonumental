@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Matchday #{{ object.id }} - {% endblock %}
+{% block content %}
+<h2>Matchday #{{ object.id }} <span>{{ object.status }}</span></h2>
+<div class="ticket">
+    <h2>Information</h2>
+    <div class="date">
+        <p class="cr">Opened {{ object.start_date|timesince }} ago</p>
+    </div>
+    <div class="clear">&nbsp;</div>
+    <div class="block w49 left">
+        <p class="pri title">Location</p>
+        <p class="pri">{{ object.location }}</p>
+    </div>
+    <div class="block w49 right">
+        <p class="ass title">Date</p>
+        <p class="ass">{{ object.start_date }}</p>
+    </div>
+    <div class="clear">&nbsp;</div>
+    <div class="block">
+        <p class="des title">Participants</p>
+        <div class="des">
+            {% for player in object.attendee_players.all %}
+                <li>{{ player.first_name}} {{ player.alias_name }} {{ player.last_name }}</li>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<a href="/">Home</a>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}View MatchDays{% endblock %}
+{% block content %}
+<table cellspacing="0" class="list">
+    <tr>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Hour</th>
+        <th>Actions</th>
+    </tr>
+    {% for matchday in object_list %}
+    <tr>
+        <td>{{ matchday.start_date|date:"D d M Y" }}</td>
+        <td>{{ matchday.location }}</td>
+        <td>{{ matchday.start_date|time:"H:i" }}</td>
+        <td>
+            {% if matchday.isFuture %}
+            <a href="{% url matchday-attend matchday.id %}">Attend</a>
+            {% else %}
+            <a href="{% url matchday-detail matchday.id %}">View</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
