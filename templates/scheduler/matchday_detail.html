@@ -20,8 +20,10 @@
     <div class="block">
         <p class="des title">Participants</p>
         <div class="des">
-            {% for player in object.attendee_players.all %}
-                <li>{{ player.first_name}} {{ player.alias_name }} {{ player.last_name }}</li>
+            {% for player in object.participants.all %}
+                <li>{{ player.first_name}}
+                    {{ player.get_profile.alias_name }}
+                    {{ player.last_name }}</li>
             {% endfor %}
         </div>
     </div>
