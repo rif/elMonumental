@@ -25,3 +25,6 @@ class MatchDay(models.Model):
     def  isFuture(self):
         return datetime.today() < self.start_date
 
+
+    class Meta:
+        ordering = ["-start_date"]

@@ -30,7 +30,6 @@ MEDIA_ROOT = rel('media')
 MEDIA_URL = '/media/'
 
 LOGOUT_URL = '/'
-LOGIN_URL = '/'
 
 AUTH_PROFILE_MODULE = 'scheduler.PlayerProfile'
 
