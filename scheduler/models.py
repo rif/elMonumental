@@ -2,22 +2,20 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
-    user = models.ForeignKey(User, unique=True)
+class PlayerProfile(models.Model):
+    user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
-    goals_scored = models.IntegerField(blank=True)
-    speed = models.IntegerField(blank=True)
-    stamina = models.IntegerField(blank=True)
-    ball_controll = models.IntegerField(blank=True)
-    shot_power = models.IntegerField(blank=True)
-    transfer_sum = models.IntegerField(blank=True)
+    goals_scored = models.IntegerField(null=True,blank=True)
+    speed = models.IntegerField(null=True, blank=True)
+    stamina = models.IntegerField(null=True, blank=True)
+    ball_controll = models.IntegerField(null=True, blank=True)
+    shot_power = models.IntegerField(null=True, blank=True)
+    transfer_sum = models.IntegerField(null=True, blank=True)
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
-    attendee_players = models.ManyToManyField(User, through='Team')
-    scoreA = models.IntegerField(blank=True)
-    scoreB = models.IntegerField(blank=True)
+    participants = models.ManyToManyField(User)
 
     def __unicode__(self):
         return self.start_date.strftime('%d-%B-%Y')\
@@ -27,7 +25,3 @@ class MatchDay(models.Model):
     def  isFuture(self):
         return datetime.today() < self.start_date
 
-class Team(models.Model):
-    name = models.CharField(max_length=50)
-    matchDay = models.ForeignKey(MatchDay)
-    members = models.ForeignKey(User)
