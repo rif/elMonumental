@@ -16,7 +16,14 @@
         {% if user.is_authenticated %}
         <p class="login">Welcome, {{ user.username }}.  <a href="{% url logout-link %}">log out</a></p>
         {% else %}
-        <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url login-link %}">sign up.</a></p>
+        <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url signup-link %}">sign up.</a></p>
+        {% endif %}
+        {% if messages %}
+        <ul>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
         {% endif %}
         {% block content %}{% endblock %}
     </div>
