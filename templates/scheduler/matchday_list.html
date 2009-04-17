@@ -15,10 +15,9 @@
         <td>{{ matchday.start_date|time:"H:i" }}</td>
         <td>
             {% if matchday.isFuture %}
-            <a href="{% url matchday-attend matchday.id %}">Attend</a>
-            {% else %}
-            <a href="{% url matchday-detail matchday.id %}">View</a>
+              <a href="{% url matchday-attend matchday.id %}">Attend</a>
             {% endif %}
+            <a href="{% url matchday-detail matchday.id %}">View</a>
         </td>
     </tr>
     {% endfor %}
