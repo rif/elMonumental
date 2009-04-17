@@ -6,6 +6,7 @@ from models import MatchDay
 @login_required
 def attend(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
+    md.participants.add(request.user)
     return render_to_response('scheduler/attend.html',
                               {'matchday':md},
                               context_instance=RequestContext(request))
