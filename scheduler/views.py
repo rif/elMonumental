@@ -17,9 +17,10 @@ def signup(request):
     if request.method == 'POST': # If the form has been submitted...
         form = UserCreationForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
-            user = UserManager.create_user(form.username, 'test@oce.com' ,form.password1)
-            user.message_set.create(message="Your user was created succesfuly.")
-            return HttpResponseRedirect('/') # Redirect after POST
+            #user = UserManager.create_user(form.username, 'test@oce.com' ,form.password1)
+            #user.message_set.create(message="Your user was created succesfuly.")
+            form.save()
+            return HttpResponseRedirect('/mama/') # Redirect after POST
     else:
         form = UserCreationForm() # An unbound form
     return render_to_response('scheduler/signup.html',
