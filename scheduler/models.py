@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 SPEED_CHOICES = (('SN', 'Snail'), ('PD', 'Pedestrian'), ('SP', 'Sprinter'), ('RK', 'Rocket'),)
 STAMINA_CHOICES = (('SL', 'Sleep Walker'), ('PR', 'Programmer'), ('PD', 'Paladin LV7'), ('MR', 'Marathonist'),)
@@ -16,6 +17,10 @@ class PlayerProfile(models.Model):
     ball_controll = models.CharField(max_length=3, choices=CONTROLL_CHOICES)
     shot_power = models.CharField(max_length=3, choices=SHOT_CHOICES)
     transfer_sum = models.IntegerField(null=True, blank=True)
+
+class UserProfileForm(ModelForm):
+    class Meta:
+        model = PlayerProfile
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
