@@ -14,7 +14,7 @@
     </div>
     <div class="block w49 right">
         <p class="ass title">Date</p>
-        <p class="ass">{{ object.start_date }}</p>
+        <p class="ass">{{ object.start_date|date:"D d M Y" }} {{ object.start_date|time:"H:i" }}</p>
     </div>
     <div class="clear">&nbsp;</div>
     <div class="block">

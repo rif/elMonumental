@@ -3,11 +3,12 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django import forms
+from django.contrib.sessions.models import Session
 
 SPEED_CHOICES = (('SN', 'Snail'), ('PD', 'Pedestrian'), ('SP', 'Sprinter'), ('RK', 'Rocket'),)
 STAMINA_CHOICES = (('SL', 'Sleep Walker'), ('PR', 'Programmer'), ('PD', 'Paladin LV7'), ('MR', 'Marathonist'),)
 CONTROLL_CHOICES = (('LP', 'Light Post'), ('EV', 'Evitationist'), ('NW', 'Needle Worker'), ('RN', 'Ronaldinho'),)
-SHOT_CHOICES = (('SN', 'Snail'), ('KK', 'Kicker'), ('GD', 'Gigi Duru'), ('GN', 'Gunner'),)
+SHOT_CHOICES = (('DP', 'Delicate'), ('KK', 'Kicker'), ('GD', 'Gigi Duru'), ('GN', 'Gunner'),)
 
 
 class PlayerProfile(models.Model):
@@ -47,8 +48,9 @@ class MatchDay(models.Model):
         ordering = ["-start_date"]
 
 def user_profile_handler(sender, **kwargs):
-    if kwargs['created'] == True:
-        pp = PlayerProfile(user=kwargs['instance'])
+    newUser = kwargs['instance']
+    if kwargs['created'] and newUser.get_profile is None:
+        pp = PlayerProfile(user = newUser)
         pp.save()
 
 post_save.connect(user_profile_handler, sender=User)

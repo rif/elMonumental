@@ -21,7 +21,7 @@ def signup(request):
             newUser = form.save()
             user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password1'])
             login(request, user)
-            return HttpResponseRedirect('/accounts/profile/%s' % user.id) # Redirect after POST
+            return HttpResponseRedirect('/accounts/profile/') # Redirect after POST
     else:
         form = UserCreationForm() # An unbound form
     return render_to_response('scheduler/signup.html',

@@ -58,7 +58,7 @@ td {
     padding: 0.2em 0.5em;
 }
 .list a {
-    display: block;
+    /*display: block;*/
     text-decoration: none;
 }
 .list a:hover {

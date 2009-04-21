@@ -2,7 +2,7 @@
 {% block title %}Attend MatchDay #{{ matchday.id}}{% endblock %}
 
 {% block content %}
-You have joined the matchday {{ matchday.id }} held on {{ matchday.satrt_date|date:"D d M Y" }}
+You have joined the matchday {{ matchday.id }} held on {{ matchday.start_date|date:"D d M Y" }}
 at {{ matchday.location }} startding from {{ matchday.start_date|time:"H:i" }}.
 <div>
   <a href="/">Home</a>
