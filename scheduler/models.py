@@ -32,7 +32,7 @@ class PlayerProfileForm(forms.ModelForm):
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
-    participants = models.ManyToManyField(User)
+    participants = models.ManyToManyField(User, null=True, blank=True)
 
     def __unicode__(self):
         return self.start_date.strftime('%d-%B-%Y')\
