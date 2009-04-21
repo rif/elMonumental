@@ -3,7 +3,6 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django import forms
-from django.contrib.sessions.models import Session
 
 SPEED_CHOICES = (('SN', 'Snail'), ('PD', 'Pedestrian'), ('SP', 'Sprinter'), ('RK', 'Rocket'),)
 STAMINA_CHOICES = (('SL', 'Sleep Walker'), ('PR', 'Programmer'), ('PD', 'Paladin LV7'), ('MR', 'Marathonist'),)
@@ -42,7 +41,6 @@ class MatchDay(models.Model):
 
     def  isFuture(self):
         return datetime.today() < self.start_date
-
 
     class Meta:
         ordering = ["-start_date"]
