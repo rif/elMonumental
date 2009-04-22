@@ -3,10 +3,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="{{ MEDIA_URL }}style.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/MochiKit.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/linkCreator.js"></script>
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
 
-<body>
+<body onload="initpage()">
     <div id="sidebar">
         {% block sidebar %}
         {% endblock %}

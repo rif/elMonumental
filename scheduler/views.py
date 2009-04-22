@@ -2,7 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from models import MatchDay, PlayerProfileForm, PlayerProfile
 
@@ -11,6 +11,14 @@ def attend(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
     md.participants.add(request.user)
     return render_to_response('scheduler/attend.html',
+                              {'matchday':md},
+                              context_instance=RequestContext(request))
+
+@login_required
+def abandon(request, object_id):
+    md = get_object_or_404(MatchDay, pk=object_id)
+    md.participants.remove(request.user)
+    return render_to_response('scheduler/abandon.html',
                               {'matchday':md},
                               context_instance=RequestContext(request))
 
@@ -69,3 +77,14 @@ def profile(request):
     return render_to_response('scheduler/profile.html',
                               {'form': form,},
                               context_instance=RequestContext(request))
+
+def linkQuerry(request, md_id):
+    md = get_object_or_404(MatchDay, pk=md_id)
+    href = ''
+    if md.isFuture():
+        if request.user in md.participants.iterator():
+            href += '<a href="abandon/%s">Abandon</a>' % md.id
+        else:
+            href += '<a href="attend/%s">Attend</a>' % md.id
+    href += ' <a href="matchday/%s">View</a>' % md.id
+    return HttpResponse(href)
