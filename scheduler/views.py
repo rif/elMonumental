@@ -10,17 +10,17 @@ from models import MatchDay, PlayerProfileForm, PlayerProfile
 def attend(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
     md.participants.add(request.user)
-    return render_to_response('scheduler/attend.html',
-                              {'matchday':md},
-                              context_instance=RequestContext(request))
+    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.' 
+                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    return HttpResponseRedirect('/') 
 
 @login_required
 def abandon(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
     md.participants.remove(request.user)
-    return render_to_response('scheduler/abandon.html',
-                              {'matchday':md},
-                              context_instance=RequestContext(request))
+    request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.' 
+                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    return HttpResponseRedirect('/') 
 
 def signup(request):
     if request.method == 'POST': # If the form has been submitted...
