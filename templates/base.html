@@ -3,6 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="{{ MEDIA_URL }}style.css" type="text/css" media="screen" />
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/MochiKit.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
     {% block scripts %}{% endblock %}
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
@@ -20,9 +22,9 @@
         <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url signup-link %}">sign up.</a></p>
         {% endif %}
         {% if messages %}
-        <ul>
+        <ul onLoad="initMessages();">
           {% for message in messages %}
-            <li>{{ message }}</li>
+            <li class="message" id="test_mes"> {{ message }} </li>
           {% endfor %}
         </ul>
         {% endif %}
