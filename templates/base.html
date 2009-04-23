@@ -9,7 +9,7 @@
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
 
-<body {% block loadFunction %}{% endblock %}>
+<body onLoad="initMessages();{% block loadFunction %}{% endblock %}">
     <div id="sidebar">
         {% block sidebar %}
         {% endblock %}
@@ -22,7 +22,7 @@
         <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url signup-link %}">sign up.</a></p>
         {% endif %}
         {% if messages %}
-        <ul onLoad="initMessages();">
+        <ul>
           {% for message in messages %}
             <li class="message" id="test_mes"> {{ message }} </li>
           {% endfor %}

@@ -1,6 +1,6 @@
 var messageEffect = function (liElement) {
 		MochiKit.Logging.log(liElement.id);
-        MochiKit.Visual.appear(liElement.id);
+        MochiKit.Async.callLater(3,MochiKit.Visual.fade, liElement.id);
 };
 
 var initMessages = function () {
