@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form method="post" action="{% url guest-add-link md_id %}">
+<table>
+{{ form.as_table }}
+</table>
+<input type="submit" value="Save Guest Details"/>
+<input type="hidden" name="next" value="{% url matchday-list %}" />
+</form>
+<div>
+  <a href="/">Home</a>
+</div>
+{% endblock %}
