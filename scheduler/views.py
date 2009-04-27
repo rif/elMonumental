@@ -7,16 +7,16 @@ from django.contrib.auth import authenticate, login
 from models import MatchDay, PlayerProfileForm, PlayerProfile
 
 @login_required
-def attend(request, object_id):
-    md = get_object_or_404(MatchDay, pk=object_id)
+def attend(request, user_id):
+    md = get_object_or_404(MatchDay, pk=user_id)
     md.participants.add(request.user)
     request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
                                     % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
     return HttpResponseRedirect('/')
 
 @login_required
-def abandon(request, object_id):
-    md = get_object_or_404(MatchDay, pk=object_id)
+def abandon(request, user_id):
+    md = get_object_or_404(MatchDay, pk=user_id)
     md.participants.remove(request.user)
     request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
                                     % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
@@ -82,5 +82,34 @@ def linkQuerry(request, md_id):
             href += '<a href="abandon/%s">Abandon</a>' % md.id
         else:
             href += '<a href="attend/%s">Attend</a>' % md.id
+    href += ' <a href="addguest/%s">Guest++</a>' % md.id
+    href += ' <a href="delguest/%s">Guest--</a>' % md.id
     href += ' <a href="matchday/%s">View</a>' % md.id
     return HttpResponse(href)
+
+def addGuest(request, user_id):
+    md = get_object_or_404(MatchDay, pk=user_id)
+
+    if request.method == 'POST':
+        gp = GuestPlayer()
+        gp.friend_user = request.user
+        gp.first_name = request.POST['first_name']
+        gp.last_name = request.POST['last_name']
+        gp.save()
+
+        md.guest_stars.add(gp)
+
+    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
+                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    return HttpResponseRedirect('/')
+
+def delGuest(request, user_id):
+    md = get_object_or_404(GuestPlayer, pk=user_id)
+
+    if request.method == 'POST':
+        gp = GuestPlayer
+        md.guest_stars.remove(gp)
+
+    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
+                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    return HttpResponseRedirect('/')
