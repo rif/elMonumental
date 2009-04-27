@@ -7,6 +7,7 @@
 {% block content %}
 <table cellspacing="0" class="list">
     <tr>
+        <th>#</th>
         <th>Date</th>
         <th>Location</th>
         <th>Hour</th>
@@ -14,6 +15,7 @@
     </tr>
     {% for matchday in object_list %}
     <tr>
+        <td>{{ matchday.id }}</td>
         <td>{{ matchday.start_date|date:"D d M Y" }}</td>
         <td>{{ matchday.location }}</td>
         <td>{{ matchday.start_date|time:"H:i" }}</td>

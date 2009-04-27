@@ -25,6 +25,7 @@ class PlayerProfileForm(forms.ModelForm):
     class Meta:
         model = PlayerProfile
         exclude = ('user',)
+        fields = ['first_name', 'last_name', 'email', 'alias_name', 'speed', 'stamina', 'ball_controll', 'shot_power']
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True, unique=True)
@@ -33,6 +34,12 @@ class GuestPlayer(models.Model):
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
+
+class GuestPlayerForm(forms.ModelForm):
+    class Meta:
+        model = GuestPlayer
+        exclude = ('friend_user',)
+
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
