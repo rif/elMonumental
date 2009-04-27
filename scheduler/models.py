@@ -13,12 +13,10 @@ SHOT_CHOICES = (('DP', 'Delicate'), ('KK', 'Kicker'), ('GD', 'Gigi Duru'), ('GN'
 class PlayerProfile(models.Model):
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
-    goals_scored = models.IntegerField(null=True,blank=True)
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
     shot_power = models.CharField(null=True,blank=True, max_length=3, choices=SHOT_CHOICES)
-    transfer_sum = models.IntegerField(null=True, blank=True)
 
 class PlayerProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50)
@@ -28,11 +26,19 @@ class PlayerProfileForm(forms.ModelForm):
         model = PlayerProfile
         exclude = ('user',)
 
+class GuestPlayer(models.Model):
+    friend_user = models.ForeignKey(User, null=True, unique=True)
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+
+    def get_full_name(self):
+        return self.first_name + ' ' + self.last_name
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
     participants = models.ManyToManyField(User, null=True, blank=True)
+    guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
     def __unicode__(self):
         return self.start_date.strftime('%d-%B-%Y')\

@@ -10,17 +10,17 @@ from models import MatchDay, PlayerProfileForm, PlayerProfile
 def attend(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
     md.participants.add(request.user)
-    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.' 
+    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
                                     % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
-    return HttpResponseRedirect('/') 
+    return HttpResponseRedirect('/')
 
 @login_required
 def abandon(request, object_id):
     md = get_object_or_404(MatchDay, pk=object_id)
     md.participants.remove(request.user)
-    request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.' 
+    request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
                                     % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
-    return HttpResponseRedirect('/') 
+    return HttpResponseRedirect('/')
 
 def signup(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -47,12 +47,10 @@ def profile(request):
             user.last_name = form.cleaned_data['last_name']
             user.email = form.cleaned_data['email']
             profile.alias_name = form.cleaned_data['alias_name']
-            profile.goals_scored = form.cleaned_data['goals_scored']
             profile.speed = form.cleaned_data['speed']
             profile.stamina = form.cleaned_data['stamina']
             profile.ball_controll = form.cleaned_data['ball_controll']
             profile.shot_power = form.cleaned_data['shot_power']
-            profile.transfer_sum = form.cleaned_data['transfer_sum']
             user.save()
             profile.save()
             return HttpResponseRedirect('/') # Redirect after POST
@@ -66,12 +64,10 @@ def profile(request):
                 'last_name': request.user.last_name,
                 'email': request.user.email,
                 'alias_name': pp.alias_name,
-                'goals_scored': pp.goals_scored,
                 'speed': pp.speed,
                 'stamina': pp.stamina,
                 'ball_controll': pp.ball_controll,
                 'shot_power': pp.shot_power,
-                'transfer_sum': pp.transfer_sum,
                 }
         form = PlayerProfileForm(data) # An unbound form
     return render_to_response('scheduler/profile.html',
