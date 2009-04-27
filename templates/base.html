@@ -3,8 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
     <link rel="stylesheet" href="{{ MEDIA_URL }}style.css" type="text/css" media="screen" />
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/MochiKit.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/MochiKit.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
     {% block scripts %}{% endblock %}
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
@@ -17,7 +17,7 @@
 
     <div id="content">
         {% if user.is_authenticated %}
-        <p class="login">Welcome, <a href="{% url profile-link %}">{{ user.username }}</a>.  <a href="{% url logout-link %}">log out</a></p>
+        <p class="login">Welcome, <a href="{% url profile-link  user.id %}">{{ user.username }}</a>.  <a href="{% url logout-link %}">log out</a></p>
         {% else %}
         <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url signup-link %}">sign up.</a></p>
         {% endif %}
