@@ -15,8 +15,8 @@ users = {
 
 urlpatterns = patterns('django.contrib.auth.views',
     url(r'^$', object_list, info, name='matchday-list'),
-    url(r'^attend/(?P<object_id>\d+)/$', attend, name='matchday-attend'),
-    url(r'^abandon/(?P<object_id>\d+)/$', abandon, name='matchday-abandon'),
+    url(r'^attend/(?P<user_id>\d+)/$', attend, name='matchday-attend'),
+    url(r'^abandon/(?P<user_id>\d+)/$', abandon, name='matchday-abandon'),
     url(r'^matchday/(?P<object_id>\d+)/$', object_detail, info, name='matchday-detail'),
     url(r'^profile/(?P<object_id>\d+)/$', object_detail, users, name='profile-link'),
     url(r'^accounts/login/$', 'login', {'template_name': 'scheduler/login.html'}, name='login-link'),
@@ -24,4 +24,6 @@ urlpatterns = patterns('django.contrib.auth.views',
     url(r'^accounts/logout/$', 'logout', {'template_name': 'scheduler/login.html', 'next_page':'/'}, name='logout-link'),
     url(r'^accounts/profile/$', profile, name='profile-edit-link'),
     url(r'^links/(?P<md_id>\d{1})/$', linkQuerry, name='request-callback'),
+    url(r'^addguest/(?P<user_id>\d+)/$', addGuest, name='guest-add'),
+    url(r'^delguest/(?P<user_id>\d+)/$', delGuest, name='guest-del'),
 )
