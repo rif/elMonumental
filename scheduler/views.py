@@ -9,17 +9,25 @@ from models import MatchDay, PlayerProfileForm, PlayerProfile
 @login_required
 def attend(request, user_id):
     md = get_object_or_404(MatchDay, pk=user_id)
-    md.participants.add(request.user)
-    request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
-                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    if md.isFuture():
+        md.participants.add(request.user)
+        request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
+                                        % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    else:
+        request.user.message_set.create(message='Selected matchday was played on %s.'
+                                        % md.start_date.strftime('%a, %d %b %Y'))
     return HttpResponseRedirect('/')
 
 @login_required
 def abandon(request, user_id):
     md = get_object_or_404(MatchDay, pk=user_id)
-    md.participants.remove(request.user)
-    request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
-                                    % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+
+    if request.user in md.participants.iterator():
+        md.participants.remove(request.user)
+        request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
+                                        % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+    else:
+        request.user.message_set.create(message='You are not in the matchday #s participant list.' % md.id)
     return HttpResponseRedirect('/')
 
 def signup(request):
