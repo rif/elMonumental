@@ -1,15 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-    <p>Alias name:  {{ object_id.get_profile.alias_name }}</p>
-    <p>Speed: {{ object_id.get_profile.speed }}</p>
-    <p>Stamina: {{ object_id.get_profile.stamina }}</p>
-    <p>Ball controll: {{ object_id.get_profile.ball_controll }}</p>
-    <p>Shot power: {{ object_id.get_profile.shot_power }}</p>
-    <p>First name: {{ object_id.first_name }}</p>
-    <p>Last name: {{ object_id.last_name }}</p>
-    <p>Email: {{ object_id.email }}</p>
+    <p>First name: {{ object.first_name }}</p>
+    <p>Last name: {{ object.last_name }}</p>
+    <p>Email: {{ object.email }}</p>
+    <p>Alias name:  {{ object.get_profile.alias_name }}</p>
+    <p>Speed: {{ object.get_profile.speed }}</p>
+    <p>Stamina: {{ object.get_profile.stamina }}</p>
+    <p>Ball controll: {{ object.get_profile.ball_controll }}</p>
+    <p>Shot power: {{ object.get_profile.shot_power }}</p>
 <br>
 <div>
   <a href="{% url profile-edit-link %}">Edit</a> <a href="/">Home</a>

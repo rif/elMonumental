@@ -77,7 +77,7 @@ def profile(request):
                 'ball_controll': pp.ball_controll,
                 'shot_power': pp.shot_power,
                 }
-        form = PlayerProfileForm(instance=pp)
+        form = PlayerProfileForm(data)
     return render_to_response('scheduler/profile.html',
                               {'form': form,},
                               context_instance=RequestContext(request))
