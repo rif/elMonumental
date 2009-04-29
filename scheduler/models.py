@@ -24,13 +24,12 @@ class PlayerProfileForm(forms.ModelForm):
     email = forms.EmailField()
     class Meta:
         model = PlayerProfile
-        exclude = ('user',)
         fields = ['first_name', 'last_name', 'email', 'alias_name', 'speed', 'stamina', 'ball_controll', 'shot_power']
 
 class GuestPlayer(models.Model):
-    friend_user = models.ForeignKey(User, null=True, unique=True)
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
+    friend_user = models.ForeignKey(User, null=True)
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name

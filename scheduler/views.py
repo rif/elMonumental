@@ -102,8 +102,11 @@ def addGuest(request, md_id):
     if request.method == 'POST':
         form = GuestPlayerForm(request.POST)
         if form.is_valid():
-            gp = form.save()
+            gp = form.save(commit=False)
+            gp.friend_user = request.user
+            gp.save()
             md.guest_stars.add(gp)
+            md.save()
             request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
             return HttpResponseRedirect('/')

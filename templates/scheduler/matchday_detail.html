@@ -30,9 +30,9 @@
         <p class="pri title">Guest Stars</p>
         <div class="pri">
             {% for guest in object.guest_stars.all %}
-                <li>guest.get_full_name
+                <li>{{ guest.get_full_name }}
                     invited by
-                    player.friend_user.get_full name</li>
+                    {{ player.friend_user.get_full_name }}</li>
             {% endfor %}
         </div>
     </div>
