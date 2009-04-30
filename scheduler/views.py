@@ -5,6 +5,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from models import MatchDay, PlayerProfileForm, PlayerProfile, GuestPlayerForm
+from django.forms.models import inlineformset_factory
+from django.contrib.auth.models import User
+
 
 @login_required
 def attend(request, md_id):
@@ -51,10 +54,13 @@ def signup(request):
                               context_instance=RequestContext(request))
 
 def profile(request):
+    UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
     if request.method == 'POST': # If the form has been submitted...
         user = request.user
         profile = user.get_profile()
-        form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
+        form = UserInlineFormSet(request.POST, request.FILES, instance=user)
+
+        #form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
@@ -77,7 +83,7 @@ def profile(request):
                 'ball_controll': pp.ball_controll,
                 'shot_power': pp.shot_power,
                 }
-        form = PlayerProfileForm(data)
+        form = UserInlineFormSet(instance=request.user)
     return render_to_response('scheduler/profile.html',
                               {'form': form,},
                               context_instance=RequestContext(request))
@@ -119,12 +125,20 @@ def addGuest(request, md_id):
 @login_required
 def delGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
-
-    if request.method == 'POST':
-        md = get_object_or_404(MatchDay, get_full_name=request.POST['full_name'])
-        md.guest_stars.remove(gp)
-        request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
-                                        % (gp.get_full_name() ,md.id))
+    gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
+    if len(gsl) == 0:
+        request.user.message_set.create(message='You did not added any guest players to this metchday!')
         return HttpResponseRedirect('/')
     return render_to_response('scheduler/del_guest.html',
+                             {'guests_lists': gsl, 'md_id': md_id},
                               context_instance=RequestContext(request))
+
+@login_required
+def delGuestCallback(request):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
+        gp = md.guest_stars.get(id=request.POST['guest_id'])
+        if gp != None:
+            md.guest_stars.remove(gp)
+            request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
+                                            % (gp.get_full_name() ,md.id))
