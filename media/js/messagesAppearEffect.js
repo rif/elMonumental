@@ -1,8 +1,6 @@
-var messageEffect = function (liElement) {
-		MochiKit.Logging.log(liElement.id);
-        MochiKit.Async.callLater(3,MochiKit.Visual.fade, liElement.id);
-};
-
-var initMessages = function () {
-    MochiKit.Base.map(messageEffect,MochiKit.DOM.getElementsByTagAndClassName('li', 'message'));
-};
+$(document).ready(function(){
+   $("li.message").ready(function (liElement) {
+        alert("As you can see, the link no longer took you to jquery.com");
+         $(liElement).fadeOut("slow");
+    });
+});
