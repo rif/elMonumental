@@ -201,3 +201,8 @@ form p {
 .login {
 text-align: right;
 }
+
+.message{
+    font-size: 90%;
+    color: #A52A2A;
+}

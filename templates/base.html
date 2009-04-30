@@ -22,7 +22,7 @@
         <p class="login">Please <a href="{% url login-link %}">log in</a> or <a href="{% url signup-link %}">sign up.</a></p>
         {% endif %}
         {% if messages %}
-        <ul>
+        <ul class="message">
           {% for message in messages %}
             <li class="message" id="test_mes"> {{ message }} </li>
           {% endfor %}

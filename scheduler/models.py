@@ -13,6 +13,7 @@ SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'),
 class PlayerProfile(models.Model):
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
+    receive_email = models.BooleanField('Do you want to by notified by email?', default=True)
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
@@ -25,6 +26,11 @@ class PlayerProfileForm(forms.ModelForm):
     class Meta:
         model = PlayerProfile
         fields = ['first_name', 'last_name', 'email', 'alias_name', 'speed', 'stamina', 'ball_controll', 'shot_power']
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
