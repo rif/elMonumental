@@ -5,10 +5,10 @@
     <p>Last name: {{ object.last_name }}</p>
     <p>Email: {{ object.email }}</p>
     <p>Alias name:  {{ object.get_profile.alias_name }}</p>
-    <p>Speed: {{ object.get_profile.speed }}</p>
-    <p>Stamina: {{ object.get_profile.stamina }}</p>
-    <p>Ball controll: {{ object.get_profile.ball_controll }}</p>
-    <p>Shot power: {{ object.get_profile.shot_power }}</p>
+    <p>Speed: {{ object.get_profile.get_speed_display }}</p>
+    <p>Stamina: {{ object.get_profile.get_stamina_display }}</p>
+    <p>Ball controll: {{ object.get_profile.get_ball_controll_display }}</p>
+    <p>Shot power: {{ object.get_profile.get_shot_power_display }}</p>
 <br>
 <div>
   <a href="{% url profile-edit-link %}">Edit</a> <a href="/">Home</a>
