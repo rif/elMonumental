@@ -4,13 +4,12 @@
 <head>
     <link rel="stylesheet" href="{{ MEDIA_URL }}style.css" type="text/css" media="screen" />
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/MochiKit.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
     {% block scripts %}{% endblock %}
     <title>{% block title %}El Monumental{% endblock %}</title>
 </head>
 
-<body onLoad="initMessages();{% block loadFunction %}{% endblock %}">
+<body onLoad="{% block loadFunction %}{% endblock %}">
     <div id="sidebar">
         {% block sidebar %}
         {% endblock %}
