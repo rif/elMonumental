@@ -90,8 +90,8 @@ def linkQuerry(request, md_id):
             href += '<a href="abandon/%s">Abandon</a>' % md.id
         else:
             href += '<a href="attend/%s">Attend</a>' % md.id
-    href += ' <a href="addguest/%s">Guest++</a>' % md.id
-    href += ' <a href="delguest/%s">Guest--</a>' % md.id
+        href += ' <a href="addguest/%s">G++</a>' % md.id
+        href += ' <a href="delguest/%s">G--</a>' % md.id
     href += ' <a href="matchday/%s">View</a>' % md.id
     return HttpResponse(href)
 

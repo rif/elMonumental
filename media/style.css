@@ -83,6 +83,13 @@ legend {
 a {
     color: #00f;
 }
+
+.async{
+    color: #00f;
+    font-size: 80%;
+    font-weight:bold;
+}
+
 a:hover {
     color: #55f;
     text-decoration: none;
