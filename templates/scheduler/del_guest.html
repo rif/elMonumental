@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
 <script type="text/javascript">
 function deleteGuest(guestId) {
 $.post("{% url delGuest-callback %}", { md_id: {{ md_id }}, guest_id: guestId });
