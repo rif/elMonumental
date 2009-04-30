@@ -4,10 +4,10 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 from django import forms
 
-SPEED_CHOICES = (('SN', 'Snail'), ('PD', 'Pedestrian'), ('SP', 'Sprinter'), ('RK', 'Rocket'),)
-STAMINA_CHOICES = (('SL', 'Sleep Walker'), ('PR', 'Programmer'), ('PD', 'Paladin LV7'), ('MR', 'Marathonist'),)
-CONTROLL_CHOICES = (('LP', 'Light Post'), ('EV', 'Evitationist'), ('NW', 'Needle Worker'), ('RN', 'Ronaldinho'),)
-SHOT_CHOICES = (('DP', 'Delicate'), ('KK', 'Kicker'), ('GD', 'Gigi Duru'), ('GN', 'Gunner'),)
+SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
+STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
+CONTROLL_CHOICES = ((u'LP', u'Light Post'), (u'EV', u'Evitationist'), (u'NW', u'Needle Worker'), (u'RN', u'Ronaldinho'),)
+SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
 
 
 class PlayerProfile(models.Model):
