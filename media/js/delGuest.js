@@ -5,5 +5,6 @@ $(document).ready(function(){
               guest_id: $(this).attr('guestId'),
             });
         $(this).replaceWith('Deleted');
+        e.preventDefault();
     });
 });

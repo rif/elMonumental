@@ -9,25 +9,26 @@ from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 
 
+def __isMatchdayInFuture(md):
+    if not md.isFuture():
+        request.user.message_set.create(message='Selected matchday was played on %s.'
+                                        % md.start_date.strftime('%a, %d %b %Y'))
+    return md.isFuture()
+
 @login_required
 def attend(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
-    if md.isFuture():
+    if __isMatchdayInFuture(md):
         md.participants.add(request.user)
         request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
-    else:
-        request.user.message_set.create(message='Selected matchday was played on %s.'
-                                        % md.start_date.strftime('%a, %d %b %Y'))
     return HttpResponseRedirect('/')
 
 @login_required
 def abandon(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
-    if not md.isFuture():
-        request.user.message_set.create(message='Selected matchday was played on %s.'
-                                        % md.start_date.strftime('%a, %d %b %Y'))
+    if not __isMatchdayInFuture(md):
         return HttpResponseRedirect('/')
 
     if request.user in md.participants.iterator():
@@ -105,6 +106,8 @@ def linkQuerry(request):
 @login_required
 def addGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
+    if not __isMatchdayInFuture(md):
+        return HttpResponseRedirect('/')
 
     if request.method == 'POST':
         form = GuestPlayerForm(request.POST)
@@ -126,6 +129,10 @@ def addGuest(request, md_id):
 @login_required
 def delGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
+
+    if not __isMatchdayInFuture(md):
+        return HttpResponseRedirect('/')
+
     gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
     if len(gsl) == 0:
         request.user.message_set.create(message='You did not added any guest players to this metchday!')
@@ -142,5 +149,6 @@ def delGuestCallback(request):
         if gp != None:
             md.guest_stars.remove(gp)
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
-                                            % (gp.get_full_name() ,md.id))
-            return HttpResponse('Deleted')
+                                            % (gp.get_full_name(), md.id))
+            return HttpResponse('')
+    return HttpResponseRedirect('/')
