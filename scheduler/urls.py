@@ -27,4 +27,5 @@ urlpatterns = patterns('django.contrib.auth.views',
     url(r'^addguest/(?P<md_id>\d+)/$', addGuest, name='guest-add-link'),
     url(r'^delguest/(?P<md_id>\d+)/$', delGuest, name='guest-del-link'),
     url(r'^links/delguest/$', delGuestCallback, name='delGuest-callback'),
+    url(r'^sendemail/(?P<md_id>\d+)/$', sendEmail, name='send-email-link'),
 )

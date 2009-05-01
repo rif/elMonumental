@@ -25,7 +25,7 @@ class PlayerProfileForm(forms.ModelForm):
     email = forms.EmailField()
     class Meta:
         model = PlayerProfile
-        fields = ['first_name', 'last_name', 'email', 'alias_name', 'speed', 'stamina', 'ball_controll', 'shot_power']
+        fields = ['first_name', 'last_name', 'email', 'alias_name', 'receive_email', 'speed', 'stamina', 'ball_controll', 'shot_power']
 
 class UserForm(forms.ModelForm):
     class Meta:
