@@ -4,9 +4,11 @@
 <h2>Matchday #{{ object.id }} <span>{{ object.status }}</span></h2>
 <div class="ticket">
     <h2>Information</h2>
+    {% if not object.isFuture %}
     <div class="date">
         <p class="cr">Opened {{ object.start_date|timesince }} ago</p>
     </div>
+    {% endif %}
     <div class="clear">&nbsp;</div>
     <div class="block w49 left">
         <p class="pri title">Location</p>
