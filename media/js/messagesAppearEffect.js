@@ -1,5 +1,5 @@
 $(document).ready(function(){
    $("li.message").each(function () {
-         $(this).fadeOut(6000);
+         $(this).fadeOut(16000);
     });
 });

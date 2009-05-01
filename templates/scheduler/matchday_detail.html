@@ -40,6 +40,11 @@
     </div>
 </div>
 <div>
+    {% if user.is_superuser and object.isFuture %}
+        <a class="right" href="{% url send-email-link object.id %}">Send invite email!</a>
+    {% endif %}
+</div>
+<div>
   <a href="/">Home</a>
 </div>
 {% endblock %}

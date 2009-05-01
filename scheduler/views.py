@@ -9,7 +9,7 @@ from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 
 
-def __isMatchdayInFuture(md):
+def __isMatchdayInFuture(request, md):
     if not md.isFuture():
         request.user.message_set.create(message='Selected matchday was played on %s.'
                                         % md.start_date.strftime('%a, %d %b %Y'))
@@ -18,7 +18,7 @@ def __isMatchdayInFuture(md):
 @login_required
 def attend(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
-    if __isMatchdayInFuture(md):
+    if __isMatchdayInFuture(request, md):
         md.participants.add(request.user)
         request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
@@ -28,7 +28,7 @@ def attend(request, md_id):
 def abandon(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
-    if not __isMatchdayInFuture(md):
+    if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect('/')
 
     if request.user in md.participants.iterator():
@@ -59,9 +59,8 @@ def profile(request):
     if request.method == 'POST': # If the form has been submitted...
         user = request.user
         profile = user.get_profile()
-        form = UserInlineFormSet(request.POST, request.FILES, instance=user)
 
-        #form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
+        form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
             user.first_name = form.cleaned_data['first_name']
             user.last_name = form.cleaned_data['last_name']
@@ -79,12 +78,13 @@ def profile(request):
                 'last_name': request.user.last_name,
                 'email': request.user.email,
                 'alias_name': pp.alias_name,
+                'receive_email': pp.receive_email,
                 'speed': pp.speed,
                 'stamina': pp.stamina,
                 'ball_controll': pp.ball_controll,
                 'shot_power': pp.shot_power,
                 }
-        form = UserInlineFormSet(instance=request.user)
+        form = PlayerProfileForm(data)
     return render_to_response('scheduler/profile.html',
                               {'form': form,},
                               context_instance=RequestContext(request))
@@ -106,7 +106,7 @@ def linkQuerry(request):
 @login_required
 def addGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
-    if not __isMatchdayInFuture(md):
+    if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect('/')
 
     if request.method == 'POST':
@@ -130,7 +130,7 @@ def addGuest(request, md_id):
 def delGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
-    if not __isMatchdayInFuture(md):
+    if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect('/')
 
     gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
@@ -151,4 +151,29 @@ def delGuestCallback(request):
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
                                             % (gp.get_full_name(), md.id))
             return HttpResponse('')
+    return HttpResponseRedirect('/')
+
+@login_required
+def sendEmail(request, md_id):
+    md = get_object_or_404(MatchDay, pk=md_id)
+
+    if not __isMatchdayInFuture(request, md):
+        return HttpResponseRedirect('/')
+
+    if request.user.is_superuser:
+        from django.core.mail import send_mail
+        subject = 'Fotball invite'
+        message = 'Connect to http://elMonumental.sro.oce.net for matchday #%s' % md_id
+        fromEmail = request.user.email
+        mass = ""
+        for user in User.objects.all():
+            try:
+                if user.get_profile().receive_email:
+                    mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
+                    send_mail(subject, message, fromEmail, user.email)
+                    request.user.message_set.create(message = 'Email sent to users!')
+            except:
+                request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+    else:
+        request.user.message_set.create(message='You do not have permission to send email to the group!')
     return HttpResponseRedirect('/')

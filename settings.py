@@ -19,7 +19,8 @@ TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
-
+EMAIL_HOST = 'mail-out.sro.oce.net'
+EMAIL_PORT = '25'
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = rel('media')
