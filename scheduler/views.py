@@ -163,7 +163,7 @@ def sendEmail(request, md_id):
     if request.user.is_superuser:
         from django.core.mail import send_mail
         subject = 'Fotball invite'
-        message = 'Connect to http://elMonumental.sro.oce.net for matchday #%s' % md_id
+        message = 'Connect to http://elMonumental.sro.oce.net for matchday #%s.' % md_id
         fromEmail = request.user.email
         mass = ""
         for user in User.objects.all():
