@@ -143,3 +143,4 @@ def delGuestCallback(request):
             md.guest_stars.remove(gp)
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
                                             % (gp.get_full_name() ,md.id))
+            return HttpResponse('Deleted')
