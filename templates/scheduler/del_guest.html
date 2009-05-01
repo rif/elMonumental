@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
-<script type="text/javascript">
-function deleteGuest(guestId) {
-$.post("{% url delGuest-callback %}", { md_id: {{ md_id }}, guest_id: guestId });
-}
-</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/delGuest.js"></script>
 {% endblock %}
 {% block loadFunction %}initpage();{% endblock %}
 {% block content %}
@@ -19,7 +15,7 @@ $.post("{% url delGuest-callback %}", { md_id: {{ md_id }}, guest_id: guestId })
     <tr>
          <td>{{ guest.id }}</td>
         <td>{{ guest.get_full_name }}</td>
-        <td><a href="javascript:deleteGuest({{ guest.id }})">Delete</a></td>
+        <td><a class="dellink" guestId="{{ guest.id }}" matchdayId="{{ md_id }}" href="#">Delete</a></td>
     </tr>
     {% endfor %}
 </table>
