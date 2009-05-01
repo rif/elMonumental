@@ -54,6 +54,10 @@ def signup(request):
                               {'form': form,},
                               context_instance=RequestContext(request))
 
+def profileInfo(request):
+    return render_to_response('scheduler/user_detail.html',
+                              context_instance=RequestContext(request))
+
 def profile(request):
     UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
     if request.method == 'POST': # If the form has been submitted...
@@ -67,7 +71,7 @@ def profile(request):
             user.email = form.cleaned_data['email']
             user.save()
             form.save()
-            return HttpResponseRedirect('/') # Redirect after POST
+            return HttpResponseRedirect('/accounts/profile') # Redirect after POST
     else:
         try:
             pp = request.user.get_profile()
