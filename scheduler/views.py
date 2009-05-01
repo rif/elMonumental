@@ -88,18 +88,19 @@ def profile(request):
                               {'form': form,},
                               context_instance=RequestContext(request))
 
-def linkQuerry(request, md_id):
-    md = get_object_or_404(MatchDay, pk=md_id)
-    href = ''
-    if md.isFuture():
-        if request.user in md.participants.iterator():
-            href += '<a href="abandon/%s">Abandon</a>' % md.id
-        else:
-            href += '<a href="attend/%s">Attend</a>' % md.id
-        href += ' <a href="addguest/%s">G++</a>' % md.id
-        href += ' <a href="delguest/%s">G--</a>' % md.id
-    href += ' <a href="matchday/%s">View</a>' % md.id
-    return HttpResponse(href)
+def linkQuerry(request):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
+        href = ''
+        if md.isFuture():
+            if request.user in md.participants.iterator():
+                href += '<a href="abandon/%s">Abandon</a>' % md.id
+            else:
+                href += '<a href="attend/%s">Attend</a>' % md.id
+            href += ' <a href="addguest/%s">G++</a>' % md.id
+            href += ' <a href="delguest/%s">G--</a>' % md.id
+        href += ' <a href="matchday/%s">View</a>' % md.id
+        return HttpResponse(href)
 
 @login_required
 def addGuest(request, md_id):
