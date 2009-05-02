@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<form method="post" action="{% url profile-edit-link %}">
+<form method="post" action="{% url sch_profile-edit %}">
 <table>
 {{ form.as_table }}
 </table>
 <input type="submit" value="Save"/>
-<input type="hidden" name="next" value="{% url profile-link %}" />
+<input type="hidden" name="next" value="{% url sch_profile %}" />
 </form>
 <div>
   <a href="/">Home</a>

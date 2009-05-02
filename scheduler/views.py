@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate, login
 from models import MatchDay, PlayerProfileForm, PlayerProfile, GuestPlayerForm
 from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
-
+from django.core.urlresolvers import reverse
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -22,14 +22,14 @@ def attend(request, md_id):
         md.participants.add(request.user)
         request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
 def abandon(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
 
     if request.user in md.participants.iterator():
         md.participants.remove(request.user)
@@ -38,7 +38,7 @@ def abandon(request, md_id):
     else:
         request.user.message_set.create(message='You are not in the matchday #s participant list.' % md.id)
 
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 def signup(request):
     if request.method == 'POST': # If the form has been submitted...
@@ -47,7 +47,7 @@ def signup(request):
             newUser = form.save()
             user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password1'])
             login(request, user)
-            return HttpResponseRedirect('/accounts/profile/') # Redirect after POST
+            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
     else:
         form = UserCreationForm() # An unbound form
     return render_to_response('scheduler/signup.html',
@@ -71,7 +71,7 @@ def profile(request):
             user.email = form.cleaned_data['email']
             user.save()
             form.save()
-            return HttpResponseRedirect('/accounts/profile') # Redirect after POST
+            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
     else:
         try:
             pp = request.user.get_profile()
@@ -99,19 +99,19 @@ def linkQuerry(request):
         href = ''
         if md.isFuture():
             if request.user in md.participants.iterator():
-                href += '<a href="abandon/%s">Abandon</a>' % md.id
+                href += '<a href="%s">Abandon</a>' % reverse('sch_matchday-abandon', args=[md.id])
             else:
-                href += '<a href="attend/%s">Attend</a>' % md.id
-            href += ' <a href="addguest/%s">G++</a>' % md.id
-            href += ' <a href="delguest/%s">G--</a>' % md.id
-        href += ' <a href="matchday/%s">View</a>' % md.id
+                href += '<a href="%s">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
+            href += ' <a href="%s">G++</a>' % reverse('sch_addguest', args=[md.id])
+            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])
+        href += ' <a href="%s">View</a>' % reverse('sch_matchday-detail', args=[md.id])
         return HttpResponse(href)
 
 @login_required
 def addGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
     if not __isMatchdayInFuture(request, md):
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
 
     if request.method == 'POST':
         form = GuestPlayerForm(request.POST)
@@ -123,7 +123,7 @@ def addGuest(request, md_id):
             md.save()
             request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
     else:
         form = GuestPlayerForm()
     return render_to_response('scheduler/add_guest.html',
@@ -135,12 +135,12 @@ def delGuest(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
 
     gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
     if len(gsl) == 0:
         request.user.message_set.create(message='You did not added any guest players to this metchday!')
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
     return render_to_response('scheduler/del_guest.html',
                              {'guests_lists': gsl, 'md_id': md_id},
                               context_instance=RequestContext(request))
@@ -155,14 +155,14 @@ def delGuestCallback(request):
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
                                             % (gp.get_full_name(), md.id))
             return HttpResponse('')
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
 def sendEmail(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
 
     if request.user.is_superuser:
         from django.core.mail import send_mail
@@ -180,4 +180,4 @@ def sendEmail(request, md_id):
                 request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
     else:
         request.user.message_set.create(message='You do not have permission to send email to the group!')
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(reverse('sch_matchday-list'))
