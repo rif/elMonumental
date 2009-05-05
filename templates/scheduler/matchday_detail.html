@@ -2,43 +2,30 @@
 {% block title %}Matchday #{{ object.id }} - {% endblock %}
 {% block content %}
 <h2>Matchday #{{ object.id }} <span>{{ object.status }}</span></h2>
-<div class="ticket">
-    <h2>Information</h2>
-    {% if not object.isFuture %}
-    <div class="date">
-        <p class="cr">Opened {{ object.start_date|timesince }} ago</p>
-    </div>
-    {% endif %}
-    <div class="clear">&nbsp;</div>
-    <div class="block w49 left">
-        <p class="pri title">Location</p>
-        <p class="pri">{{ object.location }}</p>
-    </div>
-    <div class="block w49 right">
-        <p class="ass title">Date</p>
-        <p class="ass">{{ object.start_date|date:"D d M Y" }} {{ object.start_date|time:"H:i" }}</p>
-    </div>
-    <div class="clear">&nbsp;</div>
-    <div class="block">
-        <p class="des title">Participants</p>
-        <div class="des">
-            {% for player in object.participants.all %}
-                <li>{{ player.first_name}}
-                    {{ player.get_profile.alias_name }}
-                    {{ player.last_name }}</li>
-            {% endfor %}
-        </div>
-        <br>
-        <p class="pri title">Guest Stars</p>
-        <div class="pri">
-            {% for guest in object.guest_stars.all %}
-                <li>{{ guest.get_full_name }}
-                    invited by
-                    {{ guest.friend_user.get_full_name }}</li>
-            {% endfor %}
-        </div>
-    </div>
-</div>
+<h2>Information</h2>
+<ul>
+{% if not object.isFuture %}
+    <li>Date: Opened {{ object.start_date|timesince }} ago</li>
+{% endif %}
+<li>Location: {{ object.location }}</li>
+<li>Date: {{ object.start_date|date:"D d M Y" }} {{ object.start_date|time:"H:i" }}</li>
+<li>
+Participants:
+    <ul>
+    {% for player in object.participants.all %}
+        <li>{{ player.first_name}} {{ player.get_profile.alias_name }} {{ player.last_name }}</li>
+    {% endfor %}
+    </ul>
+</li>
+<li>
+Guest Stars:
+    <ul>
+        {% for guest in object.guest_stars.all %}
+            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_full_name }}</li>
+        {% endfor %}
+    </ul>
+</li>
+</ul>
 <div>
     {% if user.is_superuser and object.isFuture %}
         <a class="right" href="{% url sch_sendemail object.id %}">Send invite email!</a>

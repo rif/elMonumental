@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>First name: {{ user.first_name }}</p>
-    <p>Last name: {{ user.last_name }}</p>
-    <p>Email: {{ user.email }}</p>
-    <p>Receive email:  {{ user.get_profile.receive_email }}</p>
-    <p>Alias name:  {{ user.get_profile.alias_name }}</p>
-    <p>Speed: {{ user.get_profile.get_speed_display }}</p>
-    <p>Stamina: {{ user.get_profile.get_stamina_display }}</p>
-    <p>Ball controll: {{ user.get_profile.get_ball_controll_display }}</p>
-    <p>Shot power: {{ user.get_profile.get_shot_power_display }}</p>
-<br>
+<table cellspacing="0" class="list">
+    <tr><td>First name:</td><td>{{ user.first_name }}</td></tr>
+    <tr><td>Last name:</td><td>{{ user.last_name }}</td></tr>
+    <tr><td>Email:</td><td>{{ user.email }}</td></tr>
+    <tr><td>Receive email:</td><td>{{ user.get_profile.receive_email }}</td></tr>
+    <tr><td>Alias name:</td><td>{{ user.get_profile.alias_name }}</td></tr>
+    <tr><td>Speed:</td><td>{{ user.get_profile.get_speed_display }}</td></tr>
+    <tr><td>Stamina:</td><td>{{ user.get_profile.get_stamina_display }}</td></tr>
+    <tr><td>Ball controll:</td><td>{{ user.get_profile.get_ball_controll_display }}</td></tr>
+    <tr><td>Shot power:</td><td>{{ user.get_profile.get_shot_power_display }}</td></tr>
+</table>
+
 <div>
   <a href="{% url sch_profile-edit %}">Edit</a> <a href="/">Home</a>
 </div>
