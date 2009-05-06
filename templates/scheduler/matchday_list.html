@@ -4,6 +4,7 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/linkCreator.js"></script>
 {% endblock %}
 {% block content %}
+<div id="placeholder"></div>
 <table cellspacing="0" class="list">
     <tr>
         <th>#</th>
@@ -20,9 +21,10 @@
         <td>{{ matchday.start_date|time:"H:i" }}</td>
         <td>
             <span class="async" id="{{ matchday.id }}">
-            </span>
+                <a class="md-detail-link" href="#">View</a>
+            </span>            
         </td>
     </tr>
-    {% endfor %}
+    {% endfor %}    
 </table>
 {% endblock %}

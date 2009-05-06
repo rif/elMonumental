@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import *
 from scheduler import views
-from django.contrib.auth.models import User
 from models import MatchDay
 
 md_info = {
