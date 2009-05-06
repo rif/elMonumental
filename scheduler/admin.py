@@ -1,4 +1,4 @@
-from elMonumental.scheduler.models import MatchDay, PlayerProfile, GuestPlayer
+from elMonumental.scheduler.models import MatchDay, PlayerProfile
 from django.contrib import admin
 
 admin.site.register(MatchDay)

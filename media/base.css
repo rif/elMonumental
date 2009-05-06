@@ -57,7 +57,7 @@ a:hover { color:#ffe761; }
 
 h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
 h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#092e20; line-height:1.1em; }
-h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#092e20; }
+h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#9aef3f; }
 #homepage h2 { font-size:140%; }
 h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
 h4 { font-size:100%; font-weight:bold; margin-bottom:-3px; margin-top:1.2em; text-transform:uppercase; letter-spacing:1px; }
@@ -196,16 +196,16 @@ h3 .small { font-size:80%; }
 }
 #subwrap { display: inline-block; }
 
-/* Hides from IE-mac \*/
+/* Hides from IE-mac */
 * html #subwrap { height: 1%; }
 #subwrap { display: block; }
-/* End hide from IE-mac */om IE-mac */
+/* End hide from IE-mac om IE-mac */
 
 table {
     border-collapse: collapse;
     border-spacing: 0;
     margin: 1em 0;
-    background: #eef;
+    background: #487858;
 }
 caption, th, td {
     text-align: left;
@@ -225,4 +225,13 @@ text-align: right;
 .message{
     font-size: 95%;
     color: #A52A2A;
+}
+
+#placeholder {
+  margin: 0px 10px 10px 10px;
+  padding: 1em;
+  position: relative;
+  float: right;
+  width: 23%;
+  font-size: 88%;
 }

@@ -103,8 +103,7 @@ def linkQuerry(request):
             else:
                 href += '<a href="%s">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
             href += ' <a href="%s">G++</a>' % reverse('sch_addguest', args=[md.id])
-            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])
-        href += ' <a href="%s">View</a>' % reverse('sch_matchday-detail', args=[md.id])
+            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])        
         return HttpResponse(href)
 
 @login_required
