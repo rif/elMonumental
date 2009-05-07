@@ -59,7 +59,7 @@ def profileInfo(request):
                               context_instance=RequestContext(request))
 
 def profile(request):
-    UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
+    #UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
     if request.method == 'POST': # If the form has been submitted...
         user = request.user
         profile = user.get_profile()
