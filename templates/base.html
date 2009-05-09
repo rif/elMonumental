@@ -21,13 +21,7 @@
         {% else %}
         <p class="login">Please <a href="{% url sch_login %}">log in</a> or <a href="{% url sch_signup %}">sign up.</a></p>
         {% endif %}
-        {% if messages %}
-        <ul class="message">
-          {% for message in messages %}
-            <li class="message" id="test_mes"> {{ message }} </li>
-          {% endfor %}
-        </ul>
-        {% endif %}
+        <div id="messages"></div>
         {% block content %}{% endblock %}
     </div>
 </body>

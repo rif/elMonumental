@@ -37,7 +37,6 @@ def abandon(request, md_id):
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
     else:
         request.user.message_set.create(message='You are not in the matchday #s participant list.' % md.id)
-
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 def signup(request):
@@ -99,11 +98,11 @@ def linkQuerry(request):
         href = ''
         if md.isFuture():
             if request.user in md.participants.iterator():
-                href += '<a href="%s">Abandon</a>' % reverse('sch_matchday-abandon', args=[md.id])
+                href += '<a class="abandon" href="%s">Abandon</a>' % reverse('sch_matchday-abandon', args=[md.id])
             else:
-                href += '<a href="%s">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
+                href += '<a class="attend" href="%s">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
             href += ' <a href="%s">G++</a>' % reverse('sch_addguest', args=[md.id])
-            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])        
+            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])
         return HttpResponse(href)
 
 @login_required
@@ -180,3 +179,7 @@ def sendEmail(request, md_id):
     else:
         request.user.message_set.create(message='You do not have permission to send email to the group!')
     return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+@login_required
+def getMessages(request):
+    return render_to_response('scheduler/messages.html',context_instance=RequestContext(request))
