@@ -1,11 +1,11 @@
-<h2>Matchday #{{ object.id }} <span>{{ object.status }}</span></h2>
+{% load humanize %}
 <h2>Information</h2>
 <ul>
 {% if not object.isFuture %}
     <li>Date: Opened {{ object.start_date|timesince }} ago</li>
 {% endif %}
 <li>Location: {{ object.location }}</li>
-<li>Date: {{ object.start_date|date:"D d M Y" }} {{ object.start_date|time:"H:i" }}</li>
+<li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
 <li>
 Participants:
     <ul>
