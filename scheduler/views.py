@@ -122,7 +122,7 @@ def addGuest(request, md_id):
             md.save()
             request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
-            return HttpResponse('')
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
     else:
         form = GuestPlayerForm()
     return render_to_response('scheduler/add_guest.html',
@@ -138,8 +138,7 @@ def delGuest(request, md_id):
 
     gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
     if len(gsl) == 0:
-        request.user.message_set.create(message='You did not added any guest players to this metchday!')
-        return HttpResponse('')
+        return HttpResponse('You did not added any guest players to this metchday!')
     return render_to_response('scheduler/del_guest.html',
                              {'guests_lists': gsl, 'md_id': md_id},
                               context_instance=RequestContext(request))
