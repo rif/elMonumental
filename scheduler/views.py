@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from models import MatchDay, PlayerProfileForm, PlayerProfile, GuestPlayerForm
-from django.forms.models import inlineformset_factory
+#from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
@@ -101,9 +101,9 @@ def linkQuerry(request):
             if request.user in md.participants.iterator():
                 href += '<a href="%s">Abandon</a>' % reverse('sch_matchday-abandon', args=[md.id])
             else:
-                href += '<a href="%s">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
-            href += ' <a href="%s">G++</a>' % reverse('sch_addguest', args=[md.id])
-            href += ' <a href="%s">G--</a>' % reverse('sch_delguest', args=[md.id])        
+                href += '<a href="%s" href="#">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
+            href += ' <a onclick="showAddGuest(%s)" href="#">G++</a>' % repr(reverse('sch_addguest', args=[md.id]))
+            href += ' <a onclick="showDelGuest(%s)" href="#">G--</a>' % repr(reverse('sch_delguest', args=[md.id]))
         return HttpResponse(href)
 
 @login_required
@@ -122,7 +122,7 @@ def addGuest(request, md_id):
             md.save()
             request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
-            return HttpResponseRedirect(reverse('sch_matchday-list'))
+            return HttpResponse('')
     else:
         form = GuestPlayerForm()
     return render_to_response('scheduler/add_guest.html',
@@ -139,7 +139,7 @@ def delGuest(request, md_id):
     gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
     if len(gsl) == 0:
         request.user.message_set.create(message='You did not added any guest players to this metchday!')
-        return HttpResponseRedirect(reverse('sch_matchday-list'))
+        return HttpResponse('')
     return render_to_response('scheduler/del_guest.html',
                              {'guests_lists': gsl, 'md_id': md_id},
                               context_instance=RequestContext(request))
