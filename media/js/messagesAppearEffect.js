@@ -7,6 +7,7 @@ $(document).ready(function(){
 function showAddGuest(link) {
     $("#placeholder").load(link);
 }
+
 function showDelGuest(link) {
     $("#placeholder").load(link, function(){
         $("a.dellink").click(function(e){
