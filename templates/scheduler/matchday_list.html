@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load humanize %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/linkCreator.js"></script>
@@ -15,8 +16,8 @@
     </tr>
     {% for matchday in object_list %}
     <tr>
-        <td>{{ matchday.id }}</td>
-        <td>{{ matchday.start_date|date:"D d M Y" }}</td>
+        <td>{{ matchday.id|ordinal }}</td>
+        <td>{{ matchday.start_date|date:"D d M Y"|naturalday }}</td>
         <td>{{ matchday.location }}</td>
         <td>{{ matchday.start_date|time:"H:i" }}</td>
         <td>

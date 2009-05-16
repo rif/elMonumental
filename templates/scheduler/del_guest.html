@@ -1,10 +1,3 @@
-{% extends 'base.html' %}
-{% block title %}View MatchDays{% endblock %}
-{% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/delGuest.js"></script>
-{% endblock %}
-{% block loadFunction %}initpage();{% endblock %}
-{% block content %}
 <table cellspacing="0" class="list">
     <tr>
         <th>#</th>
@@ -19,7 +12,3 @@
     </tr>
     {% endfor %}
 </table>
-<div>
-  <a href="/">Home</a>
-</div>
-{% endblock %}
