@@ -1,7 +1,3 @@
-{% extends "base.html" %}
-
-{% block content %}
-
 <form method="post" action="{% url sch_addguest md_id %}">
 <table>
 {{ form.as_table }}
@@ -9,7 +5,3 @@
 <input type="submit" value="Save Guest Details"/>
 <input type="hidden" name="next" value="{% url sch_matchday-list %}" />
 </form>
-<div>
-  <a href="/">Home</a>
-</div>
-{% endblock %}
