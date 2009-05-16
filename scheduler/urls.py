@@ -28,5 +28,4 @@ urlpatterns += patterns('',
     url(r'^delguest/(?P<md_id>\d+)/$', views.delGuest, name='sch_delguest'),
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_delGuest-ajax'),
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),
-    url(r'^messages/$', views.getMessages, name='sch_messages'),
 )

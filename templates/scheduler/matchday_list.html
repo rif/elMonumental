@@ -20,11 +20,11 @@
         <td>{{ matchday.location }}</td>
         <td>{{ matchday.start_date|time:"H:i" }}</td>
         <td>
-            <span class="async" md_id="{{ matchday.id }}">
+            <span class="async" id="{{ matchday.id }}">
                 <a class="md-detail-link" href="#">View</a>
-            </span>
+            </span>            
         </td>
     </tr>
-    {% endfor %}
+    {% endfor %}    
 </table>
 {% endblock %}
