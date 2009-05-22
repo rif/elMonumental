@@ -10,19 +10,14 @@
 </head>
 
 <body>
-    <div id="sidebar">
-        {% block sidebar %}
-        {% endblock %}
-    </div>
-
-    <div id="content">
+    <div id="container">
         {% if user.is_authenticated %}
-        <p class="login">Welcome, <a href="{% url sch_profile %}">{{ user.username }}</a>.  <a href="{% url sch_logout %}">log out</a></p>
+        <p class="right">Welcome, <a href="{% url sch_profile %}">{{ user.username }}</a>.  <a href="{% url sch_logout %}">log out</a></p>
         {% else %}
-        <p class="login">Please <a href="{% url sch_login %}">log in</a> or <a href="{% url sch_signup %}">sign up.</a></p>
+        <p class="right">Please <a href="{% url sch_login %}">log in</a> or <a href="{% url sch_signup %}">sign up.</a></p>
         {% endif %}
         {% if messages %}
-        <ul class="message">
+        <ul>
           {% for message in messages %}
             <li class="message" id="test_mes"> {{ message }} </li>
           {% endfor %}
@@ -30,6 +25,7 @@
         {% endif %}
         {% block content %}{% endblock %}
     </div>
+    <div id="footer"></div>
 </body>
 </html>
 

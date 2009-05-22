@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $("li.message").each(function () {
-        $(this).fadeOut(16000);
+        $(this).fadeOut(13000);
     });
 });
 
