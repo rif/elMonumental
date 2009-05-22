@@ -156,26 +156,40 @@ def delGuestCallback(request):
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
-def sendEmail(request, md_id):
+def getEmailForm(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
+    message = """You are invited to come at the %s'th mathchday starting at %s wich
+will take place at %s fotball arena.
+    """ % (md.id, md.start_date.strftime('%H:%M - %a, %d %b %Y'), md.location)
+    return HttpResponse("""
+        <form method="POST" action="%s">
+            <input type="textarea" size="25" value="%s"/>
+            <input type="submit" value="Send Email!"/>
+        </form>
+    """ % (reverse('sch_sendemail'), message))
 
-    if not __isMatchdayInFuture(request, md):
+@login_required
+def sendEmail(request):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk="1")
+
+        if not __isMatchdayInFuture(request, md):
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+        if request.user.is_superuser:
+            from django.core.mail import send_mail
+            subject = 'Fotball invite'
+            message = request.POST['message']
+            fromEmail = request.user.email
+            mass = ""
+            for user in User.objects.all():
+                try:
+                    if user.get_profile().receive_email:
+                        mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
+                        print(subject, message, fromEmail, user.email)
+                        request.user.message_set.create(message = 'Email sent to users!')
+                except:
+                    request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+        else:
+            request.user.message_set.create(message='You do not have permission to send email to the group!')
         return HttpResponseRedirect(reverse('sch_matchday-list'))
-
-    if request.user.is_superuser:
-        from django.core.mail import send_mail
-        subject = 'Fotball invite'
-        message = 'Connect to http://elMonumental.sro.oce.net for matchday #%s.' % md_id
-        fromEmail = request.user.email
-        mass = ""
-        for user in User.objects.all():
-            try:
-                if user.get_profile().receive_email:
-                    mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                    send_mail(subject, message, fromEmail, user.email)
-                    request.user.message_set.create(message = 'Email sent to users!')
-            except:
-                request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
-    else:
-        request.user.message_set.create(message='You do not have permission to send email to the group!')
-    return HttpResponseRedirect(reverse('sch_matchday-list'))

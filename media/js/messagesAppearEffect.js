@@ -21,3 +21,12 @@ function showDelGuest(link) {
         });
     });
 }
+function showEmailForm(md_id) {
+    $.get("/getemailform/" + md_id + "/", function(responseData){
+        $("div#email_form").html(responseData);
+        $("a#send_email").fadeOut("slow");
+        $("div#email_form").fadeIn(3000, function () {
+            $("form").fadeIn(100);
+        });
+    });
+}
