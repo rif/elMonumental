@@ -18,7 +18,7 @@ a:hover { color:#ffe761; }
 /* CONTENT */
 
 h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
-h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#092e20; line-height:1.1em; }
+h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#9aef3f; line-height:1.1em; }
 h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#9aef3f; }
 #homepage h2 { font-size:140%; }
 h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
@@ -41,7 +41,7 @@ ul ul ul { padding-left:1em; }
 
 /* MESSAGES */
 
-.message { padding:.8em 1em .8em; margin: 1em 0; border:1px solid #94da3a; }
+.message { color:#9aef3f; padding:.8em 1em .8em; margin: 1em 0; border:1px solid #94da3a; }
 
 /* FOOTER */
 
