@@ -158,15 +158,7 @@ def delGuestCallback(request):
 @login_required
 def getEmailForm(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
-    message = """You are invited to come at the %s'th mathchday starting at %s wich
-will take place at %s fotball arena.
-    """ % (md.id, md.start_date.strftime('%H:%M - %a, %d %b %Y'), md.location)
-    return HttpResponse("""
-        <form method="POST" action="%s">
-            <textarea rows=5 cols=35 name="message">%s</textarea>
-            <input type="submit" value="Send Email!"/>
-        </form>
-    """ % (reverse('sch_sendemail'), message))
+    return render_to_response('scheduler/send_email_form.html', {'matchday': md})
 
 @login_required
 def sendEmail(request):
@@ -186,7 +178,7 @@ def sendEmail(request):
                 try:
                     if user.get_profile().receive_email:
                         mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                        print(subject, message, fromEmail, user.email)                        
+                        send_email(subject, message, fromEmail, user.email)                        
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
                 request.user.message_set.create(message = 'Email sent to users!')
