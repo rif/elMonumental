@@ -163,7 +163,7 @@ will take place at %s fotball arena.
     """ % (md.id, md.start_date.strftime('%H:%M - %a, %d %b %Y'), md.location)
     return HttpResponse("""
         <form method="POST" action="%s">
-            <input type="textarea" size="25" value="%s"/>
+            <textarea rows=5 cols=35 name="message">%s</textarea>
             <input type="submit" value="Send Email!"/>
         </form>
     """ % (reverse('sch_sendemail'), message))
@@ -178,7 +178,7 @@ def sendEmail(request):
 
         if request.user.is_superuser:
             from django.core.mail import send_mail
-            subject = 'Fotball invite'
+            subject = 'Fotball invitation'
             message = request.POST['message']
             fromEmail = request.user.email
             mass = ""
@@ -186,10 +186,10 @@ def sendEmail(request):
                 try:
                     if user.get_profile().receive_email:
                         mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                        print(subject, message, fromEmail, user.email)
-                        request.user.message_set.create(message = 'Email sent to users!')
+                        print(subject, message, fromEmail, user.email)                        
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+                request.user.message_set.create(message = 'Email sent to users!')
         else:
             request.user.message_set.create(message='You do not have permission to send email to the group!')
         return HttpResponseRedirect(reverse('sch_matchday-list'))
