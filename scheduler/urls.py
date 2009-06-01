@@ -8,8 +8,8 @@ md_info = {
 
 
 urlpatterns = patterns('django.contrib.auth.views',
-    url(r'^accounts/login/$', 'login', {'template_name': 'scheduler/login.html'}, name='sch_login'),
-    url(r'^accounts/logout/$', 'logout', {'template_name': 'scheduler/login.html', 'next_page':'/'}, name='sch_logout'),
+    #url(r'^accounts/login/$', 'login', {'template_name': 'scheduler/login.html'}, name='sch_login'),
+    #url(r'^accounts/logout/$', 'logout', {'template_name': 'scheduler/login.html', 'next_page':'/'}, name='sch_logout'),
 )
 
 urlpatterns += patterns('django.views.generic.list_detail',
@@ -20,8 +20,8 @@ urlpatterns += patterns('django.views.generic.list_detail',
 urlpatterns += patterns('',
     url(r'^attend/(?P<md_id>\d+)/$', views.attend, name='sch_matchday-attend'),
     url(r'^abandon/(?P<md_id>\d+)/$', views.abandon, name='sch_matchday-abandon'),
-    url(r'^accounts/profile/$', views.profileInfo, name='sch_profile'),
-    url(r'^accounts/signup/$', views.signup, name='sch_signup'),
+    #url(r'^accounts/profile/$', views.profileInfo, name='sch_profile'),
+    #url(r'^accounts/signup/$', views.signup, name='sch_signup'),
     url(r'^profileedit/$', views.profile, name='sch_profile-edit'),
     url(r'^links/$', views.linkQuerry, name='sch_request-ajax'),
     url(r'^addguest/(?P<md_id>\d+)/$', views.addGuest, name='sch_addguest'),
