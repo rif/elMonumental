@@ -106,8 +106,9 @@ def linkQuerry(request):
             href += ' <a onclick="showDelGuest(%s)" href="#">G--</a>' % repr(reverse('sch_delguest', args=[md.id]))
         return HttpResponse(href)
 
-@login_required
 def addGuest(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
     if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect(reverse('sch_matchday-list'))
@@ -129,8 +130,9 @@ def addGuest(request, md_id):
                               {'form': form, 'md_id': md_id},
                               context_instance=RequestContext(request))
 
-@login_required
 def delGuest(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
@@ -178,7 +180,7 @@ def sendEmail(request):
                 try:
                     if user.get_profile().receive_email:
                         mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                        send_email(subject, message, fromEmail, user.email)                        
+                        send_email(subject, message, fromEmail, user.email)
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
                 request.user.message_set.create(message = 'Email sent to users!')
