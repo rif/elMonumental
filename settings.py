@@ -59,6 +59,7 @@ ROOT_URLCONF = 'elMonumental.urls'
 
 TEMPLATE_DIRS = (
     rel('templates'),
+    rel('registration/templates'),
 )
 
 INSTALLED_APPS = (
@@ -67,5 +68,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.humanize',
-    'scheduler',
+    'elMonumental.scheduler',
+    'elMonumental.registration',
 )
