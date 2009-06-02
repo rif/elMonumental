@@ -21,6 +21,7 @@ SITE_ID = 1
 USE_I18N = False
 EMAIL_HOST = 'mail-out.sro.oce.net'
 EMAIL_PORT = '25'
+ACCOUNT_ACTIVATION_DAYS = 7
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = rel('media')
@@ -59,7 +60,6 @@ ROOT_URLCONF = 'elMonumental.urls'
 
 TEMPLATE_DIRS = (
     rel('templates'),
-    rel('registration/templates'),
 )
 
 INSTALLED_APPS = (
