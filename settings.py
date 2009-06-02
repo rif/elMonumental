@@ -32,7 +32,7 @@ MEDIA_ROOT = rel('media')
 MEDIA_URL = '/media/'
 
 LOGOUT_URL = '/'
-
+LOGIN_REDIRECT_URL = '/'
 AUTH_PROFILE_MODULE = 'scheduler.PlayerProfile'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -66,8 +66,10 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.humanize',
     'elMonumental.scheduler',
     'elMonumental.registration',
+    'elMonumental.profiles',
 )

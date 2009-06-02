@@ -19,6 +19,11 @@ class PlayerProfile(models.Model):
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
     shot_power = models.CharField(null=True,blank=True, max_length=3, choices=SHOT_CHOICES)
 
+    def get_absolute_url(self):
+        return ('profiles_profile_detail', (), { 'username': self.user.username })
+    get_absolute_url = models.permalink(get_absolute_url)
+
+
 class PlayerProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=50)
     last_name = forms.CharField(max_length=50)

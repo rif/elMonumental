@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<table cellspacing="0" class="list">
+    <tr><td>First name:</td><td>{{ profile.user.first_name }}</td></tr>
+    <tr><td>Last name:</td><td>{{ profile.user.last_name }}</td></tr>
+    <tr><td>Email:</td><td>{{ profile.user.email }}</td></tr>
+    <tr><td>Receive email:</td><td>{{ profile.receive_email|yesno }}</td></tr>
+    <tr><td>Alias name:</td><td>{{ profile.alias_name }}</td></tr>
+    <tr><td>Speed:</td><td>{{ profile.get_speed_display }}</td></tr>
+    <tr><td>Stamina:</td><td>{{ profile.get_stamina_display }}</td></tr>
+    <tr><td>Ball controll:</td><td>{{ profile.get_ball_controll_display }}</td></tr>
+    <tr><td>Shot power:</td><td>{{ profile.get_shot_power_display }}</td></tr>
+</table>
+
+<div>
+  <a href="{% url profiles_edit_profile %}">Edit</a> <a href="/">Home</a>
+</div>
+{% endblock %}

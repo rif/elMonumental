@@ -12,7 +12,7 @@
 <body>
     <div id="container">
         {% if user.is_authenticated %}
-        <p class="right">Welcome, <a href="/accounts/profile/">{{ user.username }}</a>.  <a href="{% url auth_logout %}">log out</a></p>
+        <p class="right">Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.  <a href="{% url auth_logout %}">log out</a></p>
         {% else %}
         <p class="right">Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
         {% endif %}
