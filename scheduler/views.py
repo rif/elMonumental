@@ -40,45 +40,6 @@ def abandon(request, md_id):
 
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-def profileInfo(request):
-    return render_to_response('scheduler/user_detail.html',
-                              context_instance=RequestContext(request))
-
-def profile(request):
-    #UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
-    if request.method == 'POST': # If the form has been submitted...
-        user = request.user
-        profile = user.get_profile()
-
-        form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.email = form.cleaned_data['email']
-            user.save()
-            form.save()
-            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
-    else:
-        try:
-            pp = request.user.get_profile()
-        except PlayerProfile.DoesNotExist:
-            pp = PlayerProfile(user = request.user)
-            pp.save()
-        data = {'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
-                'alias_name': pp.alias_name,
-                'receive_email': pp.receive_email,
-                'speed': pp.speed,
-                'stamina': pp.stamina,
-                'ball_controll': pp.ball_controll,
-                'shot_power': pp.shot_power,
-                }
-        form = PlayerProfileForm(data)
-    return render_to_response('scheduler/profile.html',
-                              {'form': form,},
-                              context_instance=RequestContext(request))
-
 def linkQuerry(request):
     if request.method == 'POST':
         md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
