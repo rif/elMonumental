@@ -1,1 +1,14 @@
-{% extends base %}
+{% extends "base.html" %}
+
+{% block title %}
+registration_form.html | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<form action="{% url registration_register %}" method="POST">
+    <table>
+        {{ form.as_table }}
+    </table>
+    <input type="submit" value="Register"/>
+</form>
+{% endblock %}
