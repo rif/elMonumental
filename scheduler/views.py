@@ -40,20 +40,6 @@ def abandon(request, md_id):
 
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-def signup(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = UserCreationForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            newUser = form.save()
-            user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password1'])
-            login(request, user)
-            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
-    else:
-        form = UserCreationForm() # An unbound form
-    return render_to_response('scheduler/signup.html',
-                              {'form': form,},
-                              context_instance=RequestContext(request))
-
 def profileInfo(request):
     return render_to_response('scheduler/user_detail.html',
                               context_instance=RequestContext(request))

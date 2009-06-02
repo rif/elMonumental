@@ -19,7 +19,7 @@ TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
-EMAIL_HOST = 'mail-out.sro.oce.net'
+EMAIL_HOST = 'smtp.oce.net'
 EMAIL_PORT = '25'
 ACCOUNT_ACTIVATION_DAYS = 7
 # Absolute path to the directory that holds media.
