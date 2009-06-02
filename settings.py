@@ -21,6 +21,7 @@ SITE_ID = 1
 USE_I18N = False
 EMAIL_HOST = 'mail-out.sro.oce.net'
 EMAIL_PORT = '25'
+ACCOUNT_ACTIVATION_DAYS = 7
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = rel('media')
@@ -67,5 +68,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.admin',
     'django.contrib.humanize',
-    'scheduler',
+    'elMonumental.scheduler',
+    'elMonumental.registration',
 )
