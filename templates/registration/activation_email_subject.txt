@@ -1,1 +1,1 @@
-[elMonumental] Activation email
+{% load i18n %}{% trans "Account activation on" %} {{ site.name }}
