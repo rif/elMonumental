@@ -1,5 +1,5 @@
 from settings import *
 
 DEBUG = TEMPLATE_DEBUG = False
-DATABASE_NAME = 'production.sqlite'
+DATABASE_NAME = rel('production.sqlite')
 
