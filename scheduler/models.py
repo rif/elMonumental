@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from django import forms
+
 
 SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
 STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
@@ -24,19 +24,6 @@ class PlayerProfile(models.Model):
     get_absolute_url = models.permalink(get_absolute_url)
 
 
-class PlayerProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    class Meta:
-        model = PlayerProfile
-        fields = ['first_name', 'last_name', 'email', 'alias_name', 'receive_email', 'speed', 'stamina', 'ball_controll', 'shot_power']
-
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
-
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
     first_name = models.CharField(max_length=50)
@@ -44,11 +31,6 @@ class GuestPlayer(models.Model):
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
-
-class GuestPlayerForm(forms.ModelForm):
-    class Meta:
-        model = GuestPlayer
-        exclude = ('friend_user',)
 
 
 class MatchDay(models.Model):
