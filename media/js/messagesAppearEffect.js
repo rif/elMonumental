@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $("li.message").each(function () {
-        $(this).fadeOut(16000);
+        $(this).fadeOut(13000);
     });
 });
 
@@ -18,6 +18,15 @@ function showDelGuest(link) {
             });
             $(this).replaceWith('Deleted');
             e.preventDefault();
+        });
+    });
+}
+function showEmailForm(md_id) {
+    $.get("/getemailform/" + md_id + "/", function(responseData){
+        $("div#email_form").html(responseData);
+        $("a#send_email").fadeOut("slow");
+        $("div#email_form").fadeIn(3000, function () {
+            $("form").fadeIn(100);
         });
     });
 }

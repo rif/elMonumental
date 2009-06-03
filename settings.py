@@ -19,8 +19,11 @@ TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
-EMAIL_HOST = 'mail-out.sro.oce.net'
+EMAIL_HOST = 'smtp.oce.net'
 EMAIL_PORT = '25'
+DEFAULT_FROM_EMAIL = 'admin@elMonumental'
+EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
+ACCOUNT_ACTIVATION_DAYS = 7
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = rel('media')
@@ -31,7 +34,7 @@ MEDIA_ROOT = rel('media')
 MEDIA_URL = '/media/'
 
 LOGOUT_URL = '/'
-
+LOGIN_REDIRECT_URL = '/'
 AUTH_PROFILE_MODULE = 'scheduler.PlayerProfile'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -65,7 +68,10 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.humanize',
-    'scheduler',
+    'elMonumental.scheduler',
+    'elMonumental.registration',
+    'elMonumental.profiles',
 )

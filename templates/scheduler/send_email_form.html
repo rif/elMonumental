@@ -1,0 +1,14 @@
+{% load humanize %}
+<form method="POST" action="{% url sch_sendemail matchday.id %}">
+
+  <h4>Subject:</h4>
+  <input type="text" name="subject" value="Football invitation"/>  
+  <h4>Body:</h4>
+  <textarea rows="5" cols="30" name="message">
+You are invited to come at the {{ matchday.id|ordinal }} mathch day starting at 
+{{ matchday.start_date|time:"H:i" }} - {{ matchday.start_date|date:"D, d M Y"|naturalday }} 
+wich will take place at {{ matchday.location }} arena.
+Click at http://elMonumetal.sro.oce.net/ to attend.
+  </textarea>    
+  <input type="submit" value="Send Email!"/>
+</form>
