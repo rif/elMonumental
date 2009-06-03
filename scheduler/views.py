@@ -109,26 +109,26 @@ def getEmailForm(request, md_id):
     return render_to_response('scheduler/send_email_form.html', {'matchday': md})
 
 @login_required
-def sendEmail(request):
+def sendEmail(request, md_id):
     if request.method == 'POST':
-        md = get_object_or_404(MatchDay, pk="2")
+        md = get_object_or_404(MatchDay, pk=md_id)
 
         if not __isMatchdayInFuture(request, md):
             return HttpResponseRedirect(reverse('sch_matchday-list'))
 
         if request.user.is_superuser:
             from django.core.mail import send_mail
-            subject = 'Fotball invitation'
+            subject = request.POST['subject']
             message = request.POST['message']
             fromEmail = request.user.email
-            mass = ""
+            toList = []
             for user in User.objects.all():
                 try:
                     if user.get_profile().receive_email:
-                        mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                        send_email(subject, message, fromEmail, user.email)
+                        toList.append(user.email)                        
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+            send_mail(subject, message, fromEmail, toList)
             request.user.message_set.create(message = 'Email sent to users!')
         else:
             request.user.message_set.create(message='You do not have permission to send email to the group!')

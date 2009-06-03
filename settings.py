@@ -21,6 +21,7 @@ SITE_ID = 1
 USE_I18N = False
 EMAIL_HOST = 'smtp.oce.net'
 EMAIL_PORT = '25'
+DEFAULT_FROM_EMAIL = "admin@elMonumental"
 ACCOUNT_ACTIVATION_DAYS = 7
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
