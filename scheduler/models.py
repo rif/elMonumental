@@ -23,6 +23,9 @@ class PlayerProfile(models.Model):
         return ('profiles_profile_detail', (), { 'username': self.user.username })
     get_absolute_url = models.permalink(get_absolute_url)
 
+    def __unicode__(self):
+        return self.user.username + "'s profile"
+
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
@@ -52,8 +55,11 @@ class MatchDay(models.Model):
 
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']
-    if kwargs['created'] and newUser.get_profile is None:
-        pp = PlayerProfile(user = newUser)
-        pp.save()
+    if kwargs['created']:
+        try:
+            newUser.get_profile()
+        except:
+            pp = PlayerProfile(user = newUser)
+            pp.save()
 
 post_save.connect(user_profile_handler, sender=User)
