@@ -1,6 +1,7 @@
 from django.conf.urls.defaults import *
 from scheduler import views
 from models import MatchDay
+from forms import PlayerRegistrationForm
 
 md_info = {
     'queryset': MatchDay.objects.all(),
@@ -9,6 +10,11 @@ md_info = {
 urlpatterns = patterns('django.views.generic.list_detail',
     url(r'^$', 'object_list', md_info, name='sch_matchday-list'),
     url(r'^matchday/(?P<object_id>\d+)/$', 'object_detail', md_info, name='sch_matchday-detail'),
+)
+
+# override forms from registration
+urlpatterns += patterns('',
+    url(r'^accounts/register/$', 'registration.views.register', {'form_class' : PlayerRegistrationForm}, name='registration_register'),
 )
 
 urlpatterns += patterns('',

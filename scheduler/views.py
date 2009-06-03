@@ -1,13 +1,12 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from models import MatchDay, PlayerProfileForm, PlayerProfile, GuestPlayerForm
-#from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from models import MatchDay
+from forms import GuestPlayerForm
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -112,7 +111,7 @@ def getEmailForm(request, md_id):
 @login_required
 def sendEmail(request):
     if request.method == 'POST':
-        md = get_object_or_404(MatchDay, pk="1")
+        md = get_object_or_404(MatchDay, pk="2")
 
         if not __isMatchdayInFuture(request, md):
             return HttpResponseRedirect(reverse('sch_matchday-list'))
@@ -130,7 +129,7 @@ def sendEmail(request):
                         send_email(subject, message, fromEmail, user.email)
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
-                request.user.message_set.create(message = 'Email sent to users!')
+            request.user.message_set.create(message = 'Email sent to users!')
         else:
             request.user.message_set.create(message='You do not have permission to send email to the group!')
         return HttpResponseRedirect(reverse('sch_matchday-list'))
