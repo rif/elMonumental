@@ -1,13 +1,12 @@
 from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
-from models import MatchDay, PlayerProfileForm, PlayerProfile, GuestPlayerForm
-#from django.forms.models import inlineformset_factory
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from models import MatchDay
+from forms import GuestPlayerForm
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -40,59 +39,6 @@ def abandon(request, md_id):
 
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-def signup(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = UserCreationForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            newUser = form.save()
-            user = authenticate(username = form.cleaned_data['username'], password = form.cleaned_data['password1'])
-            login(request, user)
-            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
-    else:
-        form = UserCreationForm() # An unbound form
-    return render_to_response('scheduler/signup.html',
-                              {'form': form,},
-                              context_instance=RequestContext(request))
-
-def profileInfo(request):
-    return render_to_response('scheduler/user_detail.html',
-                              context_instance=RequestContext(request))
-
-def profile(request):
-    #UserInlineFormSet = inlineformset_factory(User, PlayerProfile)
-    if request.method == 'POST': # If the form has been submitted...
-        user = request.user
-        profile = user.get_profile()
-
-        form = PlayerProfileForm(request.POST, instance=profile) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            user.first_name = form.cleaned_data['first_name']
-            user.last_name = form.cleaned_data['last_name']
-            user.email = form.cleaned_data['email']
-            user.save()
-            form.save()
-            return HttpResponseRedirect(reverse('sch_profile')) # Redirect after POST
-    else:
-        try:
-            pp = request.user.get_profile()
-        except PlayerProfile.DoesNotExist:
-            pp = PlayerProfile(user = request.user)
-            pp.save()
-        data = {'first_name': request.user.first_name,
-                'last_name': request.user.last_name,
-                'email': request.user.email,
-                'alias_name': pp.alias_name,
-                'receive_email': pp.receive_email,
-                'speed': pp.speed,
-                'stamina': pp.stamina,
-                'ball_controll': pp.ball_controll,
-                'shot_power': pp.shot_power,
-                }
-        form = PlayerProfileForm(data)
-    return render_to_response('scheduler/profile.html',
-                              {'form': form,},
-                              context_instance=RequestContext(request))
-
 def linkQuerry(request):
     if request.method == 'POST':
         md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
@@ -106,8 +52,9 @@ def linkQuerry(request):
             href += ' <a onclick="showDelGuest(%s)" href="#">G--</a>' % repr(reverse('sch_delguest', args=[md.id]))
         return HttpResponse(href)
 
-@login_required
 def addGuest(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
     if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect(reverse('sch_matchday-list'))
@@ -129,8 +76,9 @@ def addGuest(request, md_id):
                               {'form': form, 'md_id': md_id},
                               context_instance=RequestContext(request))
 
-@login_required
 def delGuest(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
@@ -156,26 +104,32 @@ def delGuestCallback(request):
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
-def sendEmail(request, md_id):
+def getEmailForm(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
+    return render_to_response('scheduler/send_email_form.html', {'matchday': md})
 
-    if not __isMatchdayInFuture(request, md):
+@login_required
+def sendEmail(request, md_id):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk=md_id)
+
+        if not __isMatchdayInFuture(request, md):
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+        if request.user.is_superuser:
+            from django.core.mail import send_mail
+            subject = request.POST['subject']
+            message = request.POST['message']
+            fromEmail = request.user.email
+            toList = []
+            for user in User.objects.all():
+                try:
+                    if user.get_profile().receive_email:
+                        toList.append(user.email)                        
+                except:
+                    request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+            send_mail(subject, message, fromEmail, toList)
+            request.user.message_set.create(message = 'Email sent to users!')
+        else:
+            request.user.message_set.create(message='You do not have permission to send email to the group!')
         return HttpResponseRedirect(reverse('sch_matchday-list'))
-
-    if request.user.is_superuser:
-        from django.core.mail import send_mail
-        subject = 'Fotball invite'
-        message = 'Connect to http://elMonumental.sro.oce.net for matchday #%s.' % md_id
-        fromEmail = request.user.email
-        mass = ""
-        for user in User.objects.all():
-            try:
-                if user.get_profile().receive_email:
-                    mass += "(%s %s %s %s)" % (subject, message, fromEmail, user.email)
-                    send_mail(subject, message, fromEmail, user.email)
-                    request.user.message_set.create(message = 'Email sent to users!')
-            except:
-                request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
-    else:
-        request.user.message_set.create(message='You do not have permission to send email to the group!')
-    return HttpResponseRedirect(reverse('sch_matchday-list'))

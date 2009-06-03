@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
-from django import forms
+
 
 SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
 STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
@@ -19,18 +19,13 @@ class PlayerProfile(models.Model):
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
     shot_power = models.CharField(null=True,blank=True, max_length=3, choices=SHOT_CHOICES)
 
-class PlayerProfileForm(forms.ModelForm):
-    first_name = forms.CharField(max_length=50)
-    last_name = forms.CharField(max_length=50)
-    email = forms.EmailField()
-    class Meta:
-        model = PlayerProfile
-        fields = ['first_name', 'last_name', 'email', 'alias_name', 'receive_email', 'speed', 'stamina', 'ball_controll', 'shot_power']
+    def get_absolute_url(self):
+        return ('profiles_profile_detail', (), { 'username': self.user.username })
+    get_absolute_url = models.permalink(get_absolute_url)
 
-class UserForm(forms.ModelForm):
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'email']
+    def __unicode__(self):
+        return self.user.username + "'s profile"
+
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
@@ -39,11 +34,6 @@ class GuestPlayer(models.Model):
 
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
-
-class GuestPlayerForm(forms.ModelForm):
-    class Meta:
-        model = GuestPlayer
-        exclude = ('friend_user',)
 
 
 class MatchDay(models.Model):
@@ -65,8 +55,11 @@ class MatchDay(models.Model):
 
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']
-    if kwargs['created'] and newUser.get_profile is None:
-        pp = PlayerProfile(user = newUser)
-        pp.save()
+    if kwargs['created']:
+        try:
+            newUser.get_profile()
+        except:
+            pp = PlayerProfile(user = newUser)
+            pp.save()
 
 post_save.connect(user_profile_handler, sender=User)

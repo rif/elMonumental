@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% block title %}View All Users{% endblock %}
+{% block content %}
+<h2>Users</h2>
+<table>
+    <tr>
+        <th>#</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Email</th>
+        <th>Speed</th>
+        <th>Stamina</th>
+        <th>BallControl</th>
+        <th>ShotPower</th>
+    </tr>
+    {% for profile in object_list %}
+    <tr>
+        <td>{{ profile.id }}</td>
+        <td>{{ profile.user.first_name }}</td>
+        <td>{{ profile.user.last_name }}</td>
+        <td>{{ profile.user.email }}</td>
+        <td>{{ profile.get_speed_display }}</td>
+        <td>{{ profile.get_stamina_display }}</td>
+        <td>{{ profile.get_ball_controll_display }}</td>
+        <td>{{ profile.get_shot_power_display }}</td>
+        <td>
+            <a href="{% url profiles_profile_detail profile.user%}">View</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<a href="/">Home</a>
+{% endblock %}
