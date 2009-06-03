@@ -6,14 +6,12 @@ def rel(*x):
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
+MANAGERS = ADMINS = (
     ('Radu Ioan Fericean', 'radu.fericean@oce.com'),
 )
 
-MANAGERS = ADMINS
-
 DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = 'database.sqlite'
+DATABASE_NAME = rel('database.sqlite')
 
 TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
