@@ -1,4 +1,4 @@
-from settings import *
+from settings_development import *
 
 DEBUG = TEMPLATE_DEBUG = False
 DATABASE_ENGINE = 'mysql'
