@@ -54,6 +54,7 @@ class MatchDay(models.Model):
 
     def  isFuture(self):
         return datetime.today() < self.start_date
+    isFuture.short_description = 'Is in the future?'
 
     class Meta:
         ordering = ["-start_date"]
