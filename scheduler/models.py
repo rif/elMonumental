@@ -25,7 +25,9 @@ class PlayerProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username + "'s profile"
-
+    
+    def isFilled(self):
+        return self.alias_name == ''
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
