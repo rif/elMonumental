@@ -37,6 +37,9 @@ class GuestPlayer(models.Model):
     def get_full_name(self):
         return self.first_name + ' ' + self.last_name
 
+    def __unicode__(self):
+        return self.get_full_name()
+
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
