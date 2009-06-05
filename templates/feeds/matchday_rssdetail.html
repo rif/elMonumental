@@ -26,13 +26,5 @@ Guest Stars:
     </ul>
 </li>
 </ul>
-<div>
-    {% if user.is_superuser and object.isFuture %}
-        <div type="hidden" id="email_form">
-
-        </div>
-        <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
-    {% endif %}
-</div>
 <a href="/">Home</a>
 {% endblock %}

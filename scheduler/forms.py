@@ -1,8 +1,7 @@
 from django import forms
-from django.utils.translation import ugettext_lazy as _
 from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
-from models import PlayerProfile, GuestPlayer
+from models import GuestPlayer
 
 attrs_dict = { 'class': 'required' }
 
