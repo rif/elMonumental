@@ -1,1 +1,25 @@
-{{ obj.description }}
+{% load humanize %}
+<h2>Information</h2>
+<ul>
+{% if not obj.isFuture %}
+    <li>Date: Opened {{ obj.start_date|timesince }} ago</li>
+{% endif %}
+<li>Location: {{ obj.location }}</li>
+<li>Date: {{ obj.start_date|date:"D d M Y"|naturalday }} {{ obj.start_date|time:"H:i" }}</li>
+<li>
+Participants:
+    <ul>
+    {% for player in obj.participants.all %}
+        <li>{{ player.first_name}} {{ player.get_profile.alias_name }} {{ player.last_name }}</li>
+    {% endfor %}
+    </ul>
+</li>
+<li>
+Guest Stars:
+    <ul>
+        {% for guest in obj.guest_stars.all %}
+            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_full_name }}</li>
+        {% endfor %}
+    </ul>
+</li>
+</ul>

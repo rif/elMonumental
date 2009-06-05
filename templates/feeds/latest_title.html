@@ -1,1 +1,3 @@
-{{ obj.title }}
+{% load humanize %}
+
+Matchday {{ obj.start_date|date:"D d M Y"|naturalday }}

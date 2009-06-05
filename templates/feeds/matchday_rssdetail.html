@@ -1,4 +1,7 @@
+{% extends 'base.html' %}
 {% load humanize %}
+<title>{% block title %}Matchday Information{% endblock %}</title>
+{% block content %}
 <h2>Matchday Information</h2>
 <ul>
 {% if not object.isFuture %}
@@ -31,3 +34,4 @@ Guest Stars:
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
     {% endif %}
 </div>
+{% endblock %}
