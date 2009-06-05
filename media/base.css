@@ -31,42 +31,12 @@ ul li { list-style-type:square; margin-bottom:.4em; }
 ul ul { padding-left:1.2em; }
 ul ul ul { padding-left:1em; }
 
-/* MESSAGES */
+table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: #487858; border: 1px #234f32 dotted;}
 
 .message { color:#9aef3f; }
-
-
-/* MISC */
-
 .small { font-size:90%; }
-h3 .small { font-size:80%; }
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin: 1em 0;
-    background: #487858;
-    border: 1px #234f32 dotted;
-}
-
-.list tr:hover {
-    background: #234f32;
-}
-
-.right {
-    text-align: right;
-}
-
-.pagination {
-    color: #9aef3f;
-}
-
-#placeholder {
-  margin: 0px 10px 10px 10px;
-  padding: 1em;
-  position: relative;
-  float: right;
-  width: 23%;
-  font-size: 88%;
-  border: 1px #234f32 dotted;
-}
+.list tr:hover {background: #234f32; }
+.right {text-align: right;}
+.pagination {color: #9aef3f;}
+#placeholder {margin: 0px 10px 10px 10px; padding: 1em; position: relative; float: right; width: 23%; font-size: 88%; border: 1px #234f32 dotted;}
+#messages_block {position:absolute;}

@@ -2,7 +2,6 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from models import MatchDay
@@ -103,10 +102,6 @@ def delGuestCallback(request):
             return HttpResponse('')
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-@login_required
-def getEmailForm(request, md_id):
-    md = get_object_or_404(MatchDay, pk=md_id)
-    return render_to_response('scheduler/send_email_form.html', {'matchday': md})
 
 @login_required
 def sendEmail(request, md_id):
