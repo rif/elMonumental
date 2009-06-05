@@ -11,22 +11,25 @@
 
 <body>
     <div id="header">
+        {% if user.is_authenticated %}
+        <p class="right">
+      {% if user.is_superuser %}
+      Welcome, {{ user.username }}.
+      {% else %}
+      Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
+          {% endif %}
+        <a href="{% url auth_logout %}">log out</a></p>
+        {% else %}
+        <p class="right">Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
+        {% endif %}
+        <p class="right">
+            <a href="/feeds/latest/">subscribe<img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental feed"/></a>
+        </p>
       {% if user.is_authenticated and not user.is_superuser and not user.get_profile.alias_name %}
       Please uptade your profile <a href="{% url profiles_profile_detail user %}">here</a>.
       {% endif %}
     </div>
     <div id="container">
-        {% if user.is_authenticated %}	
-        <p class="right">
-	  {% if user.is_superuser %}
-	  Welcome, {{ user.username }}.
-	  {% else %}
-	  Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
-          {% endif %}
-	  <a href="{% url auth_logout %}">log out</a></p>
-        {% else %}
-        <p class="right">Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
-        {% endif %}
         {% if messages %}
         <ul>
           {% for message in messages %}
@@ -36,7 +39,7 @@
         {% endif %}
         {% block content %}{% endblock %}
     </div>
-    <div id="footer"></div>
+    <div id="footer">{% block footer %}{% endblock %}</div>
 </body>
 </html>
 
