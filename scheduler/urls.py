@@ -2,16 +2,23 @@ from django.conf.urls.defaults import *
 from scheduler import views
 from models import MatchDay
 from forms import PlayerRegistrationForm
+from scheduler.feeds import LatestMatchDays
+
+feeds = {
+    'latest': LatestMatchDays,
+}
 
 md_info = {
     'queryset': MatchDay.objects.all(),
 }
 
-paginate_info = md_info
-paginate_info['paginate_by'] = 10
+paginate_info = {
+    'queryset': MatchDay.objects.all(),
+    'paginate_by': 10,
+}
 
 urlpatterns = patterns('django.views.generic.list_detail',
-    url(r'^$', 'object_list', md_info, name='sch_matchday-list'),
+    url(r'^$', 'object_list', paginate_info, name='sch_matchday-list'),
     url(r'^matchday/(?P<object_id>\d+)/$', 'object_detail', md_info, name='sch_matchday-detail'),
 )
 
@@ -29,4 +36,5 @@ urlpatterns += patterns('',
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_delGuest-ajax'),
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),
     url(r'^getemailform/(?P<md_id>\d+)/$', views.getEmailForm, name='sch_getEmailForm-ajax'),
+    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
 )
