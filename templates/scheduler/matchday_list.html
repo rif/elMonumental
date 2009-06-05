@@ -44,6 +44,7 @@
         {% endif %}
     </span>
 </div>
-<a class="right" href="/profiles/">View all users</a>
-<a class="right" img="{{ MEDIA_URL }}images/rss.png" href="/feeds/latest/">subscribe to Matchdays feed</a>
+{% endblock %}
+{% block footer%}
+<a href="/profiles/">View all users</a>
 {% endblock %}
