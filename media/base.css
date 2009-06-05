@@ -39,4 +39,4 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
 #placeholder {margin: 0px 10px 10px 10px; padding: 1em; position: relative; float: right; width: 23%; font-size: 88%; border: 1px #234f32 dotted;}
-#messages_block {position:absolute;}
+#messages_block {position:relative;}
