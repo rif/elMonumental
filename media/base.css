@@ -45,6 +45,8 @@ ul ul ul { padding-left:1em; }
 h3 .small { font-size:80%; }
 
 table {
+    border-collapse: collapse;
+    border-spacing: 0;
     margin: 1em 0;
     background: #487858;
     border: 1px #234f32 dotted;
@@ -52,7 +54,7 @@ table {
 
 
 .list tr:hover {
-    background: #9aef3f;
+    background: #234f32;
 }
 
 .right {
