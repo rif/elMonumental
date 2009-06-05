@@ -3,15 +3,12 @@
 body { margin:0; padding:0; background:#092e20; color:white; }
 body, th, td { font:12px/1.4em Verdana,sans-serif; }
 #container { position:relative; min-width:55em; max-width:100em; margin-left:22px; margin-right:24px; }
-#homepage #container { max-width:100em; }
 
 /* LINKS */
 
 a {text-decoration: none;}
 a img {border: none;}
 a:link, a:visited { color:#ffc757; }
-#content-main a:link, #content-main a:visited { color:#ab5603; text-decoration:underline; }
-#content-secondary a:link, #content-secondary a:visited { color:#ffc757; text-decoration:none; }
 a:hover { color:#ffe761; }
 
 
@@ -20,16 +17,10 @@ a:hover { color:#ffe761; }
 h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
 h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#9aef3f; line-height:1.1em; }
 h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#9aef3f; }
-#homepage h2 { font-size:140%; }
 h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
 h4 { font-size:100%; font-weight:bold; margin-bottom:-3px; margin-top:1.2em; text-transform:uppercase; letter-spacing:1px; }
 h4 pre, h4 tt, h4 .literal { text-transform:none; }
 h5 { font-size:1em; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
-p, ul, dl { margin-top:.6em; margin-bottom:.8em; }
-hr { color:#ccc; background-color:#ccc; height:1px; border:0; }
-h2.deck { margin-bottom:.6em; color:#487858; }
-ins { text-decoration: none; }
-ins a { text-decoration: none; }
 
 /* LISTS */
 
@@ -54,27 +45,23 @@ ul ul ul { padding-left:1em; }
 h3 .small { font-size:80%; }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
     margin: 1em 0;
     background: #487858;
+    border: 1px #234f32 dotted;
 }
 
-caption, th, td {
-    text-align: left;
-    font-weight: normal;
-    border: 1px solid #487858;
-    color: white;
-}
 
 .list tr:hover {
-    background: #487858;
+    background: #9aef3f;
 }
 
 .right {
-text-align: right;
+    text-align: right;
 }
 
+.pagination {
+    color: #9aef3f;
+}
 
 #placeholder {
   margin: 0px 10px 10px 10px;

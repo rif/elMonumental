@@ -7,6 +7,9 @@ md_info = {
     'queryset': MatchDay.objects.all(),
 }
 
+paginate_info = md_info
+paginate_info['paginate_by'] = 10
+
 urlpatterns = patterns('django.views.generic.list_detail',
     url(r'^$', 'object_list', md_info, name='sch_matchday-list'),
     url(r'^matchday/(?P<object_id>\d+)/$', 'object_detail', md_info, name='sch_matchday-detail'),
