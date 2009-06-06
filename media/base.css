@@ -4,8 +4,32 @@ body { margin:0; padding:0; background:#092e20; color:white; }
 body, th, td { font:12px/1.4em Verdana,sans-serif; }
 #header {margin-left:22px; margin-right:24px;}
 #container { position:relative; min-width:55em; max-width:100em; margin-left:22px; margin-right:24px; }
-#footer { clear:both; color:#487858; padding:10px 20px; font-size:90%; }
+#container1 {
+  width: 80%;
+  margin: 0 auto 0 auto;
+  border: 1px solid #aaa;
+  padding: 1px;
+}
+#footer {
+  color: #487858;
+  font-size:90%;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
 
+#placeholder {
+  border: 1px dotted #234f32;
+  margin: 0.5em;
+  padding: 1em;
+  position: relative;
+  float: right;
+  width: 23%;
+  font-size: 88%;
+}
+#messages_block {position:relative;}
 /* LINKS */
 
 a {text-decoration: none;}
@@ -31,12 +55,10 @@ ul li { list-style-type:square; margin-bottom:.4em; }
 ul ul { padding-left:1.2em; }
 ul ul ul { padding-left:1em; }
 
-table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: #487858; border: 1px #234f32 dotted;}
+table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: #487858; border: 1px #234f32 dotted;padding:1px;}
 
 .message { color:#9aef3f; }
 .small { font-size:90%; }
 .list tr:hover {background: #234f32; }
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
-#placeholder {margin: 0px 10px 10px 10px; padding: 1em; position: relative; float: right; width: 23%; font-size: 88%; border: 1px #234f32 dotted;}
-#messages_block {position:relative;}
