@@ -30,10 +30,10 @@ class PlayerProfile(models.Model):
         return self.alias_name == ''
 
     def get_full_name(self):
-        if user.first_name or user.last_name or alias_name:
-            return user.first_name + ' ' + alias_name  + ' ' + user.last_name
+        if self.user.first_name or self.user.last_name or self.alias_name:
+            return self.user.first_name + ' ' + self.alias_name  + ' ' + self.user.last_name
         else:
-            return user.username
+            return self.user.username
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
