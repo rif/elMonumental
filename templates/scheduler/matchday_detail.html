@@ -10,7 +10,7 @@
 Participants:
     <ul>
     {% for player in object.participants.all %}
-        <li>{{ player.first_name}} {{ player.get_profile.alias_name }} {{ player.last_name }}</li>
+        <li>{{ player.get_profile.get_full_name }}</li>
     {% endfor %}
     </ul>
 </li>
@@ -18,7 +18,7 @@ Participants:
 Guest Stars:
     <ul>
         {% for guest in object.guest_stars.all %}
-            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_full_name }}</li>
+            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
         {% endfor %}
     </ul>
 </li>

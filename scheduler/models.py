@@ -29,6 +29,12 @@ class PlayerProfile(models.Model):
     def isFilled(self):
         return self.alias_name == ''
 
+    def get_full_name(self):
+        if user.first_name or user.last_name or alias_name:
+            return user.first_name + ' ' + alias_name  + ' ' + user.last_name
+        else:
+            return user.username
+
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
     first_name = models.CharField(max_length=50)
