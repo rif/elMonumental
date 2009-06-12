@@ -26,11 +26,11 @@ class PlayerProfile(models.Model):
     def __unicode__(self):
         return self.user.username + "'s profile"
     
-    def isFilled(self):
-        return self.alias_name == ''
+    def is_filled(self):
+        return self.user.first_name != '' or self.user.last_name != '' or self.alias_name != ''
 
     def get_full_name(self):
-        if self.user.first_name or self.user.last_name or self.alias_name:
+        if self.is_filled():
             return self.user.first_name + ' ' + self.alias_name  + ' ' + self.user.last_name
         else:
             return self.user.username
@@ -58,7 +58,7 @@ class MatchDay(models.Model):
         + ' ' + self.location\
         + ' ' + self.start_date.strftime('%H:%M')
 
-    def  isFuture(self):
+    def isFuture(self):
         return datetime.today() < self.start_date
     isFuture.short_description = 'Is in the future?'
 
