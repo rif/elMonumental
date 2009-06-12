@@ -1,6 +1,8 @@
 from datetime import datetime
+from django.core import mail
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.test.client import Client
 from scheduler.models import GuestPlayer, PlayerProfile, MatchDay
 
 class ProfileTest(TestCase):
@@ -50,6 +52,15 @@ class MatchDayTest(TestCase):
         md = MatchDay(start_date = today)
         self.assertFalse(md.isFuture())
 
+class SimpleTest(TestCase):
+    def test_index(self):
+        response = self.client.get('/')
+        self.failUnlessEqual(response.status_code, 200)
+    
+    def test_send_mail(self):
+        self.client.post('/sendmail/md_id=2')
+        self.assertEquals(len(mail.outbox), 1)
+        self.assertEquals(mail.outbox[0].subject, 'Subject here')
 
 __test__ = {"doctest": """
 Another way to test that 1 + 1 is equal to 2.
