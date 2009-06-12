@@ -58,7 +58,8 @@ class SimpleTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
     
     def test_send_mail(self):
-        self.client.post('/sendmail/md_id=2')
+        self.client.login('admin', '')
+        self.client.post('/sendmail/2/')
         self.assertEquals(len(mail.outbox), 1)
         self.assertEquals(mail.outbox[0].subject, 'Subject here')
 
