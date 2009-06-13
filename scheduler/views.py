@@ -4,8 +4,8 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from models import MatchDay
-from forms import GuestPlayerForm
+from scheduler.models import MatchDay
+from scheduler.forms import GuestPlayerForm
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -107,10 +107,8 @@ def delGuestCallback(request):
 def sendEmail(request, md_id):
     if request.method == 'POST':
         md = get_object_or_404(MatchDay, pk=md_id)
-
         if not __isMatchdayInFuture(request, md):
             return HttpResponseRedirect(reverse('sch_matchday-list'))
-
         if request.user.is_superuser:
             from django.core.mail import send_mail
             subject = request.POST['subject']
@@ -120,7 +118,7 @@ def sendEmail(request, md_id):
             for user in User.objects.all():
                 try:
                     if user.get_profile().receive_email:
-                        toList.append(user.email)                        
+                        toList.append(user.email)
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
             send_mail(subject, message, fromEmail, toList)
