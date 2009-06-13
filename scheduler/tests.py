@@ -75,10 +75,8 @@ class SimpleTest(TestCase):
 
     def test_send_mail(self):
         logged_in = self.client.login(username='admin', password='ps871')
-        #logged_in= self.client.post('/login/', {'username': 'admin', 'password': 'ps871'})
         self.assertTrue(logged_in)
         response = self.client.post('/sendemail/1/', {'subject': 'test', 'message': 'test'})
-        print response
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(len(mail.outbox), 1)
         self.failUnlessEqual(mail.outbox[0].subject, 'test')
