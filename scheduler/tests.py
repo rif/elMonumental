@@ -3,6 +3,7 @@ from django.core import mail
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
+from django.contrib.auth.models import User
 from scheduler.models import GuestPlayer, PlayerProfile, MatchDay
 
 class ProfileTest(TestCase):
@@ -65,6 +66,9 @@ class MatchDayTest(TestCase):
 
 class SimpleTest(TestCase):
     def setUp(self):
+        admin = User.objects.create_user('admin', 'admin@admin.ad', 'test')
+        admin.is_superuser=True
+        admin.save()
         future = datetime(2080, 07, 10)
         self.md = MatchDay(start_date=future)
         self.md.save()
@@ -74,7 +78,7 @@ class SimpleTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
 
     def test_send_mail(self):
-        logged_in = self.client.login(username='admin', password='ps871')
+        logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
         response = self.client.post('/sendemail/1/', {'subject': 'test', 'message': 'test'})
         self.failUnlessEqual(response.status_code, 200)
