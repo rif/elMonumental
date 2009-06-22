@@ -18,6 +18,10 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   position: absolute;
   margin: 0;
   padding: 0;
+  width: 100%;
+  position: absolute;
+  bottom: 0 !important;
+  bottom: -1px;
 }
 
 #placeholder {
