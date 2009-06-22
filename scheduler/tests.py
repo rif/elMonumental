@@ -2,7 +2,6 @@ from datetime import datetime
 from django.core import mail
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.test.client import Client
 from django.contrib.auth.models import User
 from scheduler.models import GuestPlayer, PlayerProfile, MatchDay
 
