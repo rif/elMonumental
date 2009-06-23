@@ -12,12 +12,16 @@ Participants:
     <ol>
     {% for player in object.participants.all %}
         <li>{{ player.get_profile.get_full_name }}</li>
+    {% empty %}
+        <p>Sorry, no participants in this list!</p>
     {% endfor %}
     </ol>
 Guest Stars:
     <ol>
         {% for guest in object.guest_stars.all %}
             <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
+        {% empty %}
+            <p>Sorry, no guest stars in this list!</p>
         {% endfor %}
     </ol>
 
