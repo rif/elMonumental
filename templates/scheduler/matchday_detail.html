@@ -6,23 +6,21 @@
 {% endif %}
 <li>Location: {{ object.location }}</li>
 <li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
-<li>
+
+</ul>
 Participants:
-    <ul>
+    <ol>
     {% for player in object.participants.all %}
         <li>{{ player.get_profile.get_full_name }}</li>
     {% endfor %}
-    </ul>
-</li>
-<li>
+    </ol>
 Guest Stars:
-    <ul>
+    <ol>
         {% for guest in object.guest_stars.all %}
             <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
         {% endfor %}
-    </ul>
-</li>
-</ul>
+    </ol>
+
 <div>
     {% if user.is_superuser and object.isFuture %}
         <div type="hidden" id="email_form">
