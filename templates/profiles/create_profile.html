@@ -4,7 +4,7 @@
     <table>
         {{ form.as_table }}
     </table>
-    <input type="submit" value="Save"/><input type="hidden" name="next" value="{% url sch_profile %}" />
+    <input type="submit" value="Save"/><input type="hidden" name="next" value="{% url profiles_profile_detail  user.username %}" />
 </form>
 <div>
     <a href="/">Home</a>
