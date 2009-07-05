@@ -46,7 +46,6 @@ class GuestPlayer(models.Model):
     def __unicode__(self):
         return self.get_full_name()
 
-
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
@@ -64,6 +63,15 @@ class MatchDay(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
+        
+class Team(models.Model):
+    name = models.CharField(max_length=50)
+    matchday = models.ForeignKey(MatchDay)
+    participants = models.ManyToManyField(User, null=True, blank=True)
+    guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
+    
+    def __unicode__(self):
+        return self.name
 
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']

@@ -24,12 +24,23 @@ Guest Stars:
             <p>Sorry, no guest stars in this list!</p>
         {% endfor %}
     </ol>
-
-<div>
-    {% if user.is_superuser and object.isFuture %}
-        <div type="hidden" id="email_form">
-
+<div id="teams">
+    {% for team in object.team_set.all %}    
+        <div id="team">
+            <h4>Team {{ team }}</h4>
+            <ul>
+                {% for player in team.participants.all %}
+                    <li>{{ player }}</li>
+                {% endfor %}
+                {% for player in team.guest_stars.all %}
+                    <li>{{ player }}</li>
+                {% endfor %}
+            </ul>
         </div>
+    {% endfor %}
+</div>
+    {% if user.is_superuser and object.isFuture %}
+        <div type="hidden" id="email_form"></div>
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
     {% endif %}
 </div>

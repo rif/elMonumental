@@ -18,7 +18,6 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   position: absolute;
   margin: 0;
   padding: 0;
-  width: 100%;
   position: absolute;
   bottom: 0 !important;
   bottom: -1px;
@@ -47,7 +46,7 @@ h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:n
 h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#9aef3f; line-height:1.1em; }
 h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#9aef3f; }
 h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
-h4 { font-size:100%; font-weight:bold; margin-bottom:-3px; margin-top:1.2em; text-transform:uppercase; letter-spacing:1px; }
+h4 { font-size:100%; font-weight:bold; margin-bottom:-3px; margin-top:1.2em; text-transform:uppercase; letter-spacing:1px; color:#9aef3f;}
 h4 pre, h4 tt, h4 .literal { text-transform:none; }
 h5 { font-size:1em; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 
@@ -68,3 +67,14 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
 /*.comment {background: #487858}*/
+#team {
+    background: #487858;
+    border: 1px dotted #234f32;
+    float: right;
+    margin-right: 1%;
+    width: 48%;
+    height:100%;
+}
+
+#team ul { padding-left:2em; }
+#team ul li { list-style-type:square; margin-bottom:0px; }
