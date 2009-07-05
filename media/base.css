@@ -67,6 +67,8 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
 /*.comment {background: #487858}*/
+.commentingUser {color:#9aef3f;}
+.commentTime {color:#487858;}
 #team {
     background: #487858;
     border: 1px dotted #234f32;
