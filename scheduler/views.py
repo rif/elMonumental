@@ -126,3 +126,9 @@ def sendEmail(request, md_id):
         else:
             request.user.message_set.create(message='You do not have permission to send email to the group!')
         return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+def comment(request, md_id):
+    md = get_object_or_404(MatchDay, pk=md_id)
+    return render_to_response('scheduler/comment.html',
+                             {'matchday': md}, context_instance=RequestContext(request))
+                             

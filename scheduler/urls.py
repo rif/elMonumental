@@ -31,4 +31,5 @@ urlpatterns += patterns('',
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_delGuest-ajax'),    
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),    
     (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    url(r'^comments/(?P<md_id>\d+)/$', views.comment, name='sch_comments'),
 )
