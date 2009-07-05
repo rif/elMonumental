@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load comments %}
+{% load humanize %}
 {% block title %}View Comments{% endblock %}
 {% block content %}
 {% get_comment_list for matchday as comment_list %}
 {% for comment in comment_list %}
-    <p class="comment">{{ comment }}</p>
+    <p class="comment">{{ comment.submit_date|date:"D d M Y"|naturalday }} {{ comment }}</p>
 {% endfor %}
 
 {% if user.is_authenticated %}
