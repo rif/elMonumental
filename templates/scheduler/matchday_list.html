@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load humanize %}
+{% load comments %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/linkCreator.js"></script>
@@ -16,6 +17,7 @@
         <th>Actions</th>
     </tr>
     {% for matchday in object_list %}
+    {% get_comment_count for matchday as comment_count %}
     <tr>
         <td>{{ matchday.id|ordinal }}</td>
         <td>{{ matchday.start_date|date:"D d M Y"|naturalday }}</td>
@@ -24,6 +26,7 @@
         <td>
             <span class="async" md_id="{{ matchday.id }}">
                 <a class="md-detail-link" href="#">View</a>
+                <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
             </span>
         </td>
     </tr>

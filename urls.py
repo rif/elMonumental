@@ -8,6 +8,7 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
     (r'^accounts/', include('registration.urls')),
     (r'^profiles/', include('profiles.urls')),
+    (r'^comments/', include('django.contrib.comments.urls')),
 )
 # if we're in DEBUG mode, allow django to serve media
 # This is considered inefficient and isn't secure.
