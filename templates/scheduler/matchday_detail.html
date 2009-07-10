@@ -39,8 +39,10 @@ Guest Stars:
         </div>
     {% endfor %}
 </div>
+<div>
     {% if user.is_superuser and object.isFuture %}
         <div type="hidden" id="email_form"></div>
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
+        <a href="{% url sch_matchday-teams object.id %}">Manage teams</a>
     {% endif %}
 </div>

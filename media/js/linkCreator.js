@@ -10,7 +10,8 @@ $(document).ready(function() {
     $("a.md-detail-link").click(function(e){
         $.get("/matchday/" + $(this).parent().attr('md_id') + "/",
             function(responseData){
-                $("div#placeholder").html(responseData);
+                $("div#placeholder").css("display", "none");
+                $("div#placeholder").html(responseData).slideDown("slow");
             });
         e.preventDefault();
     });
