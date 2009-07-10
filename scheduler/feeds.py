@@ -10,4 +10,4 @@ class LatestMatchDays(Feed):
         return MatchDay.objects.order_by('-start_date')[:5]
 
     def item_link(self, item):
-        return '/matchday/rss/' + str(item.id) + '/'
+        return '/matchday/' + str(item.id) + '/rss/'

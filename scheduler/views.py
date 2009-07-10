@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from scheduler.models import MatchDay
+from scheduler.models import MatchDay, GuestPlayer
 from scheduler.forms import GuestPlayerForm
 
 def __isMatchdayInFuture(request, md):
@@ -62,9 +62,16 @@ def addGuest(request, md_id):
         form = GuestPlayerForm(request.POST)
         if form.is_valid():
             gp = form.save(commit=False)
-            gp.friend_user = request.user
-            gp.save()
-            md.guest_stars.add(gp)
+            found = False
+            for guest in GuestPlayer.objects.filter(friend_user__pk =request.user.id):
+                if guest.first_name == gp.first_name and guest.last_name == gp.last_name:
+                    md.guest_stars.add(guest)
+                    found = True
+                    break
+            if not found:
+                gp.friend_user = request.user
+                gp.save()
+                md.guest_stars.add(gp)
             md.save()
             request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
