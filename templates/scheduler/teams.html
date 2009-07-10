@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Create Teams{% endblock %}
+{% block scripts %}
+{% endblock %}
+{% block content %}
+<h2>Matchday Information</h2>
+<ul>
+{% if not object.isFuture %}
+    <li>Date: Opened {{ object.start_date|timesince }} ago</li>
+{% endif %}
+<li>Location: {{ object.location }}</li>
+<li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
+
+</ul>
+Participants:
+    <ol>
+    {% for player in object.participants.all %}
+        <li>{{ player.get_profile.get_full_name }}</li>
+    {% empty %}
+        <p>Sorry, no participants in this list!</p>
+    {% endfor %}
+    </ol>
+Guest Stars:
+    <ol>
+        {% for guest in object.guest_stars.all %}
+            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
+        {% empty %}
+            <p>Sorry, no guest stars in this list!</p>
+        {% endfor %}
+    </ol>
+<div id="teams">
+    {% for team in object.team_set.all %}
+        <div id="team">
+            <h4>Team {{ team }}</h4>
+            <ul>
+                {% for player in team.participants.all %}
+                    <li>{{ player.get_full_name }}</li>
+                {% endfor %}
+                {% for player in team.guest_stars.all %}
+                    <li>{{ player }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
