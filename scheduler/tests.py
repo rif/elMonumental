@@ -80,7 +80,6 @@ class SimpleTest(TestCase):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
         response = self.client.post('/sendemail/1/', {'subject': 'test', 'message': 'test'})
-        self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(len(mail.outbox), 1)
         self.failUnlessEqual(mail.outbox[0].subject, 'test')
 
@@ -93,6 +92,18 @@ class SimpleTest(TestCase):
         response = self.client.get('/feeds/latest/')
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(len(response.content), 768)
+
+class ViewsTest(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user('rif', 'rif@user.ad', 'test')
+        self.user.save()
+        future = datetime(2080, 07, 10)
+        self.md = MatchDay(start_date=future)
+        self.md.save()
+		
+    def test_attend(self):
+        self.client.get('/attend/1/')
+        self.assertTrue(self.user in self.md.participants.iterator())
 
 __test__ = {"doctest": """
 Another way to test that 1 + 1 is equal to 2.
