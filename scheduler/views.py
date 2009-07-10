@@ -104,8 +104,10 @@ def delGuestCallback(request):
 
         if not __isMatchdayInFuture(request, md):
             return HttpResponseRedirect(reverse('sch_matchday-list'))
-
-        gp = md.guest_stars.get(id=request.POST['guest_id'])
+        try:
+            gp = md.guest_stars.get(id=request.POST['guest_id'])
+        except:
+            pass
         if gp != None:
             md.guest_stars.remove(gp)
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
