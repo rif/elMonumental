@@ -5,6 +5,7 @@
     <link type="text/css" href="{{ MEDIA_URL }}js/themes/base/ui.all.css" rel="stylesheet" />
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.draggable.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/ui.sortable.js"></script>
     <script type="text/javascript">
     $(function() {
         $(".draggable").draggable();
@@ -32,14 +33,14 @@ Participants:
 Guest Stars:
     <ol>
         {% for guest in object.guest_stars.all %}
-            <li>{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
+            <li class="draggable">{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
         {% empty %}
             <p>Sorry, no guest stars in this list!</p>
         {% endfor %}
     </ol>
 <div id="teams">
     {% for team in object.team_set.all %}
-        <div id="team">
+        <div id="team" class="draggable">
             <h4>Team {{ team }}</h4>
             <ul>
                 {% for player in team.participants.all %}
