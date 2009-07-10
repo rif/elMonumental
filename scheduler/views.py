@@ -94,6 +94,10 @@ def delGuest(request, md_id):
 def delGuestCallback(request):
     if request.method == 'POST':
         md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
+
+        if not __isMatchdayInFuture(request, md):
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
+
         gp = md.guest_stars.get(id=request.POST['guest_id'])
         if gp != None:
             md.guest_stars.remove(gp)
@@ -131,4 +135,4 @@ def comment(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
     return render_to_response('scheduler/comment.html',
                              {'matchday': md}, context_instance=RequestContext(request))
-                             
+
