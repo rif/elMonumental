@@ -25,7 +25,7 @@ class PlayerProfile(models.Model):
 
     def __unicode__(self):
         return self.user.username + "'s profile"
-    
+
     def is_filled(self):
         return self.user.first_name != '' or self.user.last_name != '' or self.alias_name != ''
 
@@ -44,7 +44,7 @@ class GuestPlayer(models.Model):
         return self.first_name + ' ' + self.last_name
 
     def __unicode__(self):
-        return self.get_full_name()
+        return self.get_full_name() + ' invited by ' + self.friend_user.username
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
@@ -63,13 +63,13 @@ class MatchDay(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
-        
+
 class Team(models.Model):
     name = models.CharField(max_length=50)
     matchday = models.ForeignKey(MatchDay)
     participants = models.ManyToManyField(User, null=True, blank=True)
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
-    
+
     def __unicode__(self):
         return self.name
 
