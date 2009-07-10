@@ -27,7 +27,7 @@
                 <a type="application/rss+xml" href="/feeds/latest/">Subscribe <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental feed"/></a>
             </p>
             {% if user.is_authenticated and not user.is_superuser and not user.get_profile.alias_name %}
-            Please uptade your profile <a href="{% url profiles_profile_detail user %}">here</a>.
+            Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
             {% endif %}
         </div>
         <div id="container">

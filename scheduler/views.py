@@ -34,7 +34,7 @@ def abandon(request, md_id):
         request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
     else:
-        request.user.message_set.create(message='You are not in the matchday #s participant list.' % md.id)
+        request.user.message_set.create(message='You are not in the matchday %s participant list.' % md.id)
 
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
