@@ -9,9 +9,12 @@
     <script type="text/javascript">
     $(function() {
         $(".sortable").sortable({
-            revert: true
+            revert: false
         });
         $(".draggable").draggable({
+            stop: function() {
+                $('span.count').text($('.sortable').children().size());
+            },
             connectToSortable: '.sortable',
             helper: 'clone',
             revert: 'invalid'
@@ -39,17 +42,17 @@ Participants:
     {% endfor %}
     </ul>
 Guest Stars:
-    <ol>
+    <ul>
         {% for guest in object.guest_stars.all %}
             <li class="draggable">{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
         {% empty %}
             <p>Sorry, no guest stars in this list!</p>
         {% endfor %}
-    </ol>
+    </ul>
 <div id="teams">
     {% for team in object.team_set.all %}
         <div id="team">
-            <h4>Team {{ team }}</h4>
+            <h4>Team {{ team }} <span class="count">0</span></h4>
             <ul class="sortable">
                 {% for player in team.participants.all %}
                     <li>{{ player.get_full_name }}</li>
