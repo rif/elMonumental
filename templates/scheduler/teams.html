@@ -6,20 +6,23 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.draggable.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.sortable.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.droppable.js"></script>
     <script type="text/javascript">
     $(function() {
         $(".sortable").sortable({
             revert: false
         });
         $(".draggable").draggable({
-            stop: function() {
-                $('span.count').text($('.sortable').children().size());
-            },
             connectToSortable: '.sortable',
             helper: 'clone',
             revert: 'invalid'
         });
-        $("ul, li").disableSelection();
+        $(".droppable").droppable({
+            drop: function(event, ui) {
+                $('span.count', $(this)).text($(this).find('li').length - 1);
+            }
+        });
+
     });
     </script>
 {% endblock %}
@@ -51,7 +54,7 @@ Guest Stars:
     </ul>
 <div id="teams">
     {% for team in object.team_set.all %}
-        <div id="team">
+        <div id="team{{team.id}}" class="droppable">
             <h4>Team {{ team }} <span class="count">0</span></h4>
             <ul class="sortable">
                 {% for player in team.participants.all %}
