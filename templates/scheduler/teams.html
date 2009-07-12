@@ -13,6 +13,9 @@
             revert: false
         });
         $(".draggable").draggable({
+            stop: function() {
+                 $(this).css("background-color", "red");
+            },
             connectToSortable: '.sortable',
             helper: 'clone',
             revert: 'invalid'
@@ -54,7 +57,7 @@ Guest Stars:
     </ul>
 <div id="teams">
     {% for team in object.team_set.all %}
-        <div id="team{{team.id}}" class="droppable">
+        <div id="team{{ forloop.counter }}" class="droppable">
             <h4>Team {{ team }} <span class="count">0</span></h4>
             <ul class="sortable">
                 {% for player in team.participants.all %}
