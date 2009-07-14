@@ -70,6 +70,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 /*.comment {background: #487858}*/
 .commentingUser {color:#9aef3f;}
 .commentTime {color:#487858;}
+.right { float: right; }
 #team1, #team2, #team3, #team4 {
     background: #487858;
     border: 1px dotted #234f32;
@@ -78,6 +79,4 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
     width: 48%;
     height:100%;
 }
-
-#team ul { padding-left:2em; }
-#team ul li { list-style-type:square; margin-bottom:0px; }
+#drop-message {color:lightgrey;list-style-type:none;}
