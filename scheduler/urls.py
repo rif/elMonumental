@@ -22,6 +22,7 @@ urlpatterns = patterns('django.views.generic.list_detail',
 # override forms from registration
 urlpatterns += patterns('',
     url(r'^accounts/register/$', 'registration.views.register', {'form_class' : PlayerRegistrationForm}, name='registration_register'),
+    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
 )
 
 urlpatterns += patterns('',
@@ -32,6 +33,6 @@ urlpatterns += patterns('',
     url(r'^delguest/(?P<md_id>\d+)/$', views.delGuest, name='sch_delguest'),
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_delGuest-ajax'),
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),
-    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
     url(r'^comments/(?P<md_id>\d+)/$', views.comment, name='sch_comments'),
+    url(r'^loadTeam/$', views.loadTeam, name='sch_loadteam'),
 )

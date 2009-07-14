@@ -145,3 +145,11 @@ def comment(request, md_id):
     return render_to_response('scheduler/comment.html',
                              {'matchday': md}, context_instance=RequestContext(request))
 
+@login_required
+def loadTeam(request):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk=request.POST['mdId'])
+        if not __isMatchdayInFuture(request, md):
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
+        if request.user.is_superuser:
+            print(request.POST['teamId'], request.POST['pList'], request.POST['gList'])

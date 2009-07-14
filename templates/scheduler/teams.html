@@ -9,10 +9,10 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.droppable.js"></script>
     <script type="text/javascript">
     $(function() {
-        $(".sortable").sortable({
+        $('.sortable').sortable({
             revert: false
         });
-        $(".draggable").draggable({
+        $('.draggable').draggable({
             stop: function() {
                  $(this).css("background-color", "red");
                  $(this).css("list-style-type", "none");
@@ -21,9 +21,9 @@
             },
             connectToSortable: '.sortable',
             helper: 'clone',
-            revert: false
+            revert: 'invalid'
         });
-        $(".droppable").droppable({
+        $('.team').droppable({
             drop: function(event, ui) {
                 $('span.count', $(this)).text($(this).find('li').length - 1);
                 $('#drop-message', $(this)).remove();
@@ -31,6 +31,29 @@
         });
 
     });
+    function saveTeams(){
+        var pIdList = new Array();
+        var gIdList = new Array();
+        var mdId = $('#teams').attr('md_id');
+        $('.team').each(function(){
+            var teamId = $(this).attr('tm_id');
+            $('li', $(this)).each(function(){
+                var plId = $(this).attr('pl_id');
+                var guId = $(this).attr('gu_id');
+                if(plId != null){
+                    pIdList.push(plId);
+                }
+                if(guId != null){
+                    gIdList.push(guId);
+                }
+                $.post('/loadTeam/',
+                        {'mdId': mdId, 'teamId': teamId, 'pList': pIdList, 'gList':gIdList},
+                        function(data){
+                            alert("Team loaded!");
+                        });
+            })
+        });
+    }
     </script>
 {% endblock %}
 {% block content %}
@@ -52,12 +75,12 @@ Participants:
 Guest Stars:
     <ul>
         {% for guest in object.guest_stars.all %}
-            <li class="draggable" gl_id="{{ guest.id }}">{{ guest.get_full_name }}</li>
+            <li class="draggable" gu_id="{{ guest.id }}">{{ guest.get_full_name }}</li>
         {% endfor %}
     </ul>
-<div id="teams">
+<div id="teams" md_id="{{ object.id }}">
     {% for team in object.team_set.all %}
-        <div id="team{{ forloop.counter }}" class="droppable">
+        <div class="team" tm_id="{{ team.id }}">
             <h4>Team {{ team }} <span class="count">0</span></h4>
             <ol class="sortable">
                 <li id="drop-message">Drop players here!</li>
@@ -65,5 +88,7 @@ Guest Stars:
         </div>
     {% endfor %}
 </div>
-<a class="right" href="/">Cancel</a> <a class="right" href="/">Save</a>
+<div class="right">
+    <a href="/">Cancel</a><a class="right" href="#" onClick="saveTeams();">Save</a>
+</div>
 {% endblock %}
