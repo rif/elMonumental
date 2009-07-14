@@ -71,7 +71,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .commentingUser {color:#9aef3f;}
 .commentTime {color:#487858;}
 .right { float: right; }
-#team1, #team2, #team3, #team4 {
+.team {
     background: #487858;
     border: 1px dotted #234f32;
     float: right;

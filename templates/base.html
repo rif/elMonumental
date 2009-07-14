@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
-	<link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
+    <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
         {% block scripts %}{% endblock %}
@@ -12,23 +12,25 @@
 
     <body>
         <div id="header">
+            <div class="right">
             {% if user.is_authenticated %}
-            <p class="right">
-                {% if user.is_superuser %}
-                Welcome, {{ user.username }}.
-                {% else %}
-                Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
-                {% endif %}
-            <a href="{% url auth_logout %}">log out</a></p>
+                <p class="right">
+                    {% if user.is_superuser %}
+                        Welcome, {{ user.username }}.
+                    {% else %}
+                        Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
+                    {% endif %}
+                <a href="{% url auth_logout %}">log out</a></p>
             {% else %}
-            <p class="right">Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
+                <p>Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
             {% endif %}
-            <p class="right">
+            <p>
                 <a type="application/rss+xml" href="/feeds/latest/">Subscribe <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental feed"/></a>
             </p>
             {% if user.is_authenticated and not user.is_superuser and not user.get_profile.alias_name %}
             Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
             {% endif %}
+            </div>
         </div>
         <div id="container">
             <div id="messages_block">
@@ -42,13 +44,13 @@
             </div>
             {% block content %}{% endblock %}
         </div>
-        <div id="footer">  
-	  {% block footer %}{% endblock %}
-	  <div class="right">
-	    <a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a>
-	    <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=0&amp;t=219"><img border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox2/ff2b80x15.gif"/></a>    
-	  </div>
-	</div>
+        <div id="footer">
+      {% block footer %}{% endblock %}
+      <div class="right">
+        <a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a>
+        <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=0&amp;t=219"><img border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox2/ff2b80x15.gif"/></a>
+      </div>
+    </div>
     </body>
 </html>
 
