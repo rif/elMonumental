@@ -153,13 +153,12 @@ def loadTeam(request):
             team.participants.clear()
             team.guest_stars.clear()
             plIds = request.POST['pList'].strip()
-            glIds = request.POST['gList'].strip()
             if plIds != '':
                 for plId in plIds.split(','):
                     pl = User.objects.get(pk=plId)
                     print "Adding: ", pl
                     team.participants.add(pl)
-
+            glIds = request.POST['gList'].strip()
             if glIds != '':
                 for gpId in glIds.split(','):
                     gp = GuestPlayer.objects.get(pk=gpId)
