@@ -15,14 +15,18 @@
         $(".draggable").draggable({
             stop: function() {
                  $(this).css("background-color", "red");
+                 $(this).css("list-style-type", "none");
+                 $(this).css("font-style", "overline");
+                 $(this).removeClass('draggable');
             },
             connectToSortable: '.sortable',
             helper: 'clone',
-            revert: 'invalid'
+            revert: false
         });
         $(".droppable").droppable({
             drop: function(event, ui) {
                 $('span.count', $(this)).text($(this).find('li').length - 1);
+                $('#drop-message', $(this)).remove();
             }
         });
 
@@ -42,32 +46,24 @@
 Participants:
     <ul>
     {% for player in object.participants.all %}
-        <li class="draggable">{{ player.get_profile.get_full_name }}</li>
-    {% empty %}
-        <p>Sorry, no participants in this list!</p>
+        <li class="draggable" pl_id="{{ player.id }}">{{ player.get_profile.get_full_name }}</li>
     {% endfor %}
     </ul>
 Guest Stars:
     <ul>
         {% for guest in object.guest_stars.all %}
-            <li class="draggable">{{ guest.get_full_name }} invited by {{ guest.friend_user.get_profile.get_full_name }}</li>
-        {% empty %}
-            <p>Sorry, no guest stars in this list!</p>
+            <li class="draggable" gl_id="{{ guest.id }}">{{ guest.get_full_name }}</li>
         {% endfor %}
     </ul>
 <div id="teams">
     {% for team in object.team_set.all %}
         <div id="team{{ forloop.counter }}" class="droppable">
             <h4>Team {{ team }} <span class="count">0</span></h4>
-            <ul class="sortable">
-                {% for player in team.participants.all %}
-                    <li>{{ player.get_full_name }}</li>
-                {% endfor %}
-                {% for player in team.guest_stars.all %}
-                    <li>{{ player }}</li>
-                {% endfor %}
-            </ul>
+            <ol class="sortable">
+                <li id="drop-message">Drop players here!</li>
+            </ol>
         </div>
     {% endfor %}
 </div>
+<a class="right" href="/">Cancel</a> <a class="right" href="/">Save</a>
 {% endblock %}
