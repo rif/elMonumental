@@ -58,6 +58,26 @@
             }
         });
     }
+    $("#dialog").dialog({
+            bgiframe: true,
+            autoOpen: false,
+            height: 300,
+            modal: true,
+            buttons: {
+                Create: function() {
+                    $.post('/createTeam/', {'name': $("#name")}, function(data){
+
+                    });
+                },
+                Cancel: function() {
+                    $(this).dialog('close');
+                }
+            },
+            close: function() {
+                allFields.val('').removeClass('ui-state-error');
+            }
+        });
+
     </script>
 {% endblock %}
 {% block content %}
@@ -94,5 +114,15 @@ Guest Stars:
 </div>
 <div>
     <a href="/">Home</a> <a href="#" onClick="saveTeams();">Save</a>
+</div>
+<div id="dialog" title="Create new team">
+    <p id="validateTips">All form fields are required.</p>
+
+    <form>
+        <fieldset>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
+        </fieldset>
+    </form>
 </div>
 {% endblock %}
