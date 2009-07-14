@@ -32,26 +32,30 @@
 
     });
     function saveTeams(){
-        var pIdList = new Array();
-        var gIdList = new Array();
-        var mdId = $('#teams').attr('md_id');
         $('.team').each(function(){
+            var pIdList = new Array();
+            var gIdList = new Array();
             var teamId = $(this).attr('tm_id');
+            var found = false;
             $('li', $(this)).each(function(){
                 var plId = $(this).attr('pl_id');
                 var guId = $(this).attr('gu_id');
                 if(plId != null){
                     pIdList.push(plId);
+                    found = true;
                 }
                 if(guId != null){
                     gIdList.push(guId);
+                    found = true;
                 }
-                $.post('/loadTeam/',
-                        {'mdId': mdId, 'teamId': teamId, 'pList': pIdList, 'gList':gIdList},
-                        function(data){
-                            alert("Team loaded!");
-                        });
             })
+            if(found){
+                $.post('/loadTeam/',
+                        {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")},
+                        function(data){
+                        }
+                );
+            }
         });
     }
     </script>

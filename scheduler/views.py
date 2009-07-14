@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from scheduler.models import MatchDay, GuestPlayer
+from scheduler.models import MatchDay, GuestPlayer, Team
 from scheduler.forms import GuestPlayerForm
 
 def __isMatchdayInFuture(request, md):
@@ -148,8 +148,20 @@ def comment(request, md_id):
 @login_required
 def loadTeam(request):
     if request.method == 'POST':
-        md = get_object_or_404(MatchDay, pk=request.POST['mdId'])
-        if not __isMatchdayInFuture(request, md):
-            return HttpResponseRedirect(reverse('sch_matchday-list'))
         if request.user.is_superuser:
-            print(request.POST['teamId'], request.POST['pList'], request.POST['gList'])
+            team = get_object_or_404(Team, pk=request.POST['teamId'])
+            team.participants.clear()
+            team.guest_stars.clear()
+            plIds = request.POST['pList'].strip()
+            glIds = request.POST['gList'].strip()
+            if plIds != '':
+                for plId in plIds.split(','):
+                    pl = GuestPlayer.objects.get(pk=plId)
+                    team.participants.add(pl)
+
+            if glIds != '':
+                for gpId in glIds.split(','):
+                    gp = GuestPlayer.objects.get(pk=gpId)
+                    team.guest_stars.add(gp)
+            team.save()
+        return HttpResponse('Done team ' + request.POST['teamId'])
