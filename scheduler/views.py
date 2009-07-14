@@ -156,7 +156,8 @@ def loadTeam(request):
             glIds = request.POST['gList'].strip()
             if plIds != '':
                 for plId in plIds.split(','):
-                    pl = GuestPlayer.objects.get(pk=plId)
+                    pl = User.objects.get(pk=plId)
+                    print "Adding: ", pl
                     team.participants.add(pl)
 
             if glIds != '':
@@ -164,4 +165,5 @@ def loadTeam(request):
                     gp = GuestPlayer.objects.get(pk=gpId)
                     team.guest_stars.add(gp)
             team.save()
+            request.user.message_set.create(message='Team saved!')
         return HttpResponse('Done team ' + request.POST['teamId'])

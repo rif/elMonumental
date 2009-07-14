@@ -85,14 +85,14 @@ Guest Stars:
 <div id="teams" md_id="{{ object.id }}">
     {% for team in object.team_set.all %}
         <div class="team" tm_id="{{ team.id }}">
-            <h4>Team {{ team }} <span class="count">0</span></h4>
+            <h4>Team {{ team }} Players: <span class="count">0</span></h4>
             <ol class="sortable">
                 <li id="drop-message">Drop players here!</li>
             </ol>
         </div>
     {% endfor %}
 </div>
-<div class="right">
-    <a href="/">Cancel</a><a class="right" href="#" onClick="saveTeams();">Save</a>
+<div>
+    <a href="/">Home</a> <a href="#" onClick="saveTeams();">Save</a>
 </div>
 {% endblock %}
