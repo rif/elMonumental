@@ -29,7 +29,6 @@
                 $('#drop-message', $(this)).remove();
             }
         });
-
     });
     function saveTeams(){
         $('.team').each(function(){
@@ -58,29 +57,29 @@
             }
         });
     }
-    $("#dialog").dialog({
-            bgiframe: true,
-            autoOpen: false,
-            height: 300,
-            modal: true,
-            buttons: {
-                Create: function() {
-                    $.post('/createTeam/', {'name': $("#name")}, function(data){
+    function showAddTeam(link) {
+        $("#placeholder").css("display", "none");
+        $("#placeholder").load(link).slideDown("slow");
+    }
 
-                    });
-                },
-                Cancel: function() {
-                    $(this).dialog('close');
-                }
-            },
-            close: function() {
-                allFields.val('').removeClass('ui-state-error');
-            }
-        });
-
+    function showDelTeam(link) {
+        $("#placeholder").css("display", "none");
+        $("#placeholder").load(link, function(){
+            $("a.dellink").click(function(e){
+                $.post("/links/delteam/",
+                {
+                    md_id: $(this).attr('matchdayId'),
+                    team_id: $(this).attr('teamId')
+                });
+                $(this).replaceWith('Deleted');
+                e.preventDefault();
+            });
+        }).slideDown("slow");
+    }
     </script>
 {% endblock %}
 {% block content %}
+<div id="placeholder"></div>
 <h2>Matchday Information</h2>
 <ul>
 {% if not object.isFuture %}
@@ -89,8 +88,8 @@
 <li>Location: {{ object.location }}</li>
 <li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
 <div>
-<a>
-</a>
+    <a id="create-team" href="#" onClick="showAddTeam('{% url sch_addteam object.id %}');">Create Team</a>
+    <a href="#" onClick="showDelTeam('{% url sch_delteam object.id %}');">Delete Team</a>
 </div>
 </ul>
 Participants:
@@ -117,15 +116,5 @@ Guest Stars:
 </div>
 <div>
     <a href="/">Home</a> <a href="#" onClick="saveTeams();">Save</a>
-</div>
-<div id="dialog" title="Create new team">
-    <p id="validateTips">All form fields are required.</p>
-
-    <form>
-        <fieldset>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" class="text ui-widget-content ui-corner-all" />
-        </fieldset>
-    </form>
 </div>
 {% endblock %}

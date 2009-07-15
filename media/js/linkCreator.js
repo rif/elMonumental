@@ -8,11 +8,8 @@ $(document).ready(function() {
         });
     });
     $("a.md-detail-link").click(function(e){
-        $.get("/matchday/" + $(this).parent().attr('md_id') + "/",
-            function(responseData){
-                $("div#placeholder").css("display", "none");
-                $("div#placeholder").html(responseData).slideDown("slow");
-            });
+        $("#placeholder").css("display", "none");
+        $.load("/matchday/" + $(this).parent().attr('md_id') + "/").slideDown("slow");
         e.preventDefault();
     });
 });

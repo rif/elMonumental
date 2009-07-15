@@ -68,7 +68,7 @@ class GuestTest(TestCase):
         self.assertTrue(self.gp in self.md.guest_stars.iterator())
         response = self.client.post('/delguest/%s/' % self.md.id)
         self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.context['guests_lists'], [self.gp])
+        self.failUnlessEqual(response.context['guest_list'], [self.gp])
 
 class MatchDayTest(TestCase):
     def test_is_future_future(self):
