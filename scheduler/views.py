@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from scheduler.models import MatchDay, GuestPlayer, Team
-from scheduler.forms import GuestPlayerForm
+from scheduler.forms import GuestPlayerForm, TeamForm
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -63,8 +63,8 @@ def addGuest(request, md_id):
         if form.is_valid():
             gp = form.save(commit=False)
             found = False
-            for guest in GuestPlayer.objects.filter(friend_user__pk =request.user.id):
-                if guest.first_name == gp.first_name and guest.last_name == gp.last_name:
+            for guest in GuestPlayer.objects.filter(friend_user__pk = request.user.id):
+                if guest.get_full_name() == gp.get_full_name():
                     md.guest_stars.add(guest)
                     found = True
                     break
@@ -94,7 +94,7 @@ def delGuest(request, md_id):
     if len(gsl) == 0:
         return HttpResponse('You did not added any guest players to this metchday!')
     return render_to_response('scheduler/del_guest.html',
-                             {'guests_lists': gsl, 'md_id': md_id},
+                             {'guest_list': gsl, 'md_id': md_id},
                               context_instance=RequestContext(request))
 
 @login_required
@@ -144,6 +144,62 @@ def comment(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
     return render_to_response('scheduler/comment.html',
                              {'matchday': md}, context_instance=RequestContext(request))
+
+def addTeam(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
+    md = get_object_or_404(MatchDay, pk=md_id)
+    if not __isMatchdayInFuture(request, md):
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+    if request.method == 'POST':
+        form = TeamForm(request.POST)
+        if form.is_valid():
+            team = form.save(commit=False)
+            team.matchday = md
+            team.save()
+            request.user.message_set.create(message='You added team %s to the matchday #%s.'
+                                        % (team.name ,md.id))
+            return HttpResponseRedirect(reverse('sch_loadteam'))
+    else:
+        form = TeamForm()
+    return render_to_response('scheduler/add_team.html',
+                              {'form': form, 'md_id': md_id},
+                              context_instance=RequestContext(request))
+
+def delTeam(request, md_id):
+    if not request.user.is_authenticated():
+        return HttpResponse('<div class="message">Please login!</div>')
+    md = get_object_or_404(MatchDay, pk=md_id)
+
+    if not __isMatchdayInFuture(request, md):
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+    teamList = Team.objects.filter(matchday__pk = md_id)
+    if len(teamList) == 0:
+        return HttpResponse('You did not added any teams to this metchday!')
+    return render_to_response('scheduler/del_team.html',
+                             {'team_list': teamList, 'md_id': md_id},
+                              context_instance=RequestContext(request))
+
+@login_required
+def delTeamCallback(request):
+    if request.method == 'POST':
+        md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
+
+        if not __isMatchdayInFuture(request, md):
+            return HttpResponseRedirect(reverse('sch_matchday-list'))
+        try:
+            team = Team.objects.get(id=request.POST['team_id'])
+        except:
+            pass
+        if team != None:
+            Team.objects.remove(team)
+            request.user.message_set.create(message='You removed team %s from the matchday #%s.'
+                                            % (gp.name, md.id))
+            return HttpResponse('')
+    return HttpResponseRedirect(reverse('sch_loadteam'))
+
 
 @login_required
 def loadTeam(request):

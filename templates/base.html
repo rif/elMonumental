@@ -14,7 +14,7 @@
         <div id="header">
             <div class="right">
             {% if user.is_authenticated %}
-                <p class="right">
+                <p>
                     {% if user.is_superuser %}
                         Welcome, {{ user.username }}.
                     {% else %}
