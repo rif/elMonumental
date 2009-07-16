@@ -6,17 +6,21 @@ $(function() {
         stop: function() {
                 $(this).css("list-style-type", "none");
                 $(this).css("text-decoration", "line-through");
-                $(this).removeClass('draggable');
+                $(this).removeClass("draggable");
+                $(this).addClass("pinned");
         },
         connectToSortable: '.sortable',
+        addClasses: false,
         helper: 'clone',
-        revert: 'invalid'
+        revert: 'invalid',
+        cancel: '.pinned'
     });
     $('.team').droppable({
         drop: function(event, ui) {
             $('span.count', $(this)).text($(this).find('li').length - 1);
-            $('#drop-message', $(this)).remove();
-        }
+            $('#drop-message', $(this)).fadeOut();
+        },
+        accept: '.draggable'
     });
 });
 function saveTeams(){
