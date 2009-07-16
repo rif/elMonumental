@@ -6,11 +6,12 @@ $(document).ready(function(){
 });
 
 function showAddGuest(link) {
-    $("div#placeholder").css("display", "none");
+    $("#placeholder").css("display", "none");
     $("#placeholder").load(link).slideDown("slow");
 }
 
 function showDelGuest(link) {
+    $("#placeholder").css("display", "none");
     $("#placeholder").load(link, function(){
         $("a.dellink").click(function(e){
             $.post("/links/delguest/",
@@ -18,10 +19,11 @@ function showDelGuest(link) {
                 md_id: $(this).attr('matchdayId'),
                 guest_id: $(this).attr('guestId')
             });
+            $(this).parent().siblings().css("text-decoration", "line-through");
             $(this).replaceWith('Deleted');
             e.preventDefault();
         });
-    });
+    }).slideDown("slow");
 }
 function showEmailForm(md_id) {
     $.get("/getemailform/" + md_id + "/", function(responseData){
