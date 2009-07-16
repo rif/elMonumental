@@ -9,7 +9,7 @@ $(document).ready(function() {
     });
     $("a.md-detail-link").click(function(e){
         $("#placeholder").css("display", "none");
-        $.load("/matchday/" + $(this).parent().attr('md_id') + "/").slideDown("slow");
+        $("#placeholder").load("/matchday/" + $(this).parent().attr('md_id') + "/").slideDown("slow");
         e.preventDefault();
     });
 });

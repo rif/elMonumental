@@ -155,12 +155,14 @@ def addTeam(request, md_id):
     if request.method == 'POST':
         form = TeamForm(request.POST)
         if form.is_valid():
+            print "Begin"
             team = form.save(commit=False)
             team.matchday = md
             team.save()
+            print "End"
             request.user.message_set.create(message='You added team %s to the matchday #%s.'
-                                        % (team.name ,md.id))
-            return HttpResponseRedirect(reverse('sch_loadteam'))
+                                        % (team.name, md.id))
+            return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
     else:
         form = TeamForm()
     return render_to_response('scheduler/add_team.html',
@@ -194,11 +196,11 @@ def delTeamCallback(request):
         except:
             pass
         if team != None:
-            Team.objects.remove(team)
+            team.delete()
             request.user.message_set.create(message='You removed team %s from the matchday #%s.'
-                                            % (gp.name, md.id))
+                                            % (team.name, md.id))
             return HttpResponse('')
-    return HttpResponseRedirect(reverse('sch_loadteam'))
+    return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
 
 
 @login_required
@@ -222,3 +224,4 @@ def loadTeam(request):
             team.save()
             request.user.message_set.create(message='Team saved!')
         return HttpResponse('Done team ' + request.POST['teamId'])
+    return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))

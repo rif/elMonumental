@@ -14,9 +14,8 @@
         });
         $('.draggable').draggable({
             stop: function() {
-                 $(this).css("background-color", "red");
                  $(this).css("list-style-type", "none");
-                 $(this).css("font-style", "overline");
+                 $(this).css("text-decoration", "line-through");
                  $(this).removeClass('draggable');
             },
             connectToSortable: '.sortable',
@@ -67,11 +66,10 @@
         $("#placeholder").load(link, function(){
             $("a.dellink").click(function(e){
                 $.post("/links/delteam/",
-                {
-                    md_id: $(this).attr('matchdayId'),
-                    team_id: $(this).attr('teamId')
-                });
+                    {md_id: $(this).attr('matchdayId'), team_id: $(this).attr('teamId')}
+                );
                 $(this).replaceWith('Deleted');
+                $(this).parent().siblings().css("text-decoration", "line-through")
                 e.preventDefault();
             });
         }).slideDown("slow");
