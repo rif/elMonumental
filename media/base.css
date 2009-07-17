@@ -79,3 +79,4 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
     height:100%;
 }
 #drop-message {color:lightgrey;list-style-type:none;}
+#admin-links a {background:#487858;}

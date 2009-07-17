@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
-    <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
+        <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
         {% block scripts %}{% endblock %}
@@ -31,6 +31,12 @@
             Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
             {% endif %}
             </div>
+            {% if user.is_superuser %}
+            <div id="admin-links">
+                <a class="ui-corner-all" href="/admin/">Administration</a>
+                <a href="{% url sch_delorphangps %}">Delete Orphan GuestPlayers</a>
+            </div>
+            {% endif %}
         </div>
         <div id="container">
             <div id="messages_block">
