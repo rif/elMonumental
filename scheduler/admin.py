@@ -11,8 +11,16 @@ class MatchDayAdmin(admin.ModelAdmin):
     search_fields = ['location']
     date_hierarchy = 'start_date'
 
+class TeamsInline(admin.StackedInline):
+    model = Team
+    max_num = 2
+
+class MatchDayAdminWithTeams(MatchDayAdmin):
+    inlines = [TeamsInline]
 
 admin.site.register(MatchDay, MatchDayAdmin)
 admin.site.register(PlayerProfile)
 admin.site.register(GuestPlayer)
 admin.site.register(Team)
+admin.site.unregister(MatchDay)
+admin.site.register(MatchDay, MatchDayAdminWithTeams)

@@ -225,3 +225,22 @@ def loadTeam(request):
             request.user.message_set.create(message='Team saved!')
         return HttpResponse('Done team ' + request.POST['teamId'])
     return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
+
+@login_required
+def deleteOrphanGuestPlayers(request):
+    if request.user.is_superuser:
+        guestPlayers = GuestPlayer.objects.all()
+        matchdays = MatchDay.objects.all()
+        foundGps = []
+        deleted = 0
+        for md in matchdays:
+            for gp in md.guest_stars.iterator():
+                if gp not in foundGps:
+                    foundGps.append(gp)
+
+        for gp in guestPlayers:
+            if gp not in foundGps:
+                gp.delete()
+                deleted += 1
+        return HttpResponse('Done, deleted %s guest playes.' % deleted)
+    return HttpResponse('Please come back as the admin!')
