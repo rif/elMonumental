@@ -2,8 +2,7 @@ from datetime import datetime
 from django.core import mail
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.contrib.auth.models import User
-from scheduler.models import GuestPlayer, PlayerProfile, MatchDay
+from scheduler.models import GuestPlayer, PlayerProfile, MatchDay, Team
 
 class ProfileTest(TestCase):
     def test_is_filled_empty(self):
@@ -198,8 +197,27 @@ class ViewsTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(response.content, '')
 
-    def test_addGuest(self):
-        gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
+    def test_del_team_callback(self):
+        team = Team.objects.create(name="Bursucii", matchday=self.md)
+        self.assertTrue(team in Team.objects.all())
+        response = self.client.post('/links/delteam/', {'md_id': self.md.id, 'team_id': team.id})
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertFalse(team in Team.objects.all())
+
+    def test_old_del_team_callback(self):
+        team = Team.objects.create(name="Bursucii", matchday=self.old_md)
+        self.assertTrue(team in Team.objects.all())
+        response = self.client.post('/links/delteam/', {'md_id': self.old_md.id, 'team_id': team.id})
+        self.failUnlessEqual(response.status_code, 302)
+        self.assertTrue(team in Team.objects.all())
+
+    def test_del_team_list(self):
+        team = Team.objects.create(name="Bursucii", matchday=self.md)
+        self.assertTrue(team in Team.objects.all())
+        response = self.client.post('/delteam/%s/' % self.md.id)
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.context['team_list'][0], team)
+
 
 __test__ = {"doctest": """
 Another way to test that 1 + 1 is equal to 2.
