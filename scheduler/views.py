@@ -155,11 +155,9 @@ def addTeam(request, md_id):
     if request.method == 'POST':
         form = TeamForm(request.POST)
         if form.is_valid():
-            print "Begin"
             team = form.save(commit=False)
             team.matchday = md
             team.save()
-            print "End"
             request.user.message_set.create(message='You added team %s to the matchday #%s.'
                                         % (team.name, md.id))
             return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
@@ -214,7 +212,6 @@ def loadTeam(request):
             if plIds != '':
                 for plId in plIds.split(','):
                     pl = User.objects.get(pk=plId)
-                    print "Adding: ", pl
                     team.participants.add(pl)
             glIds = request.POST['gList'].strip()
             if glIds != '':

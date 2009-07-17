@@ -71,7 +71,7 @@ class Team(models.Model):
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
     def __unicode__(self):
-        return self.name
+        return self.name + " from " + str(self.matchday)
 
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']
