@@ -122,6 +122,26 @@ class AdminTest(TestCase):
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(len(response.content), 768)
 
+    def test_deleteOrphanGuests(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
+        gp.save()
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+        response = self.client.get('/deleteOrphanGps/')
+        self.failUnlessEqual(response.content, 'Done, deleted 1 guest playes.')
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 0)
+
+    def test_deleteOrphanGuestsNotDeeleted(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
+        gp.save()
+        self.md.guest_stars.add(gp)
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+        response = self.client.get('/deleteOrphanGps/')
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+
 class ViewsTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user('rif', 'rif@user.ad', 'test')
@@ -180,7 +200,6 @@ class ViewsTest(TestCase):
 
     def test_addGuest(self):
         gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
-
 
 __test__ = {"doctest": """
 Another way to test that 1 + 1 is equal to 2.

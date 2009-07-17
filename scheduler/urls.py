@@ -38,5 +38,5 @@ urlpatterns += patterns('',
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),
     url(r'^comments/(?P<md_id>\d+)/$', views.comment, name='sch_comments'),
     url(r'^loadTeam/$', views.loadTeam, name='sch_loadteam'),
-    url(r'deleteOrphanGps', views.deleteOrphanGuestPlayers, name='sch_delorphangps'),
+    url(r'deleteOrphanGps/$', views.deleteOrphanGuestPlayers, name='sch_delorphangps'),
 )
