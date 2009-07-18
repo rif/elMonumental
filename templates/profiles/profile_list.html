@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% load humanize %}
 {% block title %}View All Users{% endblock %}
 {% block content %}
 <h2>Users</h2>
-<table class="list" id="userlist">
+<table class="list tablesorter" cellspacing="1" id="userlist">
+<thead>
     <tr>
         <th>FirstName</th>
         <th>AliasName</th>
@@ -13,6 +13,8 @@
         <th>BallControl</th>
         <th>ShotPower</th>
     </tr>
+</thead>
+<tbody>
     {% for profile in object_list %}
     <tr>
         <td>{{ profile.user.first_name }}</td>
@@ -27,6 +29,9 @@
         </td>
     </tr>
     {% endfor %}
+</tbody>
 </table>
+<div id="pager"></div>
 <a href="/">Home</a>
 {% endblock %}
+

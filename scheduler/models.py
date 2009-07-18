@@ -71,7 +71,7 @@ class Team(models.Model):
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
     def __unicode__(self):
-        return self.name + " from " + str(self.matchday)
+        return self.name
 
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']
@@ -81,5 +81,13 @@ def user_profile_handler(sender, **kwargs):
         except:
             pp = PlayerProfile(user = newUser)
             pp.save()
+
+class Proposal(models.Model):
+    user = models.ForeignKey(User)
+    matchday = models.ForeignKey(MatchDay)
+    teams = models.TextField()
+
+    def __unicode__(self):
+        return self.user.get_full_name() + "'s proposal for " + str(self.matchday)
 
 post_save.connect(user_profile_handler, sender=User)
