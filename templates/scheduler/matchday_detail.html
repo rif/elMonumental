@@ -27,7 +27,7 @@ Guest Stars:
 <div id="teams">
     {% for team in object.team_set.all %}
         <div id="team">
-            <h4>Team {{ team }}</h4>
+            <h4>Team {{ team.name }}</h4>
             <ul>
                 {% for player in team.participants.all %}
                     <li>{{ player.get_full_name }}</li>
@@ -40,9 +40,10 @@ Guest Stars:
     {% endfor %}
 </div>
 <div>
+    <a href="{% url sch_matchday-teams object.id %}">Manage teams</a>
+    <a href="{% url sch_matchday-proposals object.id %}">Team Proposals</a>
     {% if user.is_superuser and object.isFuture %}
         <div type="hidden" id="email_form"></div>
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
-        <a href="{% url sch_matchday-teams object.id %}">Manage teams</a>
     {% endif %}
 </div>

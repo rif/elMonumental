@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from scheduler.models import MatchDay, GuestPlayer, Team
+from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
 from scheduler.forms import GuestPlayerForm, TeamForm
 
 def __isMatchdayInFuture(request, md):
@@ -205,24 +205,37 @@ def delTeamCallback(request):
 @login_required
 def loadTeam(request):
     if request.method == 'POST':
+        team = get_object_or_404(Team, pk=request.POST['teamId'])
+        plIds = request.POST['pList'].strip()
+        glIds = request.POST['gList'].strip()
         if request.user.is_superuser:
-            team = get_object_or_404(Team, pk=request.POST['teamId'])
             team.participants.clear()
             team.guest_stars.clear()
-            plIds = request.POST['pList'].strip()
             if plIds != '':
                 for plId in plIds.split(','):
                     pl = User.objects.get(pk=plId)
                     team.participants.add(pl)
-            glIds = request.POST['gList'].strip()
             if glIds != '':
                 for gpId in glIds.split(','):
                     gp = GuestPlayer.objects.get(pk=gpId)
                     team.guest_stars.add(gp)
             team.save()
             request.user.message_set.create(message='Team saved!')
+        else:
+            text = ""
+            if plIds != '':
+                for plId in plIds.split(','):
+                    pl = User.objects.get(pk=plId)
+                    text += pl.get_full_name()
+            if glIds != '':
+                for gpId in glIds.split(','):
+                    gp = GuestPlayer.objects.get(pk=gpId)
+                    text += gp.get_full_name()
+            if text != "":
+                prop = Proposal.objects.create(user=request.user, matchday=team.matchday, teams=text)
+                request.user.message_set.create(message='Proposal saved!')
         return HttpResponse('Done team ' + request.POST['teamId'])
-    return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
+    return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
 def deleteOrphanGuestPlayers(request):
