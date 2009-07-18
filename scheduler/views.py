@@ -186,8 +186,6 @@ def delTeam(request, md_id):
 @login_required
 def delTeamCallback(request):
     if request.method == 'POST':
-        md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
-
         if not __isMatchdayInFuture(request, md):
             return HttpResponseRedirect(reverse('sch_matchday-list'))
         try:
@@ -196,10 +194,9 @@ def delTeamCallback(request):
             pass
         if team != None:
             team.delete()
-            request.user.message_set.create(message='You removed team %s from the matchday #%s.'
-                                            % (team.name, md.id))
+            request.user.message_set.create(message='You removed team %s.' % team.name)
             return HttpResponse('')
-    return HttpResponseRedirect(reverse('sch_matchday-teams', args=[md.id]))
+    return HttpResponse('Cam aiurea!')
 
 
 @login_required
