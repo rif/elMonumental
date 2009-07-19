@@ -16,7 +16,7 @@
             {% if user.is_authenticated %}
                 <p>
                     {% if user.is_superuser %}
-                        Welcome, {{ user.username }}.
+                        Welcome, <a href="/admin/">{{ user.username }}</a>.
                     {% else %}
                         Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
                     {% endif %}

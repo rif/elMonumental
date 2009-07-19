@@ -1,10 +1,14 @@
 {% extends "admin/base.html" %}
 {% load i18n %}
 
-{% block title %}{{ title }} | {% trans 'Django site admin' %}{% endblock %}
+{% block title %}{{ title }} | {% trans 'elMonumental site admin' %}{% endblock %}
 
 {% block branding %}
 <h1 id="site-name">{% trans 'elMonumental administration' %}</h1>
 {% endblock %}
 
-{% block nav-global %}{% endblock %}
+{% block nav-global %}
+<div style="text-align: right;margin-right: 10px;">
+    <a style="font-size:90%; text-decoration: none;" href="/">Back to public interface</a>
+</div>
+{% endblock %}

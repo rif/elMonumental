@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Team Proposals{% endblock %}
+{% block scripts %}
+<script type="text/javascript">
+$(function(){
+    $("a.proposals_link").click(function(e){
+        $("#placeholder").hide();
+        $("#placeholder").load($(this).attr("link")).slideDown("slow");
+        e.preventDefault();
+    });
+    $("a.delete_proposal_link").click(function(e){
+        var delLink = $(this);
+        $.get(delLink.attr("link"), function(){
+            delLink.siblings().css("text-decoration", "line-through");
+            delLink.replaceWith('Deleted');
+        });
+        e.preventDefault();
+    });
+});
+</script>
+{% endblock %}
+{% block content %}
+<div id="placeholder"></div>
+<h2>Team Proposals</h2>
+<ul>
+{% for proposal in proposal_list %}
+    <li>
+        <a href="#" class="proposals_link" link="{% url sch_proposal-ajax proposal.id %}">{{ proposal }}</a>
+        {% ifequal user proposal.user %}
+            - <a href="#" class="delete_proposal_link" link="{% url sch_delproposal proposal.id %}">Delete</a>
+        {% endifequal %}
+    </li>
+{% endfor %}
+</ul>
+<a href="/">Home</a>
+{% endblock %}

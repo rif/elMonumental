@@ -250,5 +250,24 @@ def deleteOrphanGuestPlayers(request):
             if gp not in foundGps:
                 gp.delete()
                 deleted += 1
-        return HttpResponse('Done, deleted %s guest playes.' % deleted)
+        return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
+
+def proposals(request, md_id):
+    proposal_list = Proposal.objects.filter(matchday__pk=md_id)
+    return render_to_response('scheduler/proposal_list.html',
+                             {'proposal_list': proposal_list, 'md_id': md_id},
+                              context_instance=RequestContext(request))
+
+@login_required
+def delProposal(request, pid):
+    prop = get_object_or_404(Proposal, pk=pid)
+    md = prop.matchday
+
+    if not __isMatchdayInFuture(request, md):
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+    if prop.user != request.user:
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
+    prop.delete()
+    return HttpResponse('Proposal deleted!')
