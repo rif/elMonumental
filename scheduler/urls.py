@@ -10,15 +10,15 @@ paginate_info = {'queryset': MatchDay.objects.all(), 'paginate_by': 10,}
 rssdetail_info = {'queryset': MatchDay.objects.all(), 'template_name': 'feeds/matchday_rssdetail.html',}
 email_info = {'queryset': MatchDay.objects.all(), 'template_name': 'scheduler/send_email_form.html',}
 teams_info = {'queryset': MatchDay.objects.all(), 'template_name': 'scheduler/teams.html',}
-proposals_info = {'queryset': Proposal.objects.all(), 'template_name': 'scheduler/proposals.html',}
+proposal_info = {'queryset': Proposal.objects.all(), 'template_name': 'scheduler/proposal_detail.html',}
 
 urlpatterns = patterns('django.views.generic.list_detail',
     url(r'^$', 'object_list', paginate_info, name='sch_matchday-list'),
     url(r'^matchday/(?P<object_id>\d+)/$', 'object_detail', md_info, name='sch_matchday-detail'),
     url(r'^matchday/(?P<object_id>\d+)/rss/$', 'object_detail', rssdetail_info, name='sch_matchday-detail'),
     url(r'^matchday/(?P<object_id>\d+)/teams/$', 'object_detail', teams_info, name='sch_matchday-teams'),
-    url(r'^matchday/(?P<object_id>\d+)/proposals/$', 'object_detail', proposals_info, name='sch_matchday-proposals'),
     url(r'^getemailform/(?P<object_id>\d+)/$', 'object_detail', email_info, name='sch_getEmailForm-ajax'),
+    url(r'^proposal/(?P<object_id>\d+)/$', 'object_detail', proposal_info, name='sch_proposal-ajax'),
 )
 
 # override forms from registration
@@ -40,5 +40,7 @@ urlpatterns += patterns('',
     url(r'^sendemail/(?P<md_id>\d+)/$', views.sendEmail, name='sch_sendemail'),
     url(r'^comments/(?P<md_id>\d+)/$', views.comment, name='sch_comments'),
     url(r'^loadTeam/$', views.loadTeam, name='sch_loadteam'),
+    url(r'^matchday/(?P<md_id>\d+)/proposals/$', views.proposals, name='sch_matchday-proposals'),
+    url(r'^proposal/(?P<pid>\d+)/delete/$', views.delProposal, name='sch_delproposal'),
     url(r'deleteOrphanGps/$', views.deleteOrphanGuestPlayers, name='sch_delorphangps'),
 )

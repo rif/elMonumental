@@ -19,9 +19,9 @@ class PlayerProfile(models.Model):
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
     shot_power = models.CharField(null=True,blank=True, max_length=3, choices=SHOT_CHOICES)
 
+    @models.permalink
     def get_absolute_url(self):
         return ('profiles_profile_detail', (), { 'username': self.user.username })
-    get_absolute_url = models.permalink(get_absolute_url)
 
     def __unicode__(self):
         return self.user.username + "'s profile"
@@ -63,6 +63,11 @@ class MatchDay(models.Model):
 
     class Meta:
         ordering = ["-start_date"]
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('sch_matchday-detail', (), { 'object_id': self.id })
+
 
 class Team(models.Model):
     name = models.CharField(max_length=50)
