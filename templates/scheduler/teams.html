@@ -45,7 +45,11 @@ Guest Stars:
     {% endfor %}
 </div>
 <div>
-    <a href="/">Home</a> <a id="save_teams_link" href="#">Save</a>
-    <div id="result"></div>
+    <a href="/">Home</a> 
+    {% if user.is_superuser %}
+        <a id="save_teams_link" href="#">Save team</a>
+    {% else %}
+        <a id="save_teams_link" href="#">Save proposal</a>
+    {% endif %}
 </div>
 {% endblock %}
