@@ -21,6 +21,11 @@ urlpatterns = patterns('django.views.generic.list_detail',
     url(r'^proposal/(?P<object_id>\d+)/$', 'object_detail', proposal_info, name='sch_proposal-ajax'),
 )
 
+urlpatterns += patterns('django.views.generic.simple',
+    (r'^messages/$', 'direct_to_template', {'template': 'scheduler/messages.html'}),
+)
+
+
 # override forms from registration
 urlpatterns += patterns('',
     url(r'^accounts/register/$', 'registration.views.register', {'form_class' : PlayerRegistrationForm}, name='registration_register'),

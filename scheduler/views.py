@@ -217,21 +217,31 @@ def loadTeam(request):
                     gp = GuestPlayer.objects.get(pk=gpId)
                     team.guest_stars.add(gp)
             team.save()
-            request.user.message_set.create(message='Team saved!')
+            request.user.message_set.create(message='Saved team %s.' % team.name)
         else:
             text = ""
             if plIds != '':
                 for plId in plIds.split(','):
                     pl = User.objects.get(pk=plId)
-                    text += pl.get_full_name()
+                    text += "<li>" + pl.get_full_name() + "</li>"
             if glIds != '':
                 for gpId in glIds.split(','):
                     gp = GuestPlayer.objects.get(pk=gpId)
-                    text += gp.get_full_name()
+                    text += "<li>" + gp.get_full_name() + "</li>"
             if text != "":
-                prop = Proposal.objects.create(user=request.user, matchday=team.matchday, teams=text)
-                request.user.message_set.create(message='Proposal saved!')
-        return HttpResponse('Done team ' + request.POST['teamId'])
+                text = "<ol>" + text + "</ol>"
+                text = "Team " + team.name + ": " + text
+                try:
+                    prop = Proposal.objects.filter(matchday__pk=team.matchday.id).get(user__pk=request.user.id)
+                    if prop.teams.count("<ol>") > 1:
+                        prop.teams = text
+                    else:    
+                        prop.teams += text
+                    prop.save()
+                except:
+                    prop = Proposal.objects.create(user=request.user, matchday=team.matchday, teams=text)
+                request.user.message_set.create(message='Saved proposal %s.' % str(prop))
+        return HttpResponse('Done!')
     return HttpResponseRedirect(reverse('sch_matchday-list'))
 
 @login_required
