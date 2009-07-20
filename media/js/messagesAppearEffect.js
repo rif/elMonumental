@@ -1,6 +1,14 @@
 $(function(){
     $.ajaxSetup({ cache: false });
-    $("li.message").each(function () {
-        $(this).fadeOut(13000);
-    });
+    fadeOutMessages();
 });
+
+function fadeOutMessages(){
+    $("li.message").each(function () {
+        $(this).fadeOut(12000);
+    });
+}
+
+function showMessages(){
+    $("#messages_block").load("/messages/", fadeOutMessages);
+}

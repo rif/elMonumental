@@ -44,6 +44,7 @@ $(function() {
                 $.post('/loadTeam/',
                         {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")},
                         function(data){
+                            showMessages();
                         }
                 );
             }
