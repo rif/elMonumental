@@ -186,10 +186,10 @@ def delTeam(request, md_id):
 @login_required
 def delTeamCallback(request):
     if request.method == 'POST':
-        if not __isMatchdayInFuture(request, md):
-            return HttpResponseRedirect(reverse('sch_matchday-list'))
         try:
             team = Team.objects.get(id=request.POST['team_id'])
+            if not __isMatchdayInFuture(request, team.matchday):
+                return HttpResponseRedirect(reverse('sch_matchday-list'))
         except:
             pass
         if team != None:
@@ -235,7 +235,7 @@ def loadTeam(request):
                     prop = Proposal.objects.filter(matchday__pk=team.matchday.id).get(user__pk=request.user.id)
                     if prop.teams.count("<ol>") > 1:
                         prop.teams = text
-                    else:    
+                    else:
                         prop.teams += text
                     prop.save()
                 except:

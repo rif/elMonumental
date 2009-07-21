@@ -29,10 +29,12 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   padding: 1em;
   position: relative;
   float: right;
-  width: 23%;
+  width: 30%;
   font-size: 88%;
   display:none;
 }
+
+
 #messages_block {position:relative;}
 /* LINKS */
 
@@ -63,20 +65,21 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 
 .message { color:#9aef3f; }
 .small { font-size:90%; }
-.list tr:hover {background: #234f32; }
+.list tbody tr:hover {background: #234f32; }
 #userlist td {border-collapse: separate; border-spacing: 3px;border: 1px dotted grey; }
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
-/*.comment {background: #487858}*/
 .commentingUser {color:#9aef3f;}
 .commentTime {color:#487858;}
 .team {
     background: #487858;
     border: 1px dotted #234f32;
     float: right;
-    margin-right: 1%;
+    margin: 1%;
     width: 48%;
     height:100%;
 }
 #drop-message {color:lightgrey;list-style-type:none;}
 #admin-links a {background:#487858;}
+#matchdays {width: 40% ;padding: 5px; background:#487858;}
+#matchdays li{list-style-type:none;}

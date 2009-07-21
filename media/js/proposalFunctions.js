@@ -1,7 +1,6 @@
 $(function(){
     $("a.proposals_link").click(function(e){
-        $("#placeholder").hide();
-        $("#placeholder").load($(this).attr("link")).slideDown("slow");
+        loadPlaceholder($(this).attr("link"));
         e.preventDefault();
     });
     $("a.delete_proposal_link").click(function(e){

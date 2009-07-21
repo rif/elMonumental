@@ -1,4 +1,5 @@
 $(function() {
+    $('.team').corner();
     $('.sortable').sortable({
         revert: false
     });
@@ -18,7 +19,7 @@ $(function() {
     $('.team').droppable({
         drop: function(event, ui) {
             $('span.count', $(this)).text($(this).find('li').length - 1);
-            $('#drop-message', $(this)).fadeOut();
+            $('#drop-message', $(this)).remove();
         },
         accept: '.draggable'
     });
@@ -42,23 +43,19 @@ $(function() {
             })
             if(found){
                 $.post('/loadTeam/',
-                        {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")},
-                        function(data){
-                            showMessages();
-                        }
+                        {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")}
                 );
             }
         });
+        showMessages();
         e.preventDefault();
     });
     $('#create_team_link').click(function(e){
-        $("#placeholder").hide();
-        $("#placeholder").load($(this).attr("link")).slideDown("slow");
+        loadPlaceholder($(this).attr("link"));
         e.preventDefault();
     });
     $('#delete_team_link').click(function(e){
-        $("#placeholder").hide();
-        $("#placeholder").load($(this).attr("link"), function(){
+        loadPlaceholder($(this).attr("link"), function(){
             $("a.dellink").click(function(e){
                 $.post("/links/delteam/",
                     {md_id: $(this).attr('matchdayId'), team_id: $(this).attr('teamId')}
@@ -66,9 +63,10 @@ $(function() {
                 $(this).parent().siblings().css("text-decoration", "line-through");
                 $(this).replaceWith('Deleted');
                 $('div[tm_id="' + $(this).attr('teamId') + '"]').fadeOut("slow");
+                showMessages();
                 e.preventDefault();
             });
-        }).slideDown("slow");
+        });
         e.preventDefault();
     });
 });

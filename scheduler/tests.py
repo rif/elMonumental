@@ -128,7 +128,7 @@ class AdminTest(TestCase):
         gp.save()
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
-        self.failUnlessEqual(response.content, 'Done, deleted 1 guest playes.')
+        self.failUnlessEqual(response.content, '<p>Done, deleted 1 guest playes.</p><a href="/">Home</a>')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 0)
 
     def test_deleteOrphanGuestsNotDeeleted(self):

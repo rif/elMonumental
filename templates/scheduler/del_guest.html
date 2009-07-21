@@ -1,14 +1,18 @@
 <table cellspacing="0" class="list">
+    <thead>
     <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Actions</th>
+        <th>Id#</th>
+        <th>Guest name</th>
+        <th>Action</th>
     </tr>
+    </thead>
     {% for guest in guest_list %}
+    <tbody>
     <tr>
         <td>{{ guest.id }}</td>
         <td>{{ guest.get_full_name }}</td>
         <td><a class="dellink" guestId="{{ guest.id }}" matchdayId="{{ md_id }}" href="#">Delete</a></td>
     </tr>
+    </tbody>
     {% endfor %}
 </table>
