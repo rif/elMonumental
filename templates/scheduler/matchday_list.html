@@ -6,32 +6,24 @@
 <script type="text/javascript" src="{{ MEDIA_URL }}js/linkCreator.js"></script>
 {% endblock %}
 {% block content %}
-<div id="placeholder"></div>
 <h2>Matchdays</h2>
-<table cellspacing="0" class="list">
-    <tr>
-        <th>#</th>
-        <th>Date</th>
-        <th>Location</th>
-        <th>Hour</th>
-        <th>Actions</th>
-    </tr>
+<div id="matchdays">
+<ul>
     {% for matchday in object_list %}
     {% get_comment_count for matchday as comment_count %}
-    <tr>
-        <td>{{ matchday.id|ordinal }}</td>
-        <td>{{ matchday.start_date|date:"D d M Y"|naturalday }}</td>
-        <td>{{ matchday.location }}</td>
-        <td>{{ matchday.start_date|time:"H:i" }}</td>
-        <td>
-            <span class="async" md_id="{{ matchday.id }}">
-                <a class="md-detail-link" href="#">View</a>
-                <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
-            </span>
-        </td>
-    </tr>
+    <li>
+        {{ matchday.id|ordinal }}
+        {{ matchday.start_date|date:"D d M Y"|naturalday }} -
+        {{ matchday.location }} -
+        {{ matchday.start_date|time:"H:i" }}
+        <span class="async" md_id="{{ matchday.id }}">
+            <a class="md-detail-link" href="#">View</a>
+            <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
+        </span>
+    </li>
     {% endfor %}
-</table>
+</ul>
+</div>
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}

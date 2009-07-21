@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
         <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.corner.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
         {% block scripts %}{% endblock %}
         <title>{% block title %}El Monumental{% endblock %}</title>
@@ -48,6 +49,7 @@
                 </ul>
                 {% endif %}
             </div>
+            <div id="placeholder"></div>
             {% block content %}{% endblock %}
         </div>
         <div id="footer">

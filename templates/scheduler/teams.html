@@ -9,7 +9,6 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/teamFunctions.js"></script>
 {% endblock %}
 {% block content %}
-<div id="placeholder"></div>
 <h2>Matchday Information</h2>
 <ul>
 {% if not object.isFuture %}
@@ -45,7 +44,7 @@ Guest Stars:
     {% endfor %}
 </div>
 <div>
-    <a href="/">Home</a> 
+    <a href="/">Home</a>
     {% if user.is_superuser %}
         <a id="save_teams_link" href="#">Save team</a>
     {% else %}

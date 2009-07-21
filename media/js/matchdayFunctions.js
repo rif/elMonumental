@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    $("#matchdays").corner();
     $("span.async").each(function(){
         var span = $(this);
         $.post('links/', {
@@ -8,20 +9,17 @@ $(document).ready(function() {
         });
     });
     $("a.md-detail-link").click(function(e){
-        $("#placeholder").hide();
-        $("#placeholder").load("/matchday/" + $(this).parent().attr('md_id') + "/").slideDown("slow");
+        loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
         e.preventDefault();
     });
 });
 
 function showAddGuest(link) {
-    $("#placeholder").hide();
-    $("#placeholder").load(link).slideDown("slow");
+    loadPlaceholder(link);
 }
 
 function showDelGuest(link) {
-    $("#placeholder").hide();
-    $("#placeholder").load(link, function(){
+    loadPlaceholder(link, function(){
         $("a.dellink").click(function(e){
             $.post("/links/delguest/",
             {
@@ -32,7 +30,7 @@ function showDelGuest(link) {
             $(this).replaceWith('Deleted');
             e.preventDefault();
         });
-    }).slideDown("slow");
+    });
 }
 function showEmailForm(md_id) {
     $.get("/getemailform/" + md_id + "/", function(responseData){

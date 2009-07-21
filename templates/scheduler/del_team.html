@@ -1,14 +1,18 @@
 <table cellspacing="0" class="list">
+    <thead>
     <tr>
-        <th>#</th>
-        <th>Name</th>
-        <th>Actions</th>
+        <th>Id#</th>
+        <th>Team name</th>
+        <th>Action</th>
     </tr>
+    </thead>
     {% for team in team_list %}
+    <tbody>
     <tr>
         <td>{{ team.id }}</td>
         <td>{{ team.name }}</td>
         <td><a class="dellink" teamId="{{ team.id }}" matchdayId="{{ md_id }}" href="#">Delete</a></td>
     </tr>
+    </tbody>
     {% endfor %}
 </table>
