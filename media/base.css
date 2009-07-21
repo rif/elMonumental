@@ -73,11 +73,10 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .commentTime {color:#487858;}
 .team {
     background: #487858;
-    border: 1px dotted #234f32;
+    position: relative;
     float: right;
-    margin: 1%;
-    width: 48%;
-    height:100%;
+    margin: 1px;
+    width: 50%;
 }
 #drop-message {color:lightgrey;list-style-type:none;}
 #admin-links a {background:#487858;}
