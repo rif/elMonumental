@@ -1,28 +1,37 @@
 $(function() {
     $('.team').corner();
+
     $('.sortable').sortable({
         revert: false
     });
     $('.draggable').draggable({
-        stop: function() {
-                $(this).css("list-style-type", "none");
-                $(this).css("text-decoration", "line-through");
-                $(this).removeClass("draggable");
-                $(this).addClass("pinned");
+        stop: function(event, ui) {
+                var target = $(document.elementFromPoint(event.pageX, event.pageY)).parent();
+                var parent = target.parent();
+                var droppedOnTeam = false;
+                $('.team').each(function(){
+                    if($(this).attr('tm_id') == parent.attr('tm_id')){
+                        droppedOnTeam = true;
+                    }
+                });
+                if(droppedOnTeam){
+                    $(this).css("list-style-type", "none");
+                    $(this).css("text-decoration", "line-through");
+                    $(this).removeClass("draggable");
+                    $(this).addClass("pinned");
+                    $('#drop-message', target).remove();
+                    $('span.count', parent).text(target.find('li').length);
+                }
         },
         connectToSortable: '.sortable',
         addClasses: false,
         helper: 'clone',
         revert: 'invalid',
+        zIndex: 2700,
+        cursor: 'move',
         cancel: '.pinned'
     });
-    $('.team').droppable({
-        drop: function(event, ui) {
-            $('span.count', $(this)).text($(this).find('li').length - 1);
-            $('#drop-message', $(this)).remove();
-        },
-        accept: '.draggable'
-    });
+
     $('#save_teams_link').click(function(e){
         $('.team').each(function(){
             var pIdList = new Array();
