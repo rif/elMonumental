@@ -139,7 +139,17 @@ class AdminTest(TestCase):
         self.failUnlessEqual(response.content, '<p>Done, deleted 1 guest playes.</p><a href="/">Home</a>')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 0)
 
-    def test_deleteOrphanGuestsNotDeeleted(self):
+    def test_makeGuestsUnique(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        self.md.guest_stars.add(gp)
+        ogp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+        response = self.client.get('/deleteOrphanGps/')
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+
+    def test_deleteOrphanGuestsNotDeleted(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
         gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
