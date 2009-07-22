@@ -176,7 +176,6 @@ class AdminTest(TestCase):
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 2)
         self.failIfEqual(self.md.guest_stars.all()[0], self.old_md.guest_stars.all()[0])
 
-
     def test_loadAdminTeam(self):
         u1 = User.objects.create(username='rif')
         u2 = User.objects.create(username='pif')
