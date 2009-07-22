@@ -271,6 +271,31 @@ def deleteOrphanGuestPlayers(request):
         return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
 
+@login_required
+def makeGuestPlayersUnique(request):
+    def __getLastFoundGuest(gp_item):
+         for gp in GuestPlayer.objects.iterator():
+             if gp.friend_user == gp_item.friend_user and\
+             gp.first_name == gp_item.first_name and\
+             gp.last_name == gp_item.last_name:
+                 found_gp = gp
+         return found_gp
+        
+    if request.user.is_superuser:
+        foundGps = []
+        deleted = 0
+        for md in MatchDay.objects.iterator():
+            for gp in md.guest_stars.iterator():
+                last_gp = __getLastFoundGuest(gp)
+                if last_gp != gp:
+                    md.guest_stars.remove(gp)
+                    md.guest_stars.add(last_gp)
+                    gp.delete()
+                    deleted += 1
+
+        return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
+    return HttpResponse('Please come back as the admin!')
+
 def proposals(request, md_id):
     proposal_list = Proposal.objects.filter(matchday__pk=md_id)
     return render_to_response('scheduler/proposal_list.html',
