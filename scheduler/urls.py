@@ -48,5 +48,7 @@ urlpatterns += patterns('',
     url(r'^addProposal/$', views.addProposal, name='sch_addproposal'),
     url(r'^matchday/(?P<md_id>\d+)/proposals/$', views.proposals, name='sch_matchday-proposals'),
     url(r'^proposal/(?P<pid>\d+)/delete/$', views.delProposal, name='sch_delproposal'),
+                        
     url(r'deleteOrphanGps/$', views.deleteOrphanGuestPlayers, name='sch_delorphangps'),
+    url(r'uniqueGps/$', views.makeGuestPlayersUnique, name='sch_makegpunique'),
 )
