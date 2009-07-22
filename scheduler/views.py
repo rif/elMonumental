@@ -110,7 +110,13 @@ def delGuestCallback(request):
             pass
         if gp != None:
             md.guest_stars.remove(gp)
-            gp.delete()
+            usedByOthers = False
+            for md in MatchDay.objects.iterator():
+                if gp in md.guest_stars.all():
+                    usedByOthers = True
+                    break
+            if not usedByOthers:
+                gp.delete()
             request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
                                             % (gp.get_full_name(), md.id))
             return HttpResponse('')
@@ -129,7 +135,7 @@ def sendEmail(request, md_id):
             message = request.POST['message']
             fromEmail = request.user.email
             toList = []
-            for user in User.objects.all():
+            for user in User.objects.iterator():
                 try:
                     if user.get_profile().receive_email:
                         toList.append(user.email)
@@ -255,16 +261,14 @@ def addProposal(request):
 @login_required
 def deleteOrphanGuestPlayers(request):
     if request.user.is_superuser:
-        guestPlayers = GuestPlayer.objects.all()
-        matchdays = MatchDay.objects.all()
         foundGps = []
         deleted = 0
-        for md in matchdays:
-            for gp in md.guest_stars.all():
+        for md in MatchDay.objects.iterator():
+            for gp in md.guest_stars.iterator():
                 if gp not in foundGps:
                     foundGps.append(gp)
 
-        for gp in guestPlayers:
+        for gp in GuestPlayer.objects.iterator():
             if gp not in foundGps:
                 gp.delete()
                 deleted += 1
