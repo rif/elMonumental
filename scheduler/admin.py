@@ -11,6 +11,15 @@ class MatchDayAdmin(admin.ModelAdmin):
     search_fields = ['location']
     date_hierarchy = 'start_date'
 
+class TeamAdmin(admin.ModelAdmin):
+    fieldsets = [
+        (None,               {'fields': ['name', 'matchday']}),
+        ('Participants', {'fields': ['participants', 'guest_stars'], 'classes': ['collapse']}),
+    ]
+
+class GuestPlayerAdmin(admin.ModelAdmin):
+    search_fields = ['first_name', 'last_name']
+
 class TeamsInline(admin.StackedInline):
     model = Team
     max_num = 2
@@ -20,8 +29,8 @@ class MatchDayAdminWithTeams(MatchDayAdmin):
 
 admin.site.register(MatchDay, MatchDayAdmin)
 admin.site.register(PlayerProfile)
-admin.site.register(GuestPlayer)
-admin.site.register(Team)
+admin.site.register(GuestPlayer, GuestPlayerAdmin)
+admin.site.register(Team, TeamAdmin)
 admin.site.register(Proposal)
 admin.site.unregister(MatchDay)
 admin.site.register(MatchDay, MatchDayAdminWithTeams)
