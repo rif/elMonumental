@@ -293,22 +293,11 @@ def makeGuestPlayersUnique(request):
             for gp in md.guest_stars.iterator():
                 other_gp = __getOtherFoundGuest(gp)
                 mad = MatchDay.objects.get(pk = '3')
-                print "mad1:",mad.guest_stars.all()[0].id
                 if other_gp != None:
-                    print "md: ", md.id
-                    print "this gp: ", gp.id
-                    print "other gp: ", other_gp.id
-                    print "before: ", md.guest_stars.all()[0].id
                     md.guest_stars.remove(gp)
-                    print "mad2:",mad.guest_stars.all()[0].id
                     md.guest_stars.add(other_gp)
-                    print "mad3:",mad.guest_stars.all()[0].id
                     md.save()
-                    print "mad4:",mad.guest_stars.all()[0].id
-                    print "gp to delete: ", gp.id
                     gp.delete()
-                    print "mad5:",mad.guest_stars.all()[0].id
-                    print "after: ", md.guest_stars.all()[0].id
                     deleted += 1
         return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
