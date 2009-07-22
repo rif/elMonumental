@@ -35,7 +35,7 @@ Guest Stars:
 <div id="teams" md_id="{{ object.id }}">
     {% for team in object.team_set.all %}
         <div class="team" tm_id="{{ team.id }}">
-            <h4>Team {{ team }} Players: <span class="count">0</span></h4>
+            <h4 id="team_title">Team {{ team }} Players: <span class="count">0</span></h4>
             <ol class="sortable">
                 <li id="drop-message">Drop players here!</li>
             </ol>
@@ -47,7 +47,7 @@ Guest Stars:
     {% if user.is_superuser %}
         <a id="save_teams_link" href="#">Save team</a>
     {% else %}
-        <a id="save_teams_link" href="#">Save proposal</a>
+        <a id="save_proposal_link" href="#">Save proposal</a>
     {% endif %}
 </div>
 {% endblock %}

@@ -3,14 +3,11 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
-
-SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
-STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
-CONTROLL_CHOICES = ((u'LP', u'Light Post'), (u'EV', u'Evitationist'), (u'NW', u'Needle Worker'), (u'RN', u'Ronaldinho'),)
-SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
-
-
 class PlayerProfile(models.Model):
+    SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
+    STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
+    CONTROLL_CHOICES = ((u'LP', u'Light Post'), (u'EV', u'Evitationist'), (u'NW', u'Needle Worker'), (u'RN', u'Ronaldinho'),)
+    SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
     receive_email = models.BooleanField('Do you want to by notified by email?', default=True)
@@ -45,6 +42,9 @@ class GuestPlayer(models.Model):
 
     def __unicode__(self):
         return self.get_full_name() + ' invited by ' + self.friend_user.username
+    
+    class Meta:
+        unique_together = ('friend_user', 'first_name', 'last_name')
 
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
@@ -78,6 +78,13 @@ class Team(models.Model):
     def __unicode__(self):
         return self.name
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('sch_matchday-teams', (), { 'object_id': self.matchday.id })
+
+    class Meta:
+        unique_together = ('name', 'matchday')
+
 def user_profile_handler(sender, **kwargs):
     newUser = kwargs['instance']
     if kwargs['created']:
@@ -94,5 +101,8 @@ class Proposal(models.Model):
 
     def __unicode__(self):
         return self.user.get_full_name() + "'s proposal for " + str(self.matchday)
+
+    class Meta:
+        unique_together = ('user', 'matchday')
 
 post_save.connect(user_profile_handler, sender=User)

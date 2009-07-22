@@ -29,7 +29,7 @@ def abandon(request, md_id):
     if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-    if request.user in md.participants.iterator():
+    if request.user in md.participants.all():
         md.participants.remove(request.user)
         request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
                                         % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
@@ -43,7 +43,7 @@ def linkQuerry(request):
         md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
         href = ''
         if md.isFuture():
-            if request.user in md.participants.iterator():
+            if request.user in md.participants.all():
                 href += '<a href="%s">Abandon</a>' % reverse('sch_matchday-abandon', args=[md.id])
             else:
                 href += '<a href="%s" href="#">Attend</a>' % reverse('sch_matchday-attend', args=[md.id])
@@ -90,7 +90,7 @@ def delGuest(request, md_id):
     if not __isMatchdayInFuture(request, md):
         return HttpResponseRedirect(reverse('sch_matchday-list'))
 
-    gsl = [gs for gs in md.guest_stars.iterator() if gs.friend_user == request.user]
+    gsl = [gs for gs in md.guest_stars.all() if gs.friend_user == request.user]
     if len(gsl) == 0:
         return HttpResponse('You did not added any guest players to this metchday!')
     return render_to_response('scheduler/del_guest.html',
@@ -210,39 +210,47 @@ def loadTeam(request):
             team.guest_stars.clear()
             if plIds != '':
                 for plId in plIds.split(','):
-                    pl = User.objects.get(pk=plId)
-                    team.participants.add(pl)
+                    try:
+                        pl = User.objects.get(pk=plId)
+                        team.participants.add(pl)
+                    except: pass
             if glIds != '':
                 for gpId in glIds.split(','):
-                    gp = GuestPlayer.objects.get(pk=gpId)
-                    team.guest_stars.add(gp)
+                    try:
+                        gp = GuestPlayer.objects.get(pk=gpId)
+                        team.guest_stars.add(gp)
+                    except: pass
             team.save()
             request.user.message_set.create(message='Saved team %s.' % team.name)
-        else:
-            text = ""
-            if plIds != '':
-                for plId in plIds.split(','):
-                    pl = User.objects.get(pk=plId)
-                    text += "<li>" + pl.get_full_name() + "</li>"
-            if glIds != '':
-                for gpId in glIds.split(','):
-                    gp = GuestPlayer.objects.get(pk=gpId)
-                    text += "<li>" + gp.get_full_name() + "</li>"
-            if text != "":
-                text = "<ol>" + text + "</ol>"
-                text = "Team " + team.name + ": " + text
-                try:
-                    prop = Proposal.objects.filter(matchday__pk=team.matchday.id).get(user__pk=request.user.id)
-                    if prop.teams.count("<ol>") > 1:
-                        prop.teams = text
-                    else:
-                        prop.teams += text
-                    prop.save()
-                except:
-                    prop = Proposal.objects.create(user=request.user, matchday=team.matchday, teams=text)
-                request.user.message_set.create(message='Saved proposal %s.' % str(prop))
-        return HttpResponse('Done!')
     return HttpResponseRedirect(reverse('sch_matchday-list'))
+
+@login_required
+def addProposal(request):
+    md = get_object_or_404(MatchDay, pk = request.POST['md_id'])
+    if not __isMatchdayInFuture(request, md):
+        return HttpResponseRedirect(reverse('sch_matchday-list'))
+    if request.method == 'POST':
+        entries = request.POST['entries']
+        entries = entries.split('|')
+        text = ""
+        for team in entries:
+            team = team.strip(',')
+            team = team.split(',')
+            if team[0] != '':
+                text += team[0] + "<ol>"
+                for line in team[1:]: 
+                    if line != '':
+                        text += "<li>" + line + "</li>"
+                text += "</ol>"
+        if text != "": 
+            try:
+                prop = Proposal.objects.filter(matchday__pk=md.id).get(user__pk=request.user.id)
+                prop.teams = text
+                prop.save()
+            except:
+                prop = Proposal.objects.create(user=request.user, matchday=md, teams=text)
+            request.user.message_set.create(message='Saved proposal %s.' % str(prop))
+    return HttpResponse('Done!')
 
 @login_required
 def deleteOrphanGuestPlayers(request):
@@ -252,7 +260,7 @@ def deleteOrphanGuestPlayers(request):
         foundGps = []
         deleted = 0
         for md in matchdays:
-            for gp in md.guest_stars.iterator():
+            for gp in md.guest_stars.all():
                 if gp not in foundGps:
                     foundGps.append(gp)
 
