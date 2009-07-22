@@ -292,7 +292,6 @@ def makeGuestPlayersUnique(request):
         for md in MatchDay.objects.iterator():
             for gp in md.guest_stars.iterator():
                 other_gp = __getOtherFoundGuest(gp)
-                mad = MatchDay.objects.get(pk = '3')
                 if other_gp != None:
                     md.guest_stars.remove(gp)
                     md.guest_stars.add(other_gp)
