@@ -112,6 +112,8 @@ class AdminTest(TestCase):
         self.admin.save()
         future = datetime(2080, 07, 10)
         self.md = MatchDay.objects.create(start_date=future)
+        past = datetime(2009, 06, 12)
+        self.old_md = MatchDay.objects.create(start_date = past)
         self.team = Team.objects.create(name='A', matchday=self.md)
 
     def test_index(self):
@@ -128,7 +130,7 @@ class AdminTest(TestCase):
     def test_feed(self):
         response = self.client.get('/feeds/latest/')
         self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(len(response.content), 768)
+        self.failUnlessEqual(len(response.content), 1289)
 
     def test_deleteOrphanGuests(self):
         logged_in = self.client.login(username='admin', password='test')
@@ -139,16 +141,6 @@ class AdminTest(TestCase):
         self.failUnlessEqual(response.content, '<p>Done, deleted 1 guest playes.</p><a href="/">Home</a>')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 0)
 
-    def test_makeGuestsUnique(self):
-        logged_in = self.client.login(username='admin', password='test')
-        self.assertTrue(logged_in)
-        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
-        self.md.guest_stars.add(gp)
-        ogp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
-        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
-        response = self.client.get('/deleteOrphanGps/')
-        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
-
     def test_deleteOrphanGuestsNotDeleted(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
@@ -157,6 +149,33 @@ class AdminTest(TestCase):
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+
+    def test_makeGuestsUnique(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        self.md.guest_stars.add(gp)
+        ogp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        self.old_md.guest_stars.add(ogp)
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 2)
+        response = self.client.get('/uniqueGps/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
+        self.failUnlessEqual(self.md.guest_stars.all()[0], self.old_md.guest_stars.all()[0])
+
+    def test_makeGuestsUniqueNotDeleted(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        self.md.guest_stars.add(gp)
+        ogp = GuestPlayer.objects.create(first_name = 'Radu1', last_name = 'Fericean')
+        self.old_md.guest_stars.add(ogp)
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 2)
+        response = self.client.get('/uniqueGps/')
+        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(len(GuestPlayer.objects.all()), 2)
+        self.failIfEqual(self.md.guest_stars.all()[0], self.old_md.guest_stars.all()[0])
+
 
     def test_loadAdminTeam(self):
         u1 = User.objects.create(username='rif')
