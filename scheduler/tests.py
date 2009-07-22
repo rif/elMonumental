@@ -48,16 +48,31 @@ class GuestTest(TestCase):
         self.failUnlessEqual(gp.get_full_name(), 'Radu Fericean')
 
     def test_del_guest_callback(self):
-        self.assertTrue(self.gp in self.md.guest_stars.all())
-        response = self.client.post('/links/delguest/', {'md_id': self.md.id, 'guest_id': self.gp.id})
+        ogp = GuestPlayer.objects.create(friend_user=self.user, first_name='Bobo', last_name='Crem')
+        self.md.guest_stars.add(ogp)
+        self.assertTrue(ogp in self.md.guest_stars.all())
+        self.assertTrue(ogp in GuestPlayer.objects.all())
+        response = self.client.post('/links/delguest/', {'md_id': self.md.id, 'guest_id': ogp.id})
         self.failUnlessEqual(response.status_code, 200)
-        self.assertFalse(self.gp in self.md.guest_stars.all())
+        self.assertFalse(ogp in self.md.guest_stars.all())
+        self.assertFalse(ogp in GuestPlayer.objects.all())
 
     def test_old_del_guest_callback(self):
         self.assertTrue(self.gp in self.md.guest_stars.all())
         response = self.client.post('/links/delguest/', {'md_id': self.old_md.id, 'guest_id': self.gp.id})
         self.failUnlessEqual(response.status_code, 302)
         self.assertTrue(self.gp in self.old_md.guest_stars.all())
+        self.assertTrue(self.gp in GuestPlayer.objects.all())
+
+    def test_more_than_one_del_guest_callback(self):
+        self.assertTrue(self.gp in self.md.guest_stars.all())
+        other_md = MatchDay.objects.create(start_date = datetime(2080, 07, 10))
+        other_md.guest_stars.add(self.gp)
+        self.assertTrue(self.gp in other_md.guest_stars.all())
+        response = self.client.post('/links/delguest/', {'md_id': self.md.id, 'guest_id': self.gp.id})
+        self.failUnlessEqual(response.status_code, 200)
+        self.assertTrue(self.gp in other_md.guest_stars.all())
+        self.assertTrue(self.gp in GuestPlayer.objects.all())
 
     def test_del_guest_list(self):
         self.assertTrue(self.gp in self.md.guest_stars.all())
