@@ -275,28 +275,41 @@ def deleteOrphanGuestPlayers(request):
         return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
 
+
 @login_required
-def makeGuestPlayersUnique(request):
-    def __getLastFoundGuest(gp_item):
-         for gp in GuestPlayer.objects.iterator():
-             if gp.friend_user == gp_item.friend_user and\
-             gp.first_name == gp_item.first_name and\
-             gp.last_name == gp_item.last_name:
-                 found_gp = gp
-         return found_gp
-        
+def makeGuestPlayersUnique(request):    
+    def __getOtherFoundGuest(gp_item):
+        for gp in GuestPlayer.objects.iterator():
+            if gp.id != gp_item.id and\
+                    gp.friend_user == gp_item.friend_user and\
+                    gp.get_full_name() == gp_item.get_full_name():
+                return gp
+        return None
+
     if request.user.is_superuser:
         foundGps = []
         deleted = 0
-        for md in MatchDay.objects.iterator():
+        for md in MatchDay.objects.order_by('start_date'):
             for gp in md.guest_stars.iterator():
-                last_gp = __getLastFoundGuest(gp)
-                if last_gp != gp:
+                other_gp = __getOtherFoundGuest(gp)
+                mad = MatchDay.objects.get(pk = '3')
+                print "mad1:",mad.guest_stars.all()[0].id
+                if other_gp != None:
+                    print "md: ", md.id
+                    print "this gp: ", gp.id
+                    print "other gp: ", other_gp.id
+                    print "before: ", md.guest_stars.all()[0].id
                     md.guest_stars.remove(gp)
-                    md.guest_stars.add(last_gp)
+                    print "mad2:",mad.guest_stars.all()[0].id
+                    md.guest_stars.add(other_gp)
+                    print "mad3:",mad.guest_stars.all()[0].id
+                    md.save()
+                    print "mad4:",mad.guest_stars.all()[0].id
+                    print "gp to delete: ", gp.id
                     gp.delete()
+                    print "mad5:",mad.guest_stars.all()[0].id
+                    print "after: ", md.guest_stars.all()[0].id
                     deleted += 1
-
         return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
 
