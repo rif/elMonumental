@@ -49,7 +49,7 @@ $(function() {
                     gIdList.push(guId);
                     found = true;
                 }
-            })
+	    });
             if(found){
                 $.post('/loadTeam/',
                         {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")}
@@ -58,6 +58,26 @@ $(function() {
         });
         showMessages();
         e.preventDefault();
+    });
+    $('#save_proposal_link').click(function(e){
+	var found = false;
+	var pList = new Array();
+	$('.team').each(function(){
+	    pList.push($.trim($('#team_title', this).text()));
+            $('li', $(this)).each(function(){
+		var plName = $.trim($(this).text());
+                if(plName != null){
+                    pList.push(plName);
+                    found = true;
+                }
+	    });
+	    pList.push("|");
+        });
+	if(found){
+	    $.post('/addProposal/', {'md_id': $('#teams').attr('md_id'), 'entries': pList.join(",")});
+	}
+        showMessages();
+	e.preventDefault();
     });
     $('#create_team_link').click(function(e){
         loadPlaceholder($(this).attr("link"));

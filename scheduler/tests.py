@@ -2,7 +2,7 @@ from datetime import datetime
 from django.core import mail
 from django.contrib.auth.models import User
 from django.test import TestCase
-from scheduler.models import GuestPlayer, PlayerProfile, MatchDay, Team
+from scheduler.models import GuestPlayer, PlayerProfile, MatchDay, Team, Proposal
 
 class ProfileTest(TestCase):
     def test_is_filled_empty(self):
@@ -32,18 +32,14 @@ class ProfileTest(TestCase):
 
 class GuestTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user('rif', 'rif@user.ad', 'test')
+        self.user = User.objects.create_user('rif', 'test@test.te', 'test')
         self.user.save()
         self.logged_in = self.client.login(username='rif', password='test')
         future = datetime(2080, 07, 10)
-        self.md = MatchDay(start_date = future)
-        self.md.save()
+        self.md = MatchDay.objects.create(start_date = future)
         past = datetime(2009, 06, 12)
-        self.old_md = MatchDay(start_date = past)
-        self.old_md.save()
-        self.gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
-        self.gp.friend_user = self.user
-        self.gp.save()
+        self.old_md = MatchDay.objects.create(start_date = past)
+        self.gp = GuestPlayer.objects.create(friend_user=self.user, first_name='Radu', last_name='Fericean')
         self.md.guest_stars.add(self.gp)
         self.old_md.guest_stars.add(self.gp)
 
@@ -52,19 +48,19 @@ class GuestTest(TestCase):
         self.failUnlessEqual(gp.get_full_name(), 'Radu Fericean')
 
     def test_del_guest_callback(self):
-        self.assertTrue(self.gp in self.md.guest_stars.iterator())
+        self.assertTrue(self.gp in self.md.guest_stars.all())
         response = self.client.post('/links/delguest/', {'md_id': self.md.id, 'guest_id': self.gp.id})
         self.failUnlessEqual(response.status_code, 200)
-        self.assertFalse(self.gp in self.md.guest_stars.iterator())
+        self.assertFalse(self.gp in self.md.guest_stars.all())
 
     def test_old_del_guest_callback(self):
-        self.assertTrue(self.gp in self.md.guest_stars.iterator())
+        self.assertTrue(self.gp in self.md.guest_stars.all())
         response = self.client.post('/links/delguest/', {'md_id': self.old_md.id, 'guest_id': self.gp.id})
         self.failUnlessEqual(response.status_code, 302)
-        self.assertTrue(self.gp in self.old_md.guest_stars.iterator())
+        self.assertTrue(self.gp in self.old_md.guest_stars.all())
 
     def test_del_guest_list(self):
-        self.assertTrue(self.gp in self.md.guest_stars.iterator())
+        self.assertTrue(self.gp in self.md.guest_stars.all())
         response = self.client.post('/delguest/%s/' % self.md.id)
         self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(response.context['guest_list'], [self.gp])
@@ -92,18 +88,16 @@ class MatchDayTest(TestCase):
 
     def test_matchday_found(self):
         today = datetime.today()
-        md = MatchDay(start_date=today)
-        md.save()
+        md = MatchDay.objects.create(start_date=today)
         self.failUnlessEqual(MatchDay.objects.get(id='1'), md)
 
 class AdminTest(TestCase):
     def setUp(self):
-        admin = User.objects.create_user('admin', 'admin@admin.ad', 'test')
-        admin.is_superuser=True
-        admin.save()
+        self.admin = User.objects.create_superuser('admin', 'admin@admin.ad', 'test')
+        self.admin.save()
         future = datetime(2080, 07, 10)
-        self.md = MatchDay(start_date=future)
-        self.md.save()
+        self.md = MatchDay.objects.create(start_date=future)
+        self.team = Team.objects.create(name='A', matchday=self.md)
 
     def test_index(self):
         response = self.client.get('/')
@@ -124,8 +118,7 @@ class AdminTest(TestCase):
     def test_deleteOrphanGuests(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
-        gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
-        gp.save()
+        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
         self.failUnlessEqual(response.content, '<p>Done, deleted 1 guest playes.</p><a href="/">Home</a>')
@@ -134,34 +127,69 @@ class AdminTest(TestCase):
     def test_deleteOrphanGuestsNotDeeleted(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
-        gp = GuestPlayer(first_name = 'Radu', last_name = 'Fericean')
-        gp.save()
+        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
         self.md.guest_stars.add(gp)
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
 
+    def test_loadAdminTeam(self):
+        u1 = User.objects.create(username='rif')
+        u2 = User.objects.create(username='pif')
+        g1 = GuestPlayer.objects.create(friend_user=u1, first_name='Alex', last_name='DelPiero')
+        g2 = GuestPlayer.objects.create(friend_user=u1, first_name='Bobo', last_name='Crem')
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        response = self.client.post('/loadTeam/', {'teamId': '1', 'pList': '1,2,3', 'gList': '1,2'})
+        self.failUnlessEqual(response.status_code, 302)
+        user_list = (self.admin, u1, u2)
+        team_user_list = self.team.participants.all()
+        self.failUnlessEqual(user_list[0], team_user_list[0])
+        self.failUnlessEqual(user_list[1], team_user_list[1])
+        self.failUnlessEqual(user_list[2], team_user_list[2])
+        guest_list = (g1, g2)
+        team_guest_list = self.team.guest_stars.all()
+        self.failUnlessEqual(guest_list[0], team_guest_list[0])
+        self.failUnlessEqual(guest_list[1], team_guest_list[1])
+
+    def test_loadTeam404(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        response = self.client.post('/loadTeam/', {'teamId': '2', 'pList': '1', 'gList': '1'})
+        self.failUnlessEqual(response.status_code, 404)
+
+    def test_loadAdminTeamWrongIds(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        response = self.client.post('/loadTeam/', {'teamId': '1', 'pList': '1,2,3', 'gList': '1,2'})
+        self.failUnlessEqual(response.status_code, 302)
+        user_list = (self.admin,)
+        team_user_list = self.team.participants.all()
+        self.failUnlessEqual(user_list[0], team_user_list[0])
+        self.failUnlessEqual(len(self.team.guest_stars.all()), 0)
+
 class ViewsTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user('rif', 'rif@user.ad', 'test')
+        self.user = User.objects.create_user('rif', 'test@test.te', 'test')
+        self.user.first_name="Radu"
+        self.user.last_name="Fericean"
         self.user.save()
         self.logged_in = self.client.login(username='rif', password='test')
         future = datetime(2080, 07, 10)
-        self.md = MatchDay(start_date = future)
-        self.md.save()
+        self.md = MatchDay.objects.create(start_date = future)
         past = datetime(2009, 06, 12)
-        self.old_md = MatchDay(start_date = past)
-        self.old_md.save()
+        self.old_md = MatchDay.objects.create(start_date = past)
+        self.team = Team.objects.create(name='A', matchday=self.md)
 
     def test_attend(self):
         self.assertTrue(self.logged_in)
         self.client.get('/attend/%s/' % self.md.id)
-        self.assertTrue(self.user in self.md.participants.iterator())
+        self.assertTrue(self.user in self.md.participants.all())
 
     def test_old_attend(self):
         self.assertTrue(self.logged_in)
         self.client.get('/attend/%s/' % self.old_md.id)
-        self.assertFalse(self.user in self.old_md.participants.iterator())
+        self.assertFalse(self.user in self.old_md.participants.all())
 
     def test_double_attend(self):
         self.assertTrue(self.logged_in)
@@ -172,13 +200,13 @@ class ViewsTest(TestCase):
         self.assertTrue(self.logged_in)
         self.client.get('/attend/%s/' % self.md.id)
         self.client.get('/abandon/%s/' % self.md.id)
-        self.assertFalse(self.user in self.md.participants.iterator())
+        self.assertFalse(self.user in self.md.participants.all())
 
     def test_double_abandon(self):
         self.assertTrue(self.logged_in)
         self.client.get('/abandon/%s/' % self.md.id)
         self.client.get('/abandon/%s/' % self.md.id)
-        self.assertFalse(self.user in self.md.participants.iterator())
+        self.assertFalse(self.user in self.md.participants.all())
 
     def test_get_links_attend(self):
         response = self.client.post('/links/', {'md_id': self.md.id,})
@@ -212,13 +240,69 @@ class ViewsTest(TestCase):
         self.assertTrue(team in Team.objects.all())
 
     def test_del_team_list(self):
-        team = Team.objects.create(name="Bursucii", matchday=self.md)
-        self.assertTrue(team in Team.objects.all())
+        self.assertTrue(self.team in Team.objects.all())
         response = self.client.post('/delteam/%s/' % self.md.id)
         self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.context['team_list'][0], team)
+        self.failUnlessEqual(response.context['team_list'][0], self.team)
 
+    def test_proposal(self):
+        entries = "Team A,rif,pif,|,Team B,test,best,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)
+        
+        prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+        self.assertTrue(prop is not None)
+        self.failUnlessEqual(prop.teams, 'Team A<ol><li>rif</li><li>pif</li></ol>Team B<ol><li>test</li><li>best</li></ol>')
+    def test_proposalSingle(self):
+        entries = "Team A,rif,pif,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)
+        
+        prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+        self.assertTrue(prop is not None)
+        self.failUnlessEqual(prop.teams, 'Team A<ol><li>rif</li><li>pif</li></ol>')
 
+    def test_proposalWrongEntries(self):
+        self.assertTrue(self.logged_in)
+        entries = ""
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)    
+        try:
+            prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+            self.assertTrue(False)
+        except:pass
+
+    def test_proposalDoubleSave(self):
+        self.assertTrue(self.logged_in)
+        entries = "Team A,rif,pif,|,Team B,test,best,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)    
+        prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+        self.assertTrue(prop is not None)
+        self.failUnlessEqual(prop.teams, 'Team A<ol><li>rif</li><li>pif</li></ol>Team B<ol><li>test</li><li>best</li></ol>')
+
+    def test_proposalSpecialCaseTwoTeams(self):
+        self.assertTrue(self.logged_in)
+        entries = "Team A,rif,pif,|,Team B,test,best,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)
+        single = "Team A,rif,pif,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': single})
+        self.failUnlessEqual(response.status_code, 200)
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(response.status_code, 200)    
+        prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+        self.assertTrue(prop is not None)
+        self.failUnlessEqual(prop.teams, 'Team A<ol><li>rif</li><li>pif</li></ol>Team B<ol><li>test</li><li>best</li></ol>')
+
+    def test_uniqueTeamNames(self):
+        try:
+            teamABis = Team.objects.create(name='A', matchday=self.md)
+            self.assertTrue(False)
+        except: pass
+        
 __test__ = {"doctest": """
 Another way to test that 1 + 1 is equal to 2.
 
