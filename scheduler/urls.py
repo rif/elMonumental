@@ -6,26 +6,45 @@ from feeds import LatestMatchDays
 
 feeds = {'latest': LatestMatchDays,}
 md_info = {'queryset': MatchDay.objects.all()}
-proposal_info = {'queryset': Proposal.objects.all(), 'template_name': 'scheduler/proposal_detail.html',}
+proposal_info = {'queryset': Proposal.objects.all()}
 
 urlpatterns = patterns('django.views.generic.list_detail',
-    url(r'^$', 'object_list', dict(md_info, paginate_by=10), name='sch_matchday_list'),
-    url(r'^matchday/(?P<object_id>\d+)/$', 'object_detail', md_info, name='sch_matchday_detail'),
-    url(r'^matchday/(?P<object_id>\d+)/rss/$', 'object_detail', dict(md_info, template_name='feeds/matchday_rssdetail.html'), name='sch_rss_detail'),
-    url(r'^matchday/(?P<object_id>\d+)/teams/$', 'object_detail', dict(md_info, template_name='scheduler/teams.html'), name='sch_team_detail'),
-    url(r'^getemailform/(?P<object_id>\d+)/$', 'object_detail', dict(md_info, template_name='scheduler/send_email_form.html'), name='sch_email_ajax'),
-    url(r'^proposal/(?P<object_id>\d+)/$', 'object_detail', proposal_info, name='sch_proposal_ajax'),
+    url(r'^$', 'object_list',
+        dict(md_info, paginate_by = 10),
+        name='sch_matchday_list'),
+    url(r'^matchday/(?P<object_id>\d+)/$',
+        'object_detail',
+        md_info,
+        name='sch_matchday_detail'),
+    url(r'^matchday/(?P<object_id>\d+)/rss/$',
+        'object_detail',
+        dict(md_info, template_name = 'feeds/matchday_rssdetail.html'),
+        name='sch_rss_detail'),
+    url(r'^matchday/(?P<object_id>\d+)/teams/$',
+        'object_detail',
+        dict(md_info, template_name = 'scheduler/teams.html'),
+        name='sch_team_detail'),
+    url(r'^getemailform/(?P<object_id>\d+)/$',
+        'object_detail',
+        dict(md_info, template_name = 'scheduler/send_email_form.html'),
+        name='sch_email_ajax'),
+    url(r'^proposal/(?P<object_id>\d+)/$',
+    'object_detail',
+    dict(proposal_info, template_name = 'scheduler/proposal_detail.html'),
+    name='sch_proposal_ajax'),
 )
 
-urlpatterns += patterns('django.views.generic.simple',
-    (r'^messages/$', 'direct_to_template', {'template': 'scheduler/messages.html'}),
-)
-
-
-# override forms from registration
 urlpatterns += patterns('',
-    url(r'^accounts/register/$', 'registration.views.register', {'form_class' : PlayerRegistrationForm}, name='registration_register'),
-    url(r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.feed', {'feed_dict': feeds}),
+    url(r'^accounts/register/$',
+        'registration.views.register',
+        {'form_class' : PlayerRegistrationForm},
+        name='registration_register'),
+    url(r'^feeds/(?P<url>.*)/$',
+        'django.contrib.syndication.views.feed',
+        {'feed_dict': feeds}),
+    url(r'^messages/$',
+        'django.views.generic.simple.direct_to_template',
+        {'template': 'scheduler/messages.html'})
 )
 
 urlpatterns += patterns('',
