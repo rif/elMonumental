@@ -42,7 +42,7 @@ class GuestPlayer(models.Model):
 
     def __unicode__(self):
         return self.get_full_name() + ' invited by ' + self.friend_user.username
-    
+
     class Meta:
         unique_together = ('friend_user', 'first_name', 'last_name')
 
@@ -66,7 +66,7 @@ class MatchDay(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('sch_matchday-detail', (), { 'object_id': self.id })
+        return ('sch_matchday_detail', (), { 'object_id': self.id })
 
 
 class Team(models.Model):
@@ -80,7 +80,7 @@ class Team(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('sch_matchday-teams', (), { 'object_id': self.matchday.id })
+        return ('sch_team_detail', (), { 'object_id': self.matchday.id })
 
     class Meta:
         unique_together = ('name', 'matchday')
