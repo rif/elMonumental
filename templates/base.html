@@ -35,8 +35,8 @@
             {% if user.is_superuser %}
             <div id="admin-links">
                 <a class="ui-corner-all" href="/admin/">Administration</a>
-                <a href="{% url sch_delorphangps %}">Delete Orphan GuestPlayers</a>
-	        <a href="{% url sch_makegpunique %}">Make GuestPlayers Unique</a>
+                <a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
+            <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>
             </div>
             {% endif %}
         </div>

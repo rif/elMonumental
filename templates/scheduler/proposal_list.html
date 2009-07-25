@@ -8,9 +8,9 @@
 <ul>
 {% for proposal in proposal_list %}
     <li>
-        <a href="#" class="proposals_link" link="{% url sch_proposal-ajax proposal.id %}">{{ proposal }}</a>
+        <a href="#" class="proposals_link" link="{% url sch_proposal_ajax proposal.id %}">{{ proposal }}</a>
         {% ifequal user proposal.user %}
-            - <a href="#" class="delete_proposal_link" link="{% url sch_delproposal proposal.id %}">Delete</a>
+            - <a href="#" class="delete_proposal_link" link="{% url sch_proposal_del proposal.id %}">Delete</a>
         {% endifequal %}
     </li>
 {% empty %}

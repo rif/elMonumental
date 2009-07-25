@@ -1,6 +1,6 @@
-<form method="post" action="{% url sch_addguest md_id %}">
+<form method="post" action="{% url sch_guest_add md_id %}">
     <table>
         {{ form.as_table }}
     </table>
-    <input type="submit" value="Save Guest Details"/><input type="hidden" name="next" value="{% url sch_matchday-list %}" />
+    <input type="submit" value="Save Guest Details"/><input type="hidden" name="next" value="{% url sch_matchday_list %}" />
 </form>
