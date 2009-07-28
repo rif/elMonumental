@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
@@ -250,7 +250,7 @@ def addProposal(request):
                 text += "</ol>"
         if text != "":
             try:
-                prop = Proposal.objects.filter(matchday__pk=md.id).get(user__pk=request.user.id)
+                prop = Proposal.objects.get(matchday__pk=md.id, user__pk=request.user.id)
                 prop.teams = text
                 prop.save()
             except:
