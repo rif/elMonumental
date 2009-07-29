@@ -79,8 +79,7 @@ def addGuest(request, md_id):
     else:
         form = GuestPlayerForm()
     return render_to_response('scheduler/add_guest.html',
-                              {'form': form, 'md_id': md_id},
-                              context_instance=RequestContext(request))
+                              {'form': form, 'md_id': md_id})
 
 def delGuest(request, md_id):
     if not request.user.is_authenticated():
@@ -94,8 +93,7 @@ def delGuest(request, md_id):
     if len(gsl) == 0:
         return HttpResponse('You did not added any guest players to this metchday!')
     return render_to_response('scheduler/del_guest.html',
-                             {'guest_list': gsl, 'md_id': md_id},
-                              context_instance=RequestContext(request))
+                             {'guest_list': gsl, 'md_id': md_id})
 
 @login_required
 def delGuestCallback(request):
@@ -150,7 +148,8 @@ def sendEmail(request, md_id):
 def comment(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
     return render_to_response('scheduler/comment.html',
-                             {'matchday': md}, context_instance=RequestContext(request))
+                             {'matchday': md},
+                              context_instance=RequestContext(request))
 
 def addTeam(request, md_id):
     if not request.user.is_authenticated():
@@ -171,8 +170,7 @@ def addTeam(request, md_id):
     else:
         form = TeamForm()
     return render_to_response('scheduler/add_team.html',
-                              {'form': form, 'md_id': md_id},
-                              context_instance=RequestContext(request))
+                              {'form': form, 'md_id': md_id})
 
 def delTeam(request, md_id):
     if not request.user.is_authenticated():
@@ -186,8 +184,7 @@ def delTeam(request, md_id):
     if len(teamList) == 0:
         return HttpResponse('You did not added any teams to this metchday!')
     return render_to_response('scheduler/del_team.html',
-                             {'team_list': teamList, 'md_id': md_id},
-                              context_instance=RequestContext(request))
+                             {'team_list': teamList, 'md_id': md_id})
 
 @login_required
 def delTeamCallback(request):
