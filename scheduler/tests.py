@@ -124,6 +124,7 @@ class AdminTest(TestCase):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
         response = self.client.post('/sendemail/1/', {'subject': 'test', 'message': 'test'})
+        self.failUnlessEqual(response.status_code, 302)
         self.failUnlessEqual(len(mail.outbox), 1)
         self.failUnlessEqual(mail.outbox[0].subject, 'test')
 
@@ -135,7 +136,7 @@ class AdminTest(TestCase):
     def test_deleteOrphanGuests(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
-        gp = GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
+        GuestPlayer.objects.create(first_name = 'Radu', last_name = 'Fericean')
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
         self.failUnlessEqual(response.content, '<p>Done, deleted 1 guest playes.</p><a href="/">Home</a>')
@@ -148,6 +149,7 @@ class AdminTest(TestCase):
         self.md.guest_stars.add(gp)
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
         response = self.client.get('/deleteOrphanGps/')
+        self.failUnlessEqual(response.status_code, 200)
         self.failUnlessEqual(len(GuestPlayer.objects.all()), 1)
 
     def test_makeGuestsUnique(self):
