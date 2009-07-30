@@ -17,7 +17,7 @@
             {% if user.is_authenticated %}
                 <p>
                     {% if user.is_superuser %}
-                        Welcome, <a href="/admin/">{{ user.username }}</a>.
+                        Welcome, <a href="{% url admin:index %}">{{ user.username }}</a>.
                     {% else %}
                         Welcome, <a href="{% url profiles_profile_detail user %}">{{ user.username }}</a>.
                     {% endif %}
@@ -34,7 +34,7 @@
             </div>
             {% if user.is_superuser %}
             <div id="admin-links">
-                <a class="ui-corner-all" href="/admin/">Administration</a>
+                <a class="ui-corner-all" href="{% url admin:index %}">Administration</a>
                 <a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
             <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>
             </div>
