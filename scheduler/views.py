@@ -284,7 +284,6 @@ def makeGuestPlayersUnique(request):
         return None
 
     if request.user.is_superuser:
-        foundGps = []
         deleted = 0
         for md in MatchDay.objects.iterator():
             for gp in md.guest_stars.iterator():
