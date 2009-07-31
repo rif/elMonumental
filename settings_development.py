@@ -72,8 +72,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.comments',
-    'elMonumental.scheduler',
-    'elMonumental.registration',
-    'elMonumental.profiles',
+    'scheduler',
+    'registration',
+    'profiles',
     'debug_toolbar',
 )
