@@ -4,13 +4,11 @@
     <head>
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
         <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental|">
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.corner.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
-        {% block scripts %}{% endblock %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.min.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/messagesAppearEffect.js"></script>
+	{% block scripts %}{% endblock %}
         <title>{% block title %}El Monumental{% endblock %}</title>
     </head>
-
     <body>
         <div id="header">
             <div class="right">
@@ -34,7 +32,7 @@
             </div>
             {% if user.is_superuser %}
             <div id="admin-links">
-                <a class="ui-corner-all" href="{% url admin:index %}">Administration</a>
+                <a href="{% url admin:index %}">Administration</a>
                 <a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
             <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>
             </div>
