@@ -313,7 +313,7 @@ class ViewsTest(TestCase):
         response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
         self.failUnlessEqual(response.status_code, 200)    
         try:
-            prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
+            Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
             self.assertTrue(False)
         except:pass
 
