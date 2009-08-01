@@ -344,7 +344,7 @@ class ViewsTest(TestCase):
 
     def test_uniqueTeamNames(self):
         try:
-            teamABis = Team.objects.create(name='A', matchday=self.md)
+            Team.objects.create(name='A', matchday=self.md)
             self.assertTrue(False)
         except: pass
         
