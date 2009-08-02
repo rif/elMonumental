@@ -1,5 +1,7 @@
 $(function(){
-    $.ajaxSetup({ cache: false });
+    $.ajaxSetup({ 
+        cache: false
+    });
     fadeOutMessages();
 });
 

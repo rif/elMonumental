@@ -6,22 +6,22 @@ $(function() {
     });
     $('.draggable').draggable({
         stop: function(event, ui) {
-                var target = $(document.elementFromPoint(event.pageX, event.pageY)).parent();
-                var parent = target.parent();
-                var droppedOnTeam = false;
-                $('.team').each(function(){
-                    if($(this).attr('tm_id') == parent.attr('tm_id')){
-                        droppedOnTeam = true;
-                    }
-                });
-                if(droppedOnTeam){
-                    $(this).css("list-style-type", "none");
-                    $(this).css("text-decoration", "line-through");
-                    $(this).removeClass("draggable");
-                    $(this).addClass("pinned");
-                    $('#drop-message', target).remove();
-                    $('span.count', parent).text(target.find('li').length);
+            var target = $(document.elementFromPoint(event.pageX, event.pageY)).parent();
+            var parent = target.parent();
+            var droppedOnTeam = false;
+            $('.team').each(function(){
+                if($(this).attr('tm_id') == parent.attr('tm_id')){
+                    droppedOnTeam = true;
                 }
+            });
+            if(droppedOnTeam){
+                $(this).css("list-style-type", "none");
+                $(this).css("text-decoration", "line-through");
+                $(this).removeClass("draggable");
+                $(this).addClass("pinned");
+                $('#drop-message', target).remove();
+                $('span.count', parent).text(target.find('li').length);
+            }
         },
         connectToSortable: '.sortable',
         addClasses: false,
@@ -49,10 +49,14 @@ $(function() {
                     gIdList.push(guId);
                     found = true;
                 }
-	    });
+            });
             if(found){
                 $.post('/loadTeam/',
-                        {'teamId': teamId, 'pList': pIdList.join(","), 'gList': gIdList.join(",")}
+                {
+                    'teamId': teamId,
+                    'pList': pIdList.join(","),
+                    'gList': gIdList.join(",")
+                }
                 );
             }
         });
@@ -60,24 +64,27 @@ $(function() {
         e.preventDefault();
     });
     $('#save_proposal_link').click(function(e){
-	var found = false;
-	var pList = new Array();
-	$('.team').each(function(){
-	    pList.push($.trim($('#team_title', this).text()));
+        var found = false;
+        var pList = new Array();
+        $('.team').each(function(){
+            pList.push($.trim($('#team_title', this).text()));
             $('li', $(this)).each(function(){
-		var plName = $.trim($(this).text());
+                var plName = $.trim($(this).text());
                 if(plName != null){
                     pList.push(plName);
                     found = true;
                 }
-	    });
-	    pList.push("|");
+            });
+            pList.push("|");
         });
-	if(found){
-	    $.post('/addProposal/', {'md_id': $('#teams').attr('md_id'), 'entries': pList.join(",")});
-	}
+        if(found){
+            $.post('/addProposal/', {
+                'md_id': $('#teams').attr('md_id'),
+                'entries': pList.join(",")
+            });
+        }
         showMessages();
-	e.preventDefault();
+        e.preventDefault();
     });
     $('#create_team_link').click(function(e){
         loadPlaceholder($(this).attr("link"));
@@ -87,7 +94,10 @@ $(function() {
         loadPlaceholder($(this).attr("link"), function(){
             $("a.dellink").click(function(e){
                 $.post("/links/delteam/",
-                    {md_id: $(this).attr('matchdayId'), team_id: $(this).attr('teamId')}
+                {
+                    md_id: $(this).attr('matchdayId'),
+                    team_id: $(this).attr('teamId')
+                }
                 );
                 $(this).parent().siblings().css("text-decoration", "line-through");
                 $(this).replaceWith('Deleted');
