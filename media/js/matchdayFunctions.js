@@ -4,7 +4,7 @@ $(document).ready(function() {
         var span = $(this);
         $.post('links/', {
             md_id:$(this).attr('md_id')
-            }, function(responseData){
+        }, function(responseData){
             $(span).prepend(responseData);
         });
     });
