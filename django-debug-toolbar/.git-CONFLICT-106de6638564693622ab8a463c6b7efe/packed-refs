@@ -1,0 +1,5 @@
+# pack-refs with: peeled 
+04fc096d6b90704d706f4301c846306b068cbb31 refs/tags/0.7.0
+658c7384112cc45ec04343b03ce7f670b012ab0e refs/remotes/origin/master
+55e932a4f71b6de8b8a7e0e5d4973bc7878b5a74 refs/remotes/origin/localize
+0584848bb88528feb5d2b2d234848d410b1beefb refs/remotes/origin/debug-sql-shell
