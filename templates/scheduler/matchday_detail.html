@@ -40,7 +40,9 @@ Guest Stars:
     {% endfor %}
 </div>
 <div>
+    {% if object.isFuture %}
     <a href="{% url sch_team_detail object.id %}">Manage teams</a>
+    {% endif %}
     <a href="{% url sch_proposal_list object.id %}">Team Proposals</a>
     {% if user.is_superuser and object.isFuture %}
         <div type="hidden" id="email_form"></div>
