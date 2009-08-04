@@ -58,9 +58,9 @@ $(function() {
                     'gList': gIdList.join(",")
                 }
                 );
+		showMessages();
             }
         });
-        showMessages();
         e.preventDefault();
     });
     $('#save_proposal_link').click(function(e){
@@ -82,8 +82,8 @@ $(function() {
                 'md_id': $('#teams').attr('md_id'),
                 'entries': pList.join(",")
             });
+	    showMessages();
         }
-        showMessages();
         e.preventDefault();
     });
     $('#create_team_link').click(function(e){
