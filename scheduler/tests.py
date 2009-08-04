@@ -203,6 +203,12 @@ class AdminTest(TestCase):
         response = self.client.post('/loadTeam/', {'teamId': '2', 'pList': '1', 'gList': '1'})
         self.failUnlessEqual(response.status_code, 404)
 
+    def test_loadTeamMessage(self):
+        logged_in = self.client.login(username='admin', password='test')
+        self.assertTrue(logged_in)
+        self.client.post('/loadTeam/', {'teamId': '1', 'pList': '1,2,3', 'gList': '1,2'})
+        self.failUnlessEqual(self.admin.message_set.all()[0].message, "Saved team A.")
+
     def test_loadAdminTeamWrongIds(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
@@ -298,6 +304,12 @@ class ViewsTest(TestCase):
         prop = Proposal.objects.filter(matchday__pk=self.md.id).get(user__pk=self.user.id)
         self.assertTrue(prop is not None)
         self.failUnlessEqual(prop.teams, 'Team A<ol><li>rif</li><li>pif</li></ol>Team B<ol><li>test</li><li>best</li></ol>')
+
+    def test_proposal_message(self):
+        entries = "Team A,rif,pif,|,Team B,test,best,|,"
+        response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
+        self.failUnlessEqual(self.user.message_set.all()[0].message, "Saved proposal Radu Fericean's proposal for 10-July-2080  00:00.")
+
     def test_proposalSingle(self):
         entries = "Team A,rif,pif,|,"
         response = self.client.post('/addProposal/', {'md_id': '1', 'entries': entries})
