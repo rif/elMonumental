@@ -152,8 +152,8 @@ def comment(request, md_id):
                               context_instance=RequestContext(request))
 
 def addTeam(request, md_id):
-    if not request.user.is_authenticated():
-        return HttpResponse('<div class="message">Please login!</div>')
+    if not request.user.is_authenticated() and not request.user.is_superuser:
+        return HttpResponse('<div class="message">Please login as super user!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
     if not __isMatchdayInFuture(request, md):
         return redirect('sch_matchday_list')
@@ -173,8 +173,8 @@ def addTeam(request, md_id):
                               {'form': form, 'md_id': md_id})
 
 def delTeam(request, md_id):
-    if not request.user.is_authenticated():
-        return HttpResponse('<div class="message">Please login!</div>')
+    if not request.user.is_authenticated() and not request.user.is_superuser:
+        return HttpResponse('<div class="message">Please login as super user!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
 
     if not __isMatchdayInFuture(request, md):
