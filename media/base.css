@@ -24,7 +24,6 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
 }
 #navbar {
   text-align: left;
-  font-size: 200%;
   width: 100%;
   position: absolute;
   margin-left: 10px;
@@ -34,6 +33,7 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   bottom: 0 !important;
   bottom: -1px;
 }
+
 #placeholder {
   border: 1px dotted #234f32;
   margin: 0.5em;
