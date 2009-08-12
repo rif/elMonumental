@@ -48,8 +48,12 @@
             <div id="placeholder"></div>
             {% block content %}{% endblock %}
         </div>
-        <div id="footer">
-      {% block footer %}{% endblock %}
+	<div id="navbar">
+	  <a href="/">Home</a>
+	  {% block navbar %}{% endblock %}
+	</div>
+        <div id="footer">	  
+	  {% block footer %}{% endblock %}
       <div class="right">
         <a href="http://www.djangoproject.com/"><img src="http://media.djangoproject.com/img/badges/djangosite80x15.gif" border="0" alt="A Django site." title="A Django site." /></a>
         <a href="http://www.spreadfirefox.com/?q=affiliates&amp;id=0&amp;t=219"><img border="0" alt="Firefox 3" title="Firefox 3" src="http://sfx-images.mozilla.org/affiliates/Buttons/firefox2/ff2b80x15.gif"/></a>
