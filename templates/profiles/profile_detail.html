@@ -13,7 +13,7 @@
     <tr><td>Shot power:</td><td>{{ profile.get_shot_power_display }}</td></tr>
 </table>
 
-<div>
+{% block navbar %}
   <a href="{% url profiles_edit_profile %}">Edit</a>
-</div>
+{% endblock %}
 {% endblock %}
