@@ -131,7 +131,7 @@ class AdminTest(TestCase):
     def test_feed(self):
         response = self.client.get('/feeds/latest/')
         self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(len(response.content), 1290)
+        self.failUnlessEqual(len(response.content), 1282)
 
     def test_deleteOrphanGuests(self):
         logged_in = self.client.login(username='admin', password='test')
