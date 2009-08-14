@@ -1,8 +1,8 @@
 from django.conf.urls.defaults import *
 from scheduler import views
-from models import MatchDay, Proposal
-from forms import PlayerRegistrationForm
-from feeds import LatestMatchDays
+from scheduler.models import MatchDay, Proposal
+from scheduler.forms import PlayerRegistrationForm
+from scheduler.feeds import LatestMatchDays
 
 feeds = {'latest': LatestMatchDays,}
 md_info = {'queryset': MatchDay.objects.all()}

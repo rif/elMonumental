@@ -1,5 +1,5 @@
 from django.contrib.syndication.feeds import Feed
-from models import MatchDay
+from scheduler.models import MatchDay
 
 class LatestMatchDays(Feed):
     title = "elMonumental"

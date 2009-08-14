@@ -6,7 +6,6 @@ class News(models.Model):
     title = models.CharField(max_length=50)
     pub_date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
-    content_html = models.TextField()
     
     @models.permalink
     def get_absolute_url(self):
@@ -14,3 +13,6 @@ class News(models.Model):
 
     def __unicode__(self):
         return self.title
+    
+    class Meta:
+        verbose_name_plural = "news"

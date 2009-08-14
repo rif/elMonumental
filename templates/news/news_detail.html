@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block content %}
+<h1>{{ object.title}}</h1>
+<p>{{ object.pub_date|date:"D d M Y"|naturalday }} -
+  {{ object.pub_date|time:"H:i" }}</p>
+{{ object.content }}
+{% endblock %}
+{% block navbar %}
+  <a href="{% url profiles_edit_profile %}">Edit</a>
+{% endblock %}

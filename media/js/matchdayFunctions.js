@@ -13,10 +13,15 @@ $(document).ready(function() {
         loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
         e.preventDefault();
     });
+    loadNews();
 });
 
 function showAddGuest(link) {
     loadPlaceholder(link);
+}
+
+function loadNews(){
+    $("#news-placeholder").load("/news/");
 }
 
 function showDelGuest(link) {
