@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $("#matchdays").corner();
+    $("#news").corner();
     $("span.async").each(function(){
         var span = $(this);
         $.post('links/', {

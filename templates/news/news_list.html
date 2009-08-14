@@ -1,0 +1,28 @@
+{% load humanize %}
+<div id="news">
+  {% for news in object_list %}
+  <p>
+    {{ news.title }}
+    {{ news.pub_date|date:"D d M Y"|naturalday }} -
+    {{ news.pub_date_date|time:"H:i" }}
+    {{ news.content_html|safe }}
+  </p>
+  {% empty %}
+  <li>Sorry, no news yet.</li>
+  {% endfor %}
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+      
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+      </span>
+      
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">next</a>
+      {% endif %}
+    </span>
+  </div>
+</div>
