@@ -1,4 +1,4 @@
-from models import MatchDay, PlayerProfile, Team, GuestPlayer, Proposal
+from scheduler.models import MatchDay, PlayerProfile, Team, GuestPlayer, Proposal
 from django.contrib import admin
 
 class MatchDayAdmin(admin.ModelAdmin):

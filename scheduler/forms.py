@@ -1,7 +1,7 @@
 from django import forms
 from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
-from models import GuestPlayer, Team
+from scheduler.models import GuestPlayer, Team
 
 attrs_dict = { 'class': 'required' }
 
