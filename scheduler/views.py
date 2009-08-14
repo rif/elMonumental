@@ -4,8 +4,8 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
-from scheduler.forms import GuestPlayerForm, TeamForm
+from models import MatchDay, GuestPlayer, Team, Proposal
+from forms import GuestPlayerForm, TeamForm
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
