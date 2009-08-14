@@ -66,7 +66,7 @@ class MatchDay(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('sch_matchday_detail', (), { 'object_id': self.id })
+        return ('sch_matchday_detail', (), {'object_id': self.id })
 
 
 class Team(models.Model):

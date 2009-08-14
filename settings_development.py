@@ -75,6 +75,7 @@ INSTALLED_APPS = (
     'scheduler',
     'registration',
     'profiles',
+    'news',
     'debug_toolbar',
 )
 

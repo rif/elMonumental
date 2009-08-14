@@ -1,9 +1,10 @@
+
 /* SETUP */
 
 body { margin:0; padding:0; background:#092e20; color:white; }
 body, th, td { font:12px/1.4em Verdana,sans-serif; }
 #header {margin-left:22px; margin-right:24px;}
-#container { position:relative; min-width:55em; max-width:100em; margin-left:22px; margin-right:24px; }
+#container { position:relative; min-width:55em; margin-left:22px; margin-right:24px; }
 #container1 {
   width: 80%;
   margin: 0 auto 0 auto;
@@ -92,4 +93,5 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #drop-message {color:lightgrey;list-style-type:none;}
 #admin-links a {background:#487858;}
 #matchdays {width: 50% ;padding: 5px; background:#487858;}
+#news {float:center; width: 50% ;padding: 5px; background:#487858;}
 #matchdays li{list-style-type:none;}
