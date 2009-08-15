@@ -16,3 +16,4 @@ class News(models.Model):
     
     class Meta:
         verbose_name_plural = "news"
+        ordering = ['-pub_date']

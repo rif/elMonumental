@@ -2,24 +2,14 @@
 <h1>News</h1>
 <div id="news">
   {% for news in object_list %}
-  <p>
-    <a class="news-link" href="{% url news_news_detail news.slug %}">
+  <ul>
+    <li><a class="news-link" href="{% url news_news_detail news.slug %}">
       <b>{{ news.title }}</b>
       [{{ news.pub_date|date:"D d M Y"|naturalday }} -
-      {{ news.pub_date|time:"H:i" }}]</a>
-  </p>
+      {{ news.pub_date|time:"H:i" }}]</a></li>
+  </ul>
   {% empty %}
   <li>Sorry, no news yet.</li>
   {% endfor %}
 </div>
-<div class="pagination">
-  <span class="step-links">
-    {% if page_obj.has_previous %}
-    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-    {% endif %}
-        
-    {% if page_obj.has_next %}
-    <a href="?page={{ page_obj.next_page_number }}">more</a>
-    {% endif %}
-  </span>
-</div>
+
