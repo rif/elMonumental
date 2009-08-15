@@ -87,11 +87,11 @@ $(function() {
         e.preventDefault();
     });
     $('#create_team_link').click(function(e){
-        loadPlaceholder($(this).attr("link"));
+        loadPlaceholder($(this).attr("href"));
         e.preventDefault();
     });
     $('#delete_team_link').click(function(e){
-        loadPlaceholder($(this).attr("link"), function(){
+        loadPlaceholder($(this).attr("href"), function(){
             $("a.dellink").click(function(e){
                 $.post("/links/delteam/",
                 {
