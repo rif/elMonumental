@@ -3,7 +3,7 @@
 <div id="news">
   {% for news in object_list %}
   <p>
-    <a href="{% url news_news_detail news.slug %}">
+    <a class="news-link" href="{% url news_news_detail news.slug %}">
       <b>{{ news.title }}</b>
       [{{ news.pub_date|date:"D d M Y"|naturalday }} -
       {{ news.pub_date|time:"H:i" }}]</a>

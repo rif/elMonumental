@@ -12,7 +12,7 @@ $(document).ready(function() {
     $("a.md-detail-link").click(function(e){
         loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
         e.preventDefault();
-    });
+    });    
     loadNews();
 });
 
@@ -21,7 +21,12 @@ function showAddGuest(link) {
 }
 
 function loadNews(){
-    $("#news-placeholder").load("/news/");
+    $("#news-placeholder").load("/news/", function(){
+        $("a.news-link").click(function(e){
+		loadPlaceholder($(this).attr('href'));
+		e.preventDefault();
+    	});
+    });
 }
 
 function showDelGuest(link) {
