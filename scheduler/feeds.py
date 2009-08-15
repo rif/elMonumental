@@ -1,5 +1,6 @@
 from django.contrib.syndication.feeds import Feed
 from scheduler.models import MatchDay
+from news.models import News
 
 class LatestMatchDays(Feed):
     title = "elMonumental"
@@ -11,3 +12,14 @@ class LatestMatchDays(Feed):
 
     def item_link(self, item):
         return '/matchday/' + str(item.id) + '/rss/'
+
+class LatestNews(Feed):
+    title = "elMonumental news"
+    link = "/news/"
+    description = "Latest news about fotball and elMonumental."
+    
+    def items(self):
+        return News.objects.order_by('-pub_date')[:5]
+
+    def item_link(self, item):
+        return '/news/' + str(item.id) + '/rss/'
