@@ -1,0 +1,4 @@
+{% load humanize %}
+<p>{{ obj.pub_date|date:"D d M Y"|naturalday }} -
+  {{ obj.pub_date|time:"H:i" }}</p>
+{{ obj.content_html|safe }}
