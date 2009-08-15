@@ -22,4 +22,4 @@ class LatestNews(Feed):
         return News.objects.order_by('-pub_date')[:5]
 
     def item_link(self, item):
-        return '/news/' + str(item.id) + '/rss/'
+        return '/news/' + str(item.slug) + '/rss/'

@@ -4,7 +4,7 @@ from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
-feeds = {'latest': LatestMatchDays, 'news':LatestNews}
+feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 proposal_info = {'queryset': Proposal.objects.all()}
 

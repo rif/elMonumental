@@ -1,0 +1,5 @@
+{% load humanize %}
+
+{{ obj.title }}
+    [{{ obj.pub_date|date:"D d M Y"|naturalday }} -
+      {{ obj.pub_date|time:"H:i" }}]
