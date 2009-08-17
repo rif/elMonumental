@@ -95,4 +95,5 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #matchdays {width: 40% ;padding: 5px; background:#487858;}
 #news-placeholder {float: center; text-align:center;}
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
+#news-detail {font-size: 80%;}
 #matchdays li{list-style-type:none;}
