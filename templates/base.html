@@ -21,7 +21,8 @@
                 <p>Please <a href="{% url auth_login %}">log in</a> or <a href="{% url registration_register %}">sign up.</a></p>
             {% endif %}
             <p>
-              Subscribe to <a type="application/rss+xml" href="/feeds/latest/">matchdays <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental feed"/></a> or <a type="application/rss+xml" href="/feeds/news/">news <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental news feed"/></a>
+               Subscribe to <a type="application/rss+xml" href="/feeds/latest/">matchdays <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental feed"/></a> or <a type="application/rss+xml" href="/feeds/news/">news <img src="{{ MEDIA_URL }}images/rss.png" alt="Subscribe to elMonumental news feed"/></a>
+            </p>
             </p>
             {% if user.is_authenticated and not user.is_superuser and not user.get_profile.alias_name %}
             Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
@@ -66,4 +67,3 @@
     {% block scripts %}{% endblock %}
     </body>
 </html>
-
