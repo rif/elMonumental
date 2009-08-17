@@ -82,7 +82,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .right {text-align: right;}
 .pagination {color: #9aef3f;}
 .commentingUser {color:#9aef3f;}
-.commentTime {color:#487858;}
+ {color:#487858;}
 .team {
     background: #487858;
     position: relative;
@@ -95,5 +95,5 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #matchdays {width: 40% ;padding: 5px; background:#487858;}
 #news-placeholder {float: center; text-align:center;}
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
-#news-detail {font-size: 80%;}
+.dateTime {color:#487858; font-size: 85%;}
 #matchdays li{list-style-type:none;}

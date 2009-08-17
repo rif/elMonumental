@@ -1,7 +1,7 @@
 {% load humanize %}
 
 <h1>{{ object.title }}</h1>
-<span id="news-detail">
+<span class="dateTime">
   {{ object.pub_date|date:"D d M Y"|naturalday }} -
   {{ object.pub_date|time:"H:i" }}
 </span>

@@ -5,7 +5,7 @@
 {% block content %}
 {% get_comment_list for matchday as comment_list %}
 {% for comment in comment_list %}
-    <p class="comment"><span class="commentingUser">{{ comment.user_name }}:</span> {{ comment.comment }} <span class="commentTime">({{ comment.submit_date|date:"D d M Y"|naturalday }} {{ comment.submit_date|time:"H:i"}})</span></p>
+    <p class="comment"><span class="commentingUser">{{ comment.user_name }}:</span> {{ comment.comment }} <span class="dateTime">({{ comment.submit_date|date:"D d M Y"|naturalday }} {{ comment.submit_date|time:"H:i"}})</span></p>
 {% endfor %}
 
 {% if user.is_authenticated %}
