@@ -22,4 +22,8 @@ class NewsTest(TestCase):
     def test_detail(self):
         response = self.client.get('/news/mama-are-mere/')
         self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.content, '\n\n<h1>Mama are mere</h1>\n<p>Sat 15 Aug 2009 -\n  15:20</p>\n\n\n')
+        self.assertTrue('<h1>Mama are mere</h1>' in response.content)
+        self.assertTrue('<p>Test de continut</p>' in response.content)
+        
+    def test_save(self):
+            self.failUnlessEqual(self.news.content_html, '<p>Test de continut</p>\n')
