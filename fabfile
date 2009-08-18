@@ -1,0 +1,14 @@
+config.fab_hosts = ['10.40.8.206']
+
+def ci():
+    """Commit localy using mercurial"""
+    prompt('comment', 'Commit comment: ', default='another commit from fabric')
+    local('hg ci -m "%s"' % config.comment)
+    local('hg push')
+
+
+def deploy():
+    'Deploy the app to the target environment'
+    sudo('cd /var/django/elMonumental/ && hg pul -uv')
+    sudo('touch /var/django/elMonumental/apache/django.wsgi')
+    
