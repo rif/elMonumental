@@ -93,6 +93,8 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #drop-message {color:lightgrey;list-style-type:none;}
 #admin-links a {background:#487858;}
 #matchdays {width: 45% ;padding: 5px; background:#487858;}
+#matchdays .sb-inner { background:#487858;}
+#matchdays .sb-shadow { background:#191e10;}
 #news-placeholder {float: center; text-align:center;}
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
 .dateTime {color:#487858; font-size: 85%;}

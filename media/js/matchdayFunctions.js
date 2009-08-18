@@ -1,6 +1,7 @@
+
 $(document).ready(function() {
-    $("#matchdays").corner();
-    $("#news").corner();
+    var myBorder = RUZEE.ShadedBorder.create({ corner:8, shadow:16});
+    myBorder.render('matchdays');
     $("span.async").each(function(){
         var span = $(this);
         $.post('links/', {
