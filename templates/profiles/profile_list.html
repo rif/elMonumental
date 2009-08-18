@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 {% block title %}View All Users{% endblock %}
 {% block content %}
@@ -5,6 +6,7 @@
 <table class="list tablesorter" cellspacing="1" id="userlist">
 <thead>
     <tr>
+        <th>#</th>
         <th>FirstName</th>
         <th>AliasName</th>
         <th>LastName</th>
@@ -17,6 +19,7 @@
 <tbody>
     {% for profile in object_list %}
     <tr>
+       <td>{{ forloop.counter }}</td>
         <td>{{ profile.user.first_name }}</td>
         <td>{{ profile.alias_name }}</td>
         <td>{{ profile.user.last_name }}</td>
