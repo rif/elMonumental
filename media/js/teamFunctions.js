@@ -1,7 +1,7 @@
 
 $(function() {
     var myBorder = RUZEE.ShadedBorder.create({ corner:8, shadow:16});
-    myBorder.render('teams');
+    myBorder.render('team');
     $('.sortable').sortable({
         revert: false
     });
