@@ -5,9 +5,9 @@
     <input type="text" name="subject" value="Football invitation"/>
     <h4>Body:</h4>
     <textarea rows="5" cols="30" name="message">
-You are invited to come at the {{ object.id|ordinal }} mathch day starting at
+You are invited to come at the {{ object.id|ordinal }} matchday starting at
 {{ object.start_date|time:"H:i" }} - {{ object.start_date|date:"D, d M Y"|naturalday }}
-wich will take place at {{ object.location }} arena.
+which will take place at {{ object.location }} arena.
 Click at http://elMonumental.sro.oce.net/ to attend.
     </textarea>
     <input type="submit" value="Send Email!"/>
