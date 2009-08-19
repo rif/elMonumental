@@ -1,14 +1,15 @@
-from fabric.api import hosts
+from fabric.api import hosts, prompt, sudo, local, cd
 
 def ci():
     """Commit localy using mercurial"""
-    prompt('comment', 'Commit comment: ', default='another commit from fabric')
-    local('hg ci -m "%s"' % config.comment)
+    comment = prompt('Commit comment: ', default='another commit from fabric')
+    local('hg ci -m "%s"' % comment)
     local('hg push')
 
 @hosts('10.40.8.206')
 def deploy():
     'Deploy the app to the target environment'
-    sudo('cd /var/django/elMonumental/ && hg pul -uv')
-    sudo('touch /var/django/elMonumental/apache/django.wsgi')
+    with cd('/var/django/elMonumental/'):
+        sudo('hg pul -uv')
+        sudo('touch ./apache/django.wsgi')
     
