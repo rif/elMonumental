@@ -12,8 +12,7 @@
     <tr><td>Ball controll:</td><td>{{ profile.get_ball_controll_display }}</td></tr>
     <tr><td>Shot power:</td><td>{{ profile.get_shot_power_display }}</td></tr>
 </table>
-
+{% endblock %}
 {% block navbar %}
   <a href="{% url profiles_edit_profile %}">Edit</a>
-{% endblock %}
 {% endblock %}
