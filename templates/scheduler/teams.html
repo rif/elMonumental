@@ -44,13 +44,13 @@ Guest Stars:
             </ol>
         </div>
     {% endfor %}
-</div>
-  {% block navbar%}
+</div>  
+{% endblock %}
+{% block navbar%}
     <a href="{% url sch_team_detail object.id %}">Reset</a>
     {% if user.is_superuser %}
         <a id="save_teams_link" href="#">Save team</a>
     {% else %}
         <a id="save_proposal_link" href="#">Save proposal</a>
     {% endif %}    
-  {% endblock %}
 {% endblock %}
