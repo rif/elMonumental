@@ -1,4 +1,4 @@
-config.fab_hosts = ['10.40.8.206']
+from fabric.api import hosts
 
 def ci():
     """Commit localy using mercurial"""
@@ -6,7 +6,7 @@ def ci():
     local('hg ci -m "%s"' % config.comment)
     local('hg push')
 
-
+@hosts('10.40.8.206')
 def deploy():
     'Deploy the app to the target environment'
     sudo('cd /var/django/elMonumental/ && hg pul -uv')
