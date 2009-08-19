@@ -16,7 +16,7 @@ class LatestMatchDays(Feed):
 class LatestNews(Feed):
     title = "elMonumental news"
     link = "/news/"
-    description = "Latest news about fotball and elMonumental."
+    description = "Latest news about football and elMonumental."
     
     def items(self):
         return News.objects.order_by('-pub_date')[:5]
