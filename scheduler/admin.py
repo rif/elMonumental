@@ -20,9 +20,10 @@ class TeamAdmin(admin.ModelAdmin):
 class GuestPlayerAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name']
 
-class TeamsInline(admin.StackedInline):
+class TeamsInline(admin.TabularInline):
     model = Team
     max_num = 2
+    raw_id_fields = ('participants', 'guest_stars')
 
 class MatchDayAdminWithTeams(MatchDayAdmin):
     inlines = [TeamsInline]
