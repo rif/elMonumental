@@ -65,7 +65,6 @@ $(function() {
         e.preventDefault();
     });
     $('#save_proposal_link').click(function(e){
-        alert("mama");
         var found = false;
         var pList = new Array();
         $('.team').each(function(){
