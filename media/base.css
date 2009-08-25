@@ -41,8 +41,8 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   padding: 1em;
   position: absolute;
   top:10%;
-  right:5%;    
-  width: 20%;
+  right:1%;    
+  width: 25%;
   font-size: 88%;  
   display:none;
 }
