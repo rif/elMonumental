@@ -1,7 +1,7 @@
 
 /* SETUP */
 
-body { margin:0; padding:0; background:#092e20; color:white; }
+body { margin:0; padding:0; background:#092e20; color:white;}
 body, th, td { font:12px/1.4em Verdana,sans-serif; }
 #header {margin-left:22px; margin-right:24px;}
 #container { position:relative; min-width:55em; margin-left:22px; margin-right:24px; }
@@ -58,7 +58,7 @@ a:hover { color:#ffe761; }
 
 /* CONTENT */
 
-h1,h2,h3 { margin-top:.8em; font-family:"Trebuchet MS",sans-serif; font-weight:normal; }
+h1,h2,h3 { margin-top:.8em; font-family:arial,sans-serif; font-weight:normal; text-shadow: 0 1px rgba(255, 255, 255, 0.3) !important;}
 h1 { font-size:218%; margin-top:.6em; margin-bottom:.6em; color:#9aef3f; line-height:1.1em; }
 h2 { font-size:150%; margin-top:1em; margin-bottom:.2em; line-height:1.2em; color:#9aef3f; }
 h3 { font-size:125%; font-weight:bold; margin-bottom:.2em; color:#487858; }
