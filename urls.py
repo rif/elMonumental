@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     (r'^profiles/', include('profiles.urls')),
     (r'^news/', include('news.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
+    (r'^forum/', include('forum.urls')),
 )
 # if we're in DEBUG mode, allow django to serve media
 # This is considered inefficient and isn't secure.
