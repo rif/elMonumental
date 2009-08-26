@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
-{% block head %}
+{% block html_head %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
 <link rel="alternate" type="application/rss+xml" title="{% trans "All Latest Posts via RSS" %}" href="{% url forum_index %}rss/" />
 <link rel="alternate" type="application/atom+xml" title="{% trans "All Latest Posts via ATOM" %}" href="{% url forum_index %}atom/" />
@@ -85,7 +85,7 @@ body {
 --></style>
 {% endblock %}
 <div id='djangoForumBody'>
-{% block header %}
+{% block forum_header %}
 <h1>{% block pagetitle %}{% trans "Welcome to the Forums" %}{% endblock %}</h1>
 <div id='djangoForumBreadcrumbs'><a href='/'>{% trans "Home" %}</a> &raquo; <a href='{% url forum_index %}'>{% trans "Forums" %}</a>{% block breadcrumbs %}{% endblock %}</div>
 {% endblock %}

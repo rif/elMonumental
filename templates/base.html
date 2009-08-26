@@ -2,7 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        {% block head %}
+        {% block html_head %}
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
         <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental">	
         <link rel="icon" href="{{ MEDIA_URL }}images/favicon.ico" type="image/x-icon" />
@@ -37,10 +37,10 @@
                 <!--<a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
             <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>-->
             </div>
-            {% endif %}
-            {% block header %}El Monumental{% endblock %}
+            {% endif %}            
         </div>
         <div id="container">
+            {% block forum_header %}El Monumental{% endblock %}
             <div id="messages_block">
                 {% if messages %}
                 <ul>
