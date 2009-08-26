@@ -2,13 +2,15 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
+        {% block head %}
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
         <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental">	
         <link rel="icon" href="{{ MEDIA_URL }}images/favicon.ico" type="image/x-icon" />
         <title>{% block title %}El Monumental{% endblock %}</title>
+        {% endblock %}
     </head>
     <body>
-        <div id="header">
+        <div id="header">        
             <div class="right">
             {% if user.is_authenticated %}
                 <p>
@@ -36,6 +38,7 @@
             <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>-->
             </div>
             {% endif %}
+            {% block header %}El Monumental{% endblock %}
         </div>
         <div id="container">
             <div id="messages_block">
@@ -53,6 +56,7 @@
 	<div id="navbar">
 	  <h1>
 	  <a href="/">Home</a>
+	  <a href="/forum/forum/">Forum</a>
 	  {% block navbar %}{% endblock %}
 	  </h1>
 	</div>

@@ -71,9 +71,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
     'django.contrib.comments',
+    'django.contrib.markup',
     'scheduler',
     'registration',
     'profiles',
     'news',
+    'forum',
 )
+
+FORUM_BASE = '/forum'
 
