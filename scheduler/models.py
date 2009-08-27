@@ -47,8 +47,10 @@ class GuestPlayer(models.Model):
         unique_together = ('friend_user', 'first_name', 'last_name')
 
 class MatchDay(models.Model):
+    SPORT_CHOICES = ((u'FB', u'Football'), (u'VB', u'Volleyball'), (u'BB', u'Basketball'),)
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
+    sport = models.CharField(max_length=3, choices=SPORT_CHOICES, default=u'FB')
     participants = models.ManyToManyField(User, null=True, blank=True)
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
