@@ -77,6 +77,7 @@ INSTALLED_APPS = (
     'profiles',
     'news',
     'forum',
+    'django_evolution',
 )
 
 FORUM_BASE = '/forum'

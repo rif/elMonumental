@@ -3,7 +3,7 @@ from django.contrib import admin
 
 class MatchDayAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['start_date', 'location']}),
+        (None,               {'fields': ['start_date', 'location', 'sport']}),
         ('Participants', {'fields': ['participants', 'guest_stars'], 'classes': ['collapse']}),
     ]
     list_display = ('start_date', 'location', 'isFuture')
