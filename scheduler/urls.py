@@ -66,4 +66,5 @@ urlpatterns += patterns('',
 
     url(r'deleteOrphanGps/$', views.deleteOrphanGuestPlayers, name='sch_orphangp_del'),
     url(r'uniqueGps/$', views.makeGuestPlayersUnique, name='sch_gp_unique'),
+    url(r'mdbysport/(?P<sport>\w+)/$', views.matchday_by_sport, name='sch_matchday_by_sport'),
 )
