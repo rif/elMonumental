@@ -13,6 +13,16 @@ def __isMatchdayInFuture(request, md):
                                         % md.start_date.strftime('%a, %d %b %Y'))
     return md.isFuture()
 
+def matchday_by_sport(request, sport):
+    # Use the object_list view for the heavy lifting.
+    return list_detail.object_list(
+        request,
+        queryset = MatchDay.objects.filter(sport=sport),
+        template_name = "scheduler/matchday_list.html",
+        extra_context = {"sport" : sport}
+    )
+
+
 @login_required
 def attend(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)

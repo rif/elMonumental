@@ -8,6 +8,7 @@
 {% endblock %}
 {% block content %}
 <h2>Matchdays</h2>
+<a href="{% url sch_matchday_by_sport 'BB' %}">Basket</a>
 <div id="matchdays">
 <ul>
     {% for matchday in object_list %}
