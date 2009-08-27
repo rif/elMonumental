@@ -14,6 +14,7 @@
     {% get_comment_count for matchday as comment_count %}
     <li>
         {#{ matchday.id|ordinal }#}
+	{{ matchday.get_sport_display }}
         {{ matchday.start_date|date:"D d M Y"|naturalday }} -
         {{ matchday.location }} -
         {{ matchday.start_date|time:"H:i" }}
