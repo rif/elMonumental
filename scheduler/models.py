@@ -32,6 +32,23 @@ class PlayerProfile(models.Model):
         else:
             return self.user.username
 
+    def __getAttendanceRate(self, sport):
+        count = 0
+        mds = MatchDay.objects.filter(sport = sport)
+        for md in mds:
+            if self.user in md.participants.iterator():
+                count += 1
+        return (count, mds.count())
+    
+    def getFootballAtendanceRate(self):
+        return self.__getAttendanceRate('FB')
+    
+    def getBasketballAtendanceRate(self):
+        return self.__getAttendanceRate('BB')
+
+    def getVolleyballAtendanceRate(self):
+        return self.__getAttendanceRate('VB')
+
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
     first_name = models.CharField(max_length=50)

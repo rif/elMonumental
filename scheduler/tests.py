@@ -229,14 +229,30 @@ class ViewsTest(TestCase):
         self.logged_in = self.client.login(username='rif', password='test')
         future = datetime(2080, 07, 10)
         self.md = MatchDay.objects.create(start_date = future)
-        past = datetime(2009, 06, 12)
-        self.old_md = MatchDay.objects.create(start_date = past)
+        self.past = datetime(2009, 06, 12)
+        self.old_md = MatchDay.objects.create(start_date = self.past)
         self.team = Team.objects.create(name='A', matchday=self.md)
 
     def test_attend(self):
         self.assertTrue(self.logged_in)
         self.client.get('/attend/%s/' % self.md.id)
         self.assertTrue(self.user in self.md.participants.all())
+
+    def test_football_atendance(self):
+        self.md.participants.add(self.user)
+        self.failUnlessEqual(self.user.get_profile().getFootballAtendanceRate(), (1,2))
+
+    def test_basketball_atendance(self):
+        bmd1 = MatchDay.objects.create(start_date = self.past, sport = 'BB')
+        bmd2 = MatchDay.objects.create(start_date = self.past, sport = 'BB')
+        bmd1.participants.add(self.user)
+        bmd2.participants.add(self.user)
+        self.failUnlessEqual(self.user.get_profile().getBasketballAtendanceRate(), (2,2))
+
+    def test_volleyball_atendance(self):
+        vmd = MatchDay.objects.create(start_date = self.past, sport = 'VB')
+        vmd.participants.add(self.user)
+        self.failUnlessEqual(self.user.get_profile().getVolleyballAtendanceRate(), (1,1))
 
     def test_old_attend(self):
         self.assertTrue(self.logged_in)
