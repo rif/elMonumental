@@ -16,7 +16,7 @@
 {% endif %}
 <li>Location: {{ object.location }}</li>
 <li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
-{% if user.is_superuser %}
+{% if user.is_staff %}
 <div>
     <a id="create_team_link" href="{% url sch_team_add object.id %}">Create Team</a>
     <a id="delete_team_link" href="{% url sch_team_del object.id %}">Delete Team</a>
@@ -48,7 +48,7 @@ Guest Stars:
 {% endblock %}
 {% block navbar%}
     <a href="{% url sch_team_detail object.id %}">Reset</a>
-    {% if user.is_superuser %}
+    {% if user.is_staff %}
         <a id="save_teams_link" href="#">Save team</a>
     {% else %}
         <a id="save_proposal_link" href="#">Save proposal</a>

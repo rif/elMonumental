@@ -12,6 +12,9 @@ class LatestMatchDays(Feed):
 
     def item_link(self, item):
         return '/matchday/' + str(item.id) + '/rss/'
+    
+    def item_categories(self, item):
+        return [c[1] for c in item.SPORT_CHOICES]
 
 class LatestNews(Feed):
     title = "elMonumental news"

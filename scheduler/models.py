@@ -10,7 +10,7 @@ class PlayerProfile(models.Model):
     SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
-    receive_email = models.BooleanField('Do you want to by notified by email?', default=True)
+    email_subscriptions = models.CharField('Subscription (FB-footbal,BB-basket,VB-volley):', max_length=20, default='FB')
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)

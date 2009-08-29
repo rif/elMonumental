@@ -139,7 +139,7 @@ def sendEmail(request, md_id):
         md = get_object_or_404(MatchDay, pk=md_id)
         if not __isMatchdayInFuture(request, md):
             return redirect('sch_matchday_list')
-        if request.user.is_superuser:
+        if request.user.is_staff:
             from django.core.mail import send_mail
             subject = request.POST['subject']
             message = request.POST['message']
@@ -147,7 +147,7 @@ def sendEmail(request, md_id):
             toList = []
             for user in User.objects.iterator():
                 try:
-                    if user.get_profile().receive_email:
+                    if md.sport in user.get_profile().email_subscriptions:
                         toList.append(user.email)
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
@@ -164,7 +164,7 @@ def comment(request, md_id):
                               context_instance=RequestContext(request))
 
 def addTeam(request, md_id):
-    if not request.user.is_authenticated() and not request.user.is_superuser:
+    if not request.user.is_authenticated() and not request.user.is_staff:
         return HttpResponse('<div class="message">Please login as super user!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
     if not __isMatchdayInFuture(request, md):
@@ -185,7 +185,7 @@ def addTeam(request, md_id):
                               {'form': form, 'md_id': md_id})
 
 def delTeam(request, md_id):
-    if not request.user.is_authenticated() and not request.user.is_superuser:
+    if not request.user.is_authenticated() and not request.user.is_staff:
         return HttpResponse('<div class="message">Please login as super user!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
 
@@ -220,7 +220,7 @@ def loadTeam(request):
         team = get_object_or_404(Team, pk=request.POST['teamId'])
         plIds = request.POST['pList'].strip()
         glIds = request.POST['gList'].strip()
-        if request.user.is_superuser:
+        if request.user.is_staff:
             team.participants.clear()
             team.guest_stars.clear()
             if plIds != '':
