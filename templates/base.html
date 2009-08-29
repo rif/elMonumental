@@ -30,14 +30,7 @@
             {% if user.is_authenticated and not user.is_superuser and not user.get_profile.alias_name %}
             Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
             {% endif %}
-            </div>
-            {% if user.is_superuser %}
-            <div id="admin-links">
-                <a href="{% url admin:index %}">Administration</a>
-                <!--<a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
-            <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>-->
-            </div>
-            {% endif %}            
+            </div>            
         </div>
         <div id="container">
             {% block forum_header %}{% endblock %}
@@ -55,9 +48,14 @@
         </div>
 	<div id="navbar">
 	  <h1>
-	  <a href="/">Home</a>
-	  <a href="/forum/">Forum</a>
-	  {% block navbar %}{% endblock %}
+	    {% if user.is_staff %}
+            <a href="{% url admin:index %}">Administration</a>
+            <!--<a href="{% url sch_orphangp_del %}">Delete Orphan GuestPlayers</a>
+		   <a href="{% url sch_gp_unique %}">Make GuestPlayers Unique</a>-->
+	    {% endif %}
+	    <a href="/">Home</a>
+	    <a href="/forum/">Forum</a>
+	    {% block navbar %}{% endblock %}
 	  </h1>
 	</div>
         <div id="footer">	  

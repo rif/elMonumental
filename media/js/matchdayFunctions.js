@@ -1,8 +1,20 @@
-
 $(document).ready(function() {
     var myBorder = RUZEE.ShadedBorder.create({ corner:8, shadow:16});
     myBorder.render('matchdays');
-    $("span.async").each(function(){
+    prepareLinks();
+    $("a.md-detail-link").click(function(e){
+        loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
+        e.preventDefault();
+    });
+    $("a.md-filter").click(function(e){
+	$("#md-placeholder").load("/mdbysport/" + $(this).attr("id") + "/", prepareLinks);
+	e.preventDefault();
+    });
+    loadNews();
+});
+
+function prepareLinks(){
+    $("span.async", "#md-placeholder").each(function(){
         var span = $(this);
         $.post('links/', {
             md_id:$(this).attr('md_id')
@@ -10,12 +22,15 @@ $(document).ready(function() {
             $(span).prepend(responseData);
         });
     });
-    $("a.md-detail-link").click(function(e){
-        loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
-        e.preventDefault();
-    });    
-    loadNews();
-});
+     $("#next").click(function(e){
+	$("#md-placeholder").load($(this).attr("href"), prepareLinks);
+	e.preventDefault();
+    });
+    $("#prev").click(function(e){
+	$("#md-placeholder").load($(this).attr("href"), prepareLinks);
+	e.preventDefault();
+    });
+}
 
 function showAddGuest(link) {
     loadPlaceholder(link);

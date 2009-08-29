@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.views.generic import list_detail
 from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
 from scheduler.forms import GuestPlayerForm, TeamForm
 
@@ -18,7 +19,8 @@ def matchday_by_sport(request, sport):
     return list_detail.object_list(
         request,
         queryset = MatchDay.objects.filter(sport=sport),
-        template_name = "scheduler/matchday_list.html",
+        paginate_by = 10,
+        template_name = "scheduler/filtered_matchday_list.html",
         extra_context = {"sport" : sport}
     )
 
