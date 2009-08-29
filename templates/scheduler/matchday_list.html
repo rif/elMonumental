@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% load humanize %}
-{% load comments %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/shadedborder.js"></script>
@@ -8,39 +6,16 @@
 {% endblock %}
 {% block content %}
 <h2>Matchdays</h2>
-<a href="{% url sch_matchday_by_sport 'BB' %}">Basket</a>
 <div id="matchdays">
-<ul>
-    {% for matchday in object_list %}
-    {% get_comment_count for matchday as comment_count %}
-    <li>
-        {#{ matchday.id|ordinal }#}
-	{{ matchday.get_sport_display }}
-        {{ matchday.start_date|date:"D d M Y"|naturalday }} -
-        {{ matchday.location }} -
-        {{ matchday.start_date|time:"H:i" }}
-        <span class="async" md_id="{{ matchday.id }}">
-            <a class="md-detail-link" href="#">View</a>
-            <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
-        </span>
-    </li>
-    {% endfor %}
-</ul>
-</div>
-<div class="pagination">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-        </span>
-
-        {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}">next</a>
-        {% endif %}
-    </span>
+  <div id="md-filters">
+    <a href="{% url sch_matchday_list %}">All</a>
+    <a class="md-filter" id="FB" href="{% url sch_matchday_by_sport 'FB' %}">Football</a>
+    <a class="md-filter" id="BB" href="{% url sch_matchday_by_sport 'BB' %}">Basketball</a>
+    <a class="md-filter" id="VB" href="{% url sch_matchday_by_sport 'VB' %}">Volleyball</a>
+  </div>
+  <div id="md-placeholder">
+    {% include "scheduler/filtered_matchday_list.html" %}
+  </div>
 </div>
 <div id="news-placeholder"></div>
 {% endblock %}

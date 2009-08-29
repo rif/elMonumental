@@ -1,0 +1,43 @@
+{% load humanize %}
+{% load comments %}
+<ul>
+    {% for matchday in object_list %}
+    {% get_comment_count for matchday as comment_count %}
+    <li>
+        {#{ matchday.id|ordinal }#}
+	<span class="sport">{{ matchday.get_sport_display }}</span>
+        {{ matchday.start_date|date:"D d M Y"|naturalday }} -
+        {{ matchday.location }} -
+        {{ matchday.start_date|time:"H:i" }}
+        <span class="async" md_id="{{ matchday.id }}">
+            <a class="md-detail-link" href="#">View</a>
+            <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
+        </span>
+    </li>
+    {% empty %}
+        <li>Sorry, no matchdays for this sport!</li>
+    {% endfor %}
+</ul>
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+	{% if sport %}
+            <a id="prev" href="/mdbysport/{{ sport }}/?page={{ page_obj.previous_page_number }}">previous</a>
+	{% else %}
+	    <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+	{% endif %}
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+	{% if sport %}
+            <a id="next" href="/mdbysport/{{ sport }}/?page={{ page_obj.next_page_number }}">next</a>
+	{% else %}
+	    <a href="?page={{ page_obj.next_page_number }}">next</a>
+	{% endif %}
+        {% endif %}
+    </span>
+</div>

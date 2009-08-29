@@ -81,13 +81,12 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .list tbody tr:hover {background: #234f32; }
 #userlist td {border-collapse: separate; border-spacing: 3px;border: 1px dotted grey; }
 .right {text-align: right;}
-.pagination {color: #9aef3f;}
+.pagination {color: #9aef3f; margin-left:3px;}
 .commentingUser {color:#9aef3f;}
  {color:#487858;}
 .team {background: #487858; position: relative; float: right; margin: 1px; padding:5px; width: 50%;}
 .team .sb-inner { background:#487858;}
 #drop-message {color:lightgrey;list-style-type:none;}
-#admin-links a {background:#487858;}
 #matchdays {width: 50% ;padding: 5px; background:#487858;}
 #matchdays .sb-inner { background:#487858;}
 #matchdays .sb-shadow { background:#191e10;}
@@ -95,3 +94,5 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
 .dateTime {color:#487858; font-size: 85%;}
 #matchdays li{list-style-type:none;}
+#md-filters {text-align:right; margin-right:3px;}
+#md-placeholder .sport {color: #9aef3f;}
