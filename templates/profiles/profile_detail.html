@@ -12,6 +12,12 @@
     <tr><td>Ball controll:</td><td>{{ profile.get_ball_controll_display }}</td></tr>
     <tr><td>Shot power:</td><td>{{ profile.get_shot_power_display }}</td></tr>
 </table>
+<h2>Attendance Rates</h2>
+<ul>
+  <li>Football: {{ profile.get_football_attendance_rate|safe }}</li>
+  <li>Basketball: {{ profile.get_basketball_attendance_rate|safe }}</li>
+  <li>Volleyball: {{ profile.get_volleyball_attendance_rate|safe }}</li>
+</ul>
 {% endblock %}
 {% block navbar %}
   <a href="{% url profiles_edit_profile %}">Edit</a>

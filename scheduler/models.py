@@ -32,22 +32,25 @@ class PlayerProfile(models.Model):
         else:
             return self.user.username
 
-    def __getAttendanceRate(self, sport):
+    def __get_attendance_rate(self, sport):
         count = 0
         mds = MatchDay.objects.filter(sport = sport)
         for md in mds:
             if self.user in md.participants.iterator():
                 count += 1
-        return (count, mds.count())
+        procentage = "NA"
+        if mds.count() > 0:
+            procentage = str(count*100/mds.count()) + "%"
+        return str(count) + "/" + str(mds.count()) + ' (<span class="procentage">' + procentage + ')</span>'
     
-    def getFootballAtendanceRate(self):
-        return self.__getAttendanceRate('FB')
+    def get_football_attendance_rate(self):
+        return self.__get_attendance_rate('FB')
     
-    def getBasketballAtendanceRate(self):
-        return self.__getAttendanceRate('BB')
+    def get_basketball_attendance_rate(self):
+        return self.__get_attendance_rate('BB')
 
-    def getVolleyballAtendanceRate(self):
-        return self.__getAttendanceRate('VB')
+    def get_volleyball_attendance_rate(self):
+        return self.__get_attendance_rate('VB')
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
