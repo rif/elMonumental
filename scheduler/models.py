@@ -10,7 +10,7 @@ class PlayerProfile(models.Model):
     SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
-    email_subscriptions = models.CharField('Subscription (FB-footbal,BB-basket,VB-volley):', max_length=20, default='FB')
+    email_subscriptions = models.CharField('Subscription (FB-football,BB-basket,VB-volley):', max_length=20, default='FB')
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
@@ -44,13 +44,13 @@ class PlayerProfile(models.Model):
         return str(count) + "/" + str(mds.count()) + ' (<span class="procentage">' + procentage + ')</span>'
     
     def get_football_attendance_rate(self):
-        return self.__get_attendance_rate('FB')
+        return self.__get_attendance_rate(MatchDay.FOOTBALL)
     
     def get_basketball_attendance_rate(self):
-        return self.__get_attendance_rate('BB')
+        return self.__get_attendance_rate(MatchDay.BASKETBALL)
 
     def get_volleyball_attendance_rate(self):
-        return self.__get_attendance_rate('VB')
+        return self.__get_attendance_rate(MatchDay.VOLLEYBALL)
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
@@ -67,7 +67,10 @@ class GuestPlayer(models.Model):
         unique_together = ('friend_user', 'first_name', 'last_name')
 
 class MatchDay(models.Model):
-    SPORT_CHOICES = ((u'FB', u'Football'), (u'VB', u'Volleyball'), (u'BB', u'Basketball'),)
+    FOOTBALL = u'FB'
+    VOLLEYBALL = u'VB'
+    BASKETBALL = u'BB'
+    SPORT_CHOICES = ((FOOTBALL, u'Football'), (VOLLEYBALL, u'Volleyball'), (BASKETBALL, u'Basketball'),)
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
     sport = models.CharField(max_length=3, choices=SPORT_CHOICES, default=u'FB')

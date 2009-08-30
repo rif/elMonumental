@@ -134,12 +134,6 @@ class AdminTest(TestCase):
         self.failUnlessEqual(response.content.count('<title>'), 3)
         self.failUnlessEqual(response.content.count('<description>'), 3)
 
-    def test_feed_by_sport(self):
-        response = self.client.get('/feeds/by_sports/FB/')
-        self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.content.count('<title>'), 3)
-        self.failUnlessEqual(response.content.count('<description>'), 3)
-
     def test_deleteOrphanGuests(self):
         logged_in = self.client.login(username='admin', password='test')
         self.assertTrue(logged_in)
