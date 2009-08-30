@@ -93,7 +93,7 @@ def addGuest(request, md_id):
     return render_to_response('scheduler/add_guest.html',
                               {'form': form, 'md_id': md_id})
 
-def delGuest(request, md_id):
+def delGuest(request, md_id):    
     if not request.user.is_authenticated():
         return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
