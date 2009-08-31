@@ -1,7 +1,7 @@
 from django.conf.urls.defaults import *
 from scheduler import views
 from scheduler.models import MatchDay, Proposal
-from scheduler.forms import PlayerRegistrationForm
+from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
@@ -39,6 +39,10 @@ urlpatterns += patterns('',
         'registration.views.register',
         {'form_class' : PlayerRegistrationForm},
         name='registration_register'),
+    url(r'^profiles/edit/$',
+        'profiles.views.edit_profile',
+        {'form_class' : PlayerProfileForm},
+        name='profiles_edit_profile'),
     url(r'^feeds/(?P<url>.*)/$',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}),

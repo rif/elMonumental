@@ -1,7 +1,7 @@
 from django import forms
 from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
-from scheduler.models import GuestPlayer, Team
+from scheduler.models import GuestPlayer, Team, PlayerProfile, MatchDay
 
 attrs_dict = { 'class': 'required' }
 
@@ -17,6 +17,12 @@ class PlayerRegistrationForm(RegistrationFormUniqueEmail):
         new_user.last_name = self.cleaned_data['last_name']
         new_user.save()
         return new_user
+
+class PlayerProfileForm(forms.ModelForm):
+    email_subscriptions = forms.CharField(
+                widget=forms.CheckboxSelectMultiple(choices=MatchDay.SPORT_CHOICES))
+    class Meta:
+        model = PlayerProfile
 
 class GuestPlayerForm(forms.ModelForm):
     class Meta:
