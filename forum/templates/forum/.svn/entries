@@ -1,14 +1,14 @@
 10
 
 dir
-50
+52
 http://django-forum.googlecode.com/svn/trunk/templates/forum
 http://django-forum.googlecode.com/svn
 
 
 
-2009-08-04T12:55:14.060733Z
-48
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 has-props
 
@@ -32,10 +32,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-6d7a6442013727322eb93a5bcba5e588
-2009-08-04T12:55:14.060733Z
-48
+2009-08-31T07:02:48.000000Z
+f5e86ca625192f41127f96679a399362
+2009-08-27T09:39:03.559425Z
+51
 ross@Rossp.org
 
 
@@ -58,7 +58,7 @@ ross@Rossp.org
 
 
 
-1132
+1226
 
 newthread.html
 file
@@ -205,10 +205,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-affb15f8389f541ec38057143482f17f
-2009-08-04T12:55:14.060733Z
-48
+2009-08-31T07:02:48.000000Z
+21c0f16d53b9a3b8569bb420c9493770
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 
 
