@@ -5,7 +5,7 @@
     <h4>Sport: {{ object.get_sport_display }}</h4>
     <h4>Body:</h4>
     <textarea rows="5" cols="30" name="message">
-You are invited to come at the {{ object.id|ordinal }} matchday starting at
+You are invited to come to the {{ object.get_sport_display }} matchday starting at
 {{ object.start_date|time:"H:i" }} - {{ object.start_date|date:"D, d M Y"|naturalday }}
 which will take place at {{ object.location }} arena.
 Click at http://elMonumental.sro.oce.net/ to attend.
