@@ -1,5 +1,5 @@
 {% extends "forum_base.html" %}
-{% load i18n markup %}
+{% load i18n %}
 {% block title %}{{ thread.title|escape }} ({{ forum.title }}){% endblock %}
 
 {% block pagetitle %}{{ forum.title }} &raquo; {{ thread.title|escape }}{% endblock %}
@@ -15,7 +15,7 @@
 <tr>
 <th class='djangoForumThreadPostDetail' id='post{{ post.id }}'>{% blocktrans with post.time|timesince as time %}{{ time }} ago{% endblocktrans %}<br />
 {% trans "by" %} <strong>{{ post.author }}</strong></th>
-<td>{{ post.body|force_escape|markdown|safe }}</td>
+<td>{{ post.body_html|safe }}</td>
 </tr>{% endfor %}
 
 </table>
@@ -30,7 +30,7 @@
 </ul>
 {% endif %}
 
-{% if request.user.is_authenticated %}<p><a href="{% url forum_subscriptions %}">{% trans "Update Subscriptions" %}</a></p>{% endif %}
+{% if request.user.is_authenticated %}<p><a href="{% url forum_subscriptions %}?next={{ request.path }}">{% trans "Update Subscriptions" %}</a></p>{% endif %}
 <h2>{% trans "Post a Reply" %}</h2>
 {% if thread.closed %}
 <p>{% trans "Sorry, this thread is closed. No further replies are permitted." %}</p>

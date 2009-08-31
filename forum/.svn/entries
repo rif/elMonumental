@@ -1,14 +1,14 @@
 10
 
 dir
-50
+52
 http://django-forum.googlecode.com/svn/trunk
 http://django-forum.googlecode.com/svn
 
 
 
-2009-08-24T22:13:25.299973Z
-50
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 has-props
 
@@ -35,10 +35,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-5ddce41b00140d114de78b95a1eb6497
-2009-02-07T00:45:32.519280Z
-38
+2009-08-31T07:02:48.000000Z
+9a9605309974fa942551c5efeb26e271
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 
 
@@ -61,7 +61,7 @@ ross@Rossp.org
 
 
 
-655
+667
 
 LICENSE.TXT
 file
@@ -103,10 +103,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-2acd422c8d52ce8b0f338da06f92f3ae
-2009-08-04T12:59:44.643825Z
-49
+2009-08-31T07:02:48.000000Z
+07c96d07bdb8178643e8b73d335bc65a
+2009-08-27T09:39:03.559425Z
+51
 ross@Rossp.org
 
 
@@ -129,7 +129,7 @@ ross@Rossp.org
 
 
 
-8146
+8190
 
 managers.py
 file
@@ -242,10 +242,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-bc610ad6945db28d6ff2fcdd3e37bbf1
-2009-08-04T12:55:14.060733Z
-48
+2009-08-31T07:02:48.000000Z
+ba248af9d920f933bc285b59912951ec
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 
 
@@ -268,7 +268,7 @@ ross@Rossp.org
 
 
 
-9284
+9679
 
 README.txt
 file
@@ -276,10 +276,10 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
-061fa6dcf7a874fe328e8b422a6445a1
-2009-05-03T00:26:36.151208Z
-45
+2009-08-31T07:02:48.000000Z
+b9be1fb689016820d9571dace2a63e20
+2009-08-27T10:07:37.957749Z
+52
 ross@Rossp.org
 
 
@@ -302,7 +302,7 @@ ross@Rossp.org
 
 
 
-2526
+3166
 
 urls.py
 file

@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 22
-/svn/!svn/ver/50/trunk
+/svn/!svn/ver/52/trunk
 END
 admin.py
 K 25
 svn:wc:ra_dav:version-url
 V 31
-/svn/!svn/ver/38/trunk/admin.py
+/svn/!svn/ver/52/trunk/admin.py
 END
 LICENSE.TXT
 K 25
@@ -19,7 +19,7 @@ views.py
 K 25
 svn:wc:ra_dav:version-url
 V 31
-/svn/!svn/ver/49/trunk/views.py
+/svn/!svn/ver/51/trunk/views.py
 END
 managers.py
 K 25
@@ -43,13 +43,13 @@ models.py
 K 25
 svn:wc:ra_dav:version-url
 V 32
-/svn/!svn/ver/48/trunk/models.py
+/svn/!svn/ver/52/trunk/models.py
 END
 README.txt
 K 25
 svn:wc:ra_dav:version-url
 V 33
-/svn/!svn/ver/45/trunk/README.txt
+/svn/!svn/ver/52/trunk/README.txt
 END
 urls.py
 K 25
