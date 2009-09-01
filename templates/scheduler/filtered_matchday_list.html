@@ -5,6 +5,15 @@
     {% get_comment_count for matchday as comment_count %}
     <li>
         {#{ matchday.id|ordinal }#}
+	{% ifequal matchday.sport "FB" %}
+	<img src="{{ MEDIA_URL }}images/Soccer_32x32.png" height="16" width="16"/> 
+	{% endifequal %}
+	{% ifequal matchday.sport "BB" %}
+	<img src="{{ MEDIA_URL }}images/Basketball_32x32.png" height="16" width="16"/> 
+	{% endifequal %}
+	{% ifequal matchday.sport "VB" %}
+	<img src="{{ MEDIA_URL }}images/Volleyball_32x32.png" height="16" width="16"/> 
+	{% endifequal %}
 	<span class="sport">{{ matchday.get_sport_display }}</span>
         {{ matchday.start_date|date:"D d M Y"|naturalday }} -
         {{ matchday.location }} -
