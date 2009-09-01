@@ -34,7 +34,7 @@ Guest Stars:
                     <li>{{ player.get_full_name }}</li>
                 {% endfor %}
                 {% for player in team.guest_stars.all %}
-                    <li>{{ player }}</li>
+                    <li>{{ player.get_full_name }}</li>
                 {% endfor %}
             </ul>
         </div>
