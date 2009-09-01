@@ -11,7 +11,7 @@
         {% endblock %}
     </head>
     <body>
-        <div id="header">        
+        <div id="header">        	  
             <div class="right">
             {% if user.is_authenticated %}
                 <p>
@@ -32,7 +32,7 @@
             Please uptade your profile <a href="{% url profiles_edit_profile %}">here</a>.
             {% endif %}
             </div>            
-        </div>
+        </div>    
         <div id="container">
             {% block forum_header %}{% endblock %}
             <div id="messages_block">
@@ -46,8 +46,8 @@
             </div>
             <div id="placeholder"></div>
             {% block content %}{% endblock %}
-        </div>
-	<div id="navbar">
+        </div>	
+	<div id="navbar">	  
 	  <h1>
 	    {% if user.is_staff %}
             <a href="{% url admin:index %}">Administration</a>
