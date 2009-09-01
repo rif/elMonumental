@@ -2,10 +2,6 @@ $(document).ready(function() {
     var myBorder = RUZEE.ShadedBorder.create({ corner:8, shadow:16});
     myBorder.render('matchdays');
     prepareLinks();
-    $("a.md-detail-link").click(function(e){
-        loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
-        e.preventDefault();
-    });
     $("a.md-filter").click(function(e){
 	$("#md-placeholder").load("/mdbysport/" + $(this).attr("id") + "/", prepareLinks);
 	e.preventDefault();
@@ -14,6 +10,10 @@ $(document).ready(function() {
 });
 
 function prepareLinks(){
+    $("a.md-detail-link").click(function(e){
+       loadPlaceholder("/matchday/" + $(this).parent().attr('md_id') + "/");
+       e.preventDefault();
+    });
     $("span.async", "#md-placeholder").each(function(){
         var span = $(this);
         $.post('links/', {
