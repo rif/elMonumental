@@ -19,6 +19,7 @@ class PlayerRegistrationForm(RegistrationFormUniqueEmail):
         return new_user
 
 class PlayerProfileForm(forms.ModelForm):
+    alias_name = forms.CharField(max_length=50, help_text='Name of a sport star of monumental proportions (e.g. Mutu).')
     email_subscriptions = forms.CharField(
                 widget=forms.CheckboxSelectMultiple(choices=MatchDay.SPORT_CHOICES))
     class Meta:
