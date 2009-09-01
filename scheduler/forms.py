@@ -23,6 +23,7 @@ class PlayerProfileForm(forms.ModelForm):
                 widget=forms.CheckboxSelectMultiple(choices=MatchDay.SPORT_CHOICES))
     class Meta:
         model = PlayerProfile
+        exclude = ('user',)
 
 class GuestPlayerForm(forms.ModelForm):
     class Meta:
