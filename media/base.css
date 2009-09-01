@@ -37,10 +37,10 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
 
 #placeholder {
   /*border: 1px dotted #234f32;*/
-  margin: 0.5em;
-  padding: 1em;
+  margin: 1px;
+  padding: 1px;
   position: absolute;
-  top:10%;
+  top:7%;
   right:1%;    
   width: 25%;
   font-size: 88%;  
