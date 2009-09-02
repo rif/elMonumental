@@ -40,7 +40,8 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   margin: 1px;
   padding: 1px;
   position: absolute;
-  top:7%;
+  z-index:1;
+  top:9%;
   right:1%;    
   width: 25%;
   font-size: 88%;  
