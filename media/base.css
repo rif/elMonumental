@@ -19,7 +19,7 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   position: fixed;
   margin: 0;
   padding: 0;
-  bottom: -1px;
+  bottom: 0 !important;
 }
 #navbar {
   text-align: left;
@@ -29,7 +29,7 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   padding: 0;
   position: fixed;
   z-index:1;
-  bottom: -1px;
+  bottom: 0 !important;
 }
 
 #placeholder {
