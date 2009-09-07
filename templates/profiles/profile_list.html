@@ -22,7 +22,7 @@
 <tbody>
     {% for profile in object_list %}
     <tr>
-       <td>{{ forloop.counter }}</td>
+       <td>{{ profile.user.id }}</td>
         <td>{{ profile.user.first_name }}</td>
         <td>{{ profile.alias_name }}</td>
         <td>{{ profile.user.last_name }}</td>
