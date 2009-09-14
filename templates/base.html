@@ -1,14 +1,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        {% block html_head %}
+    <head>        
         <link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
         <link rel="alternate" type="application/rss+xml" href="/feeds/latest/" title="RSS feed for elMonumental">
 	<link rel="alternate" type="application/rss+xml" href="/feeds/news/" title="RSS news feed for elMonumental">
         <link rel="icon" href="{{ MEDIA_URL }}images/favicon.ico" type="image/x-icon" />
         <title>{% block title %}El Monumental{% endblock %}</title>
-        {% endblock %}
+        {% block html_head %}{% endblock %}
     </head>
     <body>
         <div id="header">        	  
