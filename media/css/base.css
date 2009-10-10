@@ -73,7 +73,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .commentingUser {color:#9aef3f;}
 .team {background: #487858; position: relative; float: right; margin: 1px; padding:5px; width: 50%;}
 .team .sb-inner { background:#487858;}
-.drop-message {color:gray;list-style-type:none;}
+.drop-message {color:lightgray;list-style-type:none;}
 #matchdays {width: 50% ;padding: 5px; background:#487858;}
 #matchdays .sb-inner { background:#487858;}
 #matchdays .sb-shadow { background:#191e10;}
