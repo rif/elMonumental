@@ -41,16 +41,25 @@ class PlayerProfile(models.Model):
         procentage = "NA"
         if mds.count() > 0:
             procentage = str(count*100/mds.count()) + "%"
-        return str(count) + "/" + str(mds.count()) + ' (<span class="procentage">' + procentage + ')</span>'
-    
+        return (str(count) + "/" + str(mds.count()), '<span class="procentage">'+ procentage + '</span>')
+
+    def get_football_attendance_procentage(self):
+        return self.__get_attendance_rate(MatchDay.FOOTBALL)[1]
+
+    def get_basketball_attendance_procentage(self):
+        return self.__get_attendance_rate(MatchDay.BASKETBALL)[1]
+
+    def get_volleyball_attendance_procentage(self):
+        return self.__get_attendance_rate(MatchDay.VOLLEYBALL)[1]
+
     def get_football_attendance_rate(self):
-        return self.__get_attendance_rate(MatchDay.FOOTBALL)
+        return self.__get_attendance_rate(MatchDay.FOOTBALL)[0]
     
     def get_basketball_attendance_rate(self):
-        return self.__get_attendance_rate(MatchDay.BASKETBALL)
+        return self.__get_attendance_rate(MatchDay.BASKETBALL)[0]
 
     def get_volleyball_attendance_rate(self):
-        return self.__get_attendance_rate(MatchDay.VOLLEYBALL)
+        return self.__get_attendance_rate(MatchDay.VOLLEYBALL)[0]
 
 class GuestPlayer(models.Model):
     friend_user = models.ForeignKey(User, null=True)
@@ -105,7 +114,7 @@ class Team(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('sch_team_detail', (), { 'object_id': self.matchday.id })
+        return ('sch_team_management', (), { 'object_id': self.matchday.id })
 
     class Meta:
         unique_together = ('name', 'matchday')
