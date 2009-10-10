@@ -1,9 +1,38 @@
-
 {% extends 'base.html' %}
 {% block title %}View All Users{% endblock %}
+{% block html_head %}
+<style type="text/css">
+  table.tablesorter .header {
+  background-image: url({{ MEDIA_URL }}images/bg.png);
+  background-repeat: no-repeat;
+  padding-left: 30px;
+  padding-top: 8px;
+  height: auto;
+  color:black;
+  }
+  table.tablesorter .headerSortUp {
+  background-image: url({{ MEDIA_URL }}images/asc.png);
+  background-repeat: no-repeat;
+  }
+  table.tablesorter .headerSortDown {
+  background-image: url({{ MEDIA_URL }}images/desc.png);
+  background-repeat: no-repeat;
+  }
+</style>
+{% endblock %}
+{% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function()
+     {
+          $("#usersTable").tablesorter();
+     }
+);
+</script>
+{% endblock %}
 {% block content %}
 <h2>Users</h2>
-<table class="list tablesorter" cellspacing="1" id="userlist">
+<table id="usersTable" class="list tablesorter" cellspacing="1" id="userlist">
 <thead>
     <tr>
         <th>#</th>
@@ -14,11 +43,11 @@
         <th>Stamina</th>
         <th>BallControl</th>
         <th>ShotPower</th>
-	<th>Football<br/>Attendance</th>
+	<th>Football</th>
         <th>%</th>
-	<th>Basketball<br/>Attendance</th>
+	<th>Basketball</th>
         <th>%</th>
-	<th>Volleyball<br/>Attendance</th>
+	<th>Volleyball</th>
         <th>%</th>
     </tr>
 </thead>

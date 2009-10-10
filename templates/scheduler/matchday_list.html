@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load forum_tags %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/shadedborder.js"></script>
@@ -19,6 +20,23 @@
   </div>
 </div>
 <div id="news-placeholder"></div>
+<div id="latest-posts">
+  <h2>Latest activity on the forum</h2>
+<!--
+{% forum_latest_posts 5 as latest_posts %}
+<ul>
+{% for post in latest_posts %}
+<li><strong><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></strong> {{ post.latest_post_time|timesince }} ago</li>
+{% endfor %}
+</ul>
+-->
+{% forum_latest_thread_activity 5 as latest_activity %}
+<ul>
+{% for post in latest_activity %}
+<p><strong><a href='{{ post.get_absolute_url }}'>{{ post.title }}</a></strong> {{ post.latest_post_time|timesince }} ago</p>
+{% endfor %}
+</ul>
+</div>
 {% endblock %}
 {% block navbar%}
 <a href="/profiles/">View all users</a>
