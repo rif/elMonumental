@@ -20,7 +20,7 @@ table.tablesorter .odd {
     background-color: #6E6E6E;
 }
 table.tablesorter .header {
-    background-image: url(images/bg.png);
+    background-image: url(../images/bg.png);
     background-repeat: no-repeat;
     border-left: 1px solid #FFF;
     border-right: 1px solid #000;
@@ -31,7 +31,7 @@ table.tablesorter .header {
     color:black;
 }
 table.tablesorter th {
-    background-image: url(images/nosortbg.png);
+    background-image: url(../images/nosortbg.png);
     background-repeat: no-repeat;
     border-left: 1px solid #FFF;
     border-right: 1px solid #000;
@@ -41,7 +41,7 @@ table.tablesorter th {
     color:black;
 }
 table.tablesorter .headerSortUp {
-    background-image: url(images/asc.png);
+    background-image: url(../images/asc.png);
     background-repeat: no-repeat;
 }
 table.tablesorter .headerSortDown {
