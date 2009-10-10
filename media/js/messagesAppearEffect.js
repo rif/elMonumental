@@ -10,7 +10,7 @@ function fadeOutMessages(){
 }
 
 function showMessages(){
-    $("#messages_block").load("/messages/", fadeOutMessages);
+    setTimeout(function (){$("#messages_block").load("/messages/", fadeOutMessages);}, 1000);
 }
 
 function loadPlaceholder(link){
