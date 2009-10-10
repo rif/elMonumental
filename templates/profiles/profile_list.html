@@ -14,9 +14,12 @@
         <th>Stamina</th>
         <th>BallControl</th>
         <th>ShotPower</th>
-	<th>Football<br/>Attendance</th>	
+	<th>Football<br/>Attendance</th>
+        <th>%</th>
 	<th>Basketball<br/>Attendance</th>
+        <th>%</th>
 	<th>Volleyball<br/>Attendance</th>
+        <th>%</th>
     </tr>
 </thead>
 <tbody>
@@ -31,8 +34,11 @@
         <td>{{ profile.get_ball_controll_display }}</td>
 	<td>{{ profile.get_shot_power_display }}</td>
         <td>{{ profile.get_football_attendance_rate|safe }}</td>
+        <td>{{ profile.get_football_attendance_procentage|safe }}</td>
 	<td>{{ profile.get_basketball_attendance_rate|safe }}</td>
+        <td>{{ profile.get_basketball_attendance_procentage|safe }}</td>
 	<td>{{ profile.get_volleyball_attendance_rate|safe }}</td>
+        <td>{{ profile.get_volleyball_attendance_procentage|safe }}</td>
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>
         </td>

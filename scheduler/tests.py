@@ -240,19 +240,23 @@ class ViewsTest(TestCase):
 
     def test_football_atendance(self):
         self.md.participants.add(self.user)
-        self.failUnlessEqual(self.user.get_profile().get_football_attendance_rate(), '1/2 (<span class="procentage">50%)</span>')
+        self.failUnlessEqual(self.user.get_profile().get_football_attendance_rate(), '1/2')
+        self.failUnlessEqual(self.user.get_profile().get_football_attendance_procentage(), '<span class="procentage">50%</span>')
 
     def test_basketball_atendance(self):
         bmd1 = MatchDay.objects.create(start_date = self.past, sport = 'BB')
         bmd2 = MatchDay.objects.create(start_date = self.past, sport = 'BB')
         bmd1.participants.add(self.user)
         bmd2.participants.add(self.user)
-        self.failUnlessEqual(self.user.get_profile().get_basketball_attendance_rate(), '2/2 (<span class="procentage">100%)</span>')
+        self.failUnlessEqual(self.user.get_profile().get_basketball_attendance_rate(), '2/2')
+        self.failUnlessEqual(self.user.get_profile().get_basketball_attendance_procentage(), '<span class="procentage">100%</span>')
+
 
     def test_volleyball_atendance(self):
         vmd = MatchDay.objects.create(start_date = self.past, sport = 'VB')
         vmd.participants.add(self.user)
-        self.failUnlessEqual(self.user.get_profile().get_volleyball_attendance_rate(), '1/1 (<span class="procentage">100%)</span>')
+        self.failUnlessEqual(self.user.get_profile().get_volleyball_attendance_rate(), '1/1')
+        self.failUnlessEqual(self.user.get_profile().get_volleyball_attendance_procentage(), '<span class="procentage">100%</span>')
 
     def test_old_attend(self):
         self.assertTrue(self.logged_in)
