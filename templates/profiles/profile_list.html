@@ -1,31 +1,19 @@
 {% extends 'base.html' %}
 {% block title %}View All Users{% endblock %}
 {% block html_head %}
-<style type="text/css">
-  table.tablesorter .header {
-  background-image: url({{ MEDIA_URL }}images/bg.png);
-  background-repeat: no-repeat;
-  padding-left: 30px;
-  padding-top: 8px;
-  height: auto;
-  color:black;
-  }
-  table.tablesorter .headerSortUp {
-  background-image: url({{ MEDIA_URL }}images/asc.png);
-  background-repeat: no-repeat;
-  }
-  table.tablesorter .headerSortDown {
-  background-image: url({{ MEDIA_URL }}images/desc.png);
-  background-repeat: no-repeat;
-  }
-</style>
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" media="screen">
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function()
      {
-          $("#usersTable").tablesorter();
+          $("#usersTable").tablesorter(
+                    {headers: { 8: { sorter: false},
+                                10: {sorter: false},
+                                12: {sorter: false} }
+                    }
+          );
      }
 );
 </script>
