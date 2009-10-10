@@ -16,11 +16,11 @@ $(function() {
                 }
             });
             if(droppedOnTeam){
+                $('.drop-message', target).remove();
                 $(this).css("list-style-type", "none");
                 $(this).css("text-decoration", "line-through");
                 $(this).removeClass("draggable");
                 $(this).addClass("pinned");
-                $('#drop-message', target).remove();
                 $('span.count', parent).text(target.find('li').length);
             }
         },

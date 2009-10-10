@@ -41,10 +41,7 @@ Guest Stars:
     {% endfor %}
 </div>
 <div>
-    {% if object.isFuture %}
-    <a href="{% url sch_team_detail object.id %}">Manage teams</a>
-    {% endif %}
-    <a href="{% url sch_proposal_list object.id %}">Team Proposals</a>
+    <a href="{% url sch_team_management object.id %}">Teams Management</a>
     {% if user.is_staff and object.isFuture %}
         <div type="hidden" id="email_form"></div>
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>

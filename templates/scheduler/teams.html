@@ -7,8 +7,24 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.draggable.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/ui.sortable.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/teamFunctions.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/proposalFunctions.js"></script>
 {% endblock %}
 {% block content %}
+<h2>Team Proposals</h2>
+<ul>
+{% for proposal in proposal_list %}
+    <li>
+        <a class="proposals_link" href="{% url sch_proposal_ajax proposal.id %}">{{ proposal }}</a>
+        {% ifequal user proposal.user %}
+            - <a class="delete_proposal_link" href="{% url sch_proposal_del proposal.id %}">Delete</a>
+        {% endifequal %}
+    </li>
+{% empty %}
+    <li>There are no proposals at this time.</li>
+
+{% endfor %}
+</ul>
+{% if object.isFuture %}
 <h2>Matchday Information</h2>
 <ul>
 {% if not object.isFuture %}
@@ -16,13 +32,13 @@
 {% endif %}
 <li>Location: {{ object.location }}</li>
 <li>Date: {{ object.start_date|date:"D d M Y"|naturalday }} {{ object.start_date|time:"H:i" }}</li>
+</ul>
 {% if user.is_staff %}
 <div>
     <a id="create_team_link" href="{% url sch_team_add object.id %}">Create Team</a>
     <a id="delete_team_link" href="{% url sch_team_del object.id %}">Delete Team</a>
 </div>
 {% endif %}
-</ul>
 Participants:
     <ul>
     {% for player in object.participants.all %}
@@ -40,17 +56,20 @@ Guest Stars:
         <div class="team" tm_id="{{ team.id }}">
             <h4 id="team_title">Team {{ team }} Players: <span class="count">0</span></h4>
             <ol class="sortable">
-                <li id="drop-message">Drop players here!</li>
+                <li class="drop-message">Drop players here!</li>
             </ol>
         </div>
     {% endfor %}
-</div>  
+</div>
+{% endif %}
 {% endblock %}
 {% block navbar%}
-    <a href="{% url sch_team_detail object.id %}">Reset</a>
-    {% if user.is_staff %}
-        <a id="save_teams_link" href="#">Save team</a>
-    {% else %}
-        <a id="save_proposal_link" href="#">Save proposal</a>
-    {% endif %}    
+    <a href="{% url sch_team_management object.id %}">Reset</a>
+    {% if object.isFuture %}
+        {% if user.is_staff %}
+            <a id="save_teams_link" href="#">Save team</a>
+        {% else %}
+            <a id="save_proposal_link" href="#">Save proposal</a>
+        {% endif %}
+    {% endif %}
 {% endblock %}

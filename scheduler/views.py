@@ -178,7 +178,7 @@ def addTeam(request, md_id):
             team.save()
             request.user.message_set.create(message='You added team %s to the matchday #%s.'
                                         % (team.name, md.id))
-            return redirect('sch_team_detail', md.id)
+            return redirect('sch_team_management', md.id)
     else:
         form = TeamForm()
     return render_to_response('scheduler/add_team.html',
@@ -309,11 +309,17 @@ def makeGuestPlayersUnique(request):
         return HttpResponse('<p>Done, deleted %s guest playes.</p><a href="/">Home</a>' % deleted)
     return HttpResponse('Please come back as the admin!')
 
-def proposals(request, md_id):
-    proposal_list = Proposal.objects.filter(matchday__pk=md_id)
-    return render_to_response('scheduler/proposal_list.html',
-                             {'proposal_list': proposal_list, 'md_id': md_id},
-                              context_instance=RequestContext(request))
+def teamsManagement(request, object_id):
+    proposal_list = Proposal.objects.filter(matchday__pk=object_id)
+
+    return list_detail.object_detail(
+        request,
+        queryset = MatchDay.objects.all(),
+        object_id = object_id,
+        template_name = 'scheduler/teams.html',
+        extra_context = {"proposal_list" : proposal_list}
+    )
+
 
 @login_required
 def delProposal(request, pid):

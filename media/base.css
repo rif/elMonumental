@@ -81,14 +81,13 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .right {text-align: right;}
 .pagination {color: #9aef3f; margin-left:3px;}
 .commentingUser {color:#9aef3f;}
- {color:#487858;}
 .team {background: #487858; position: relative; float: right; margin: 1px; padding:5px; width: 50%;}
 .team .sb-inner { background:#487858;}
-#drop-message {color:lightgrey;list-style-type:none;}
+.drop-message {color:lightgrey;list-style-type:none;}
 #matchdays {width: 50% ;padding: 5px; background:#487858;}
 #matchdays .sb-inner { background:#487858;}
 #matchdays .sb-shadow { background:#191e10;}
-#news-placeholder {float: center; text-align:center;}
+#news-placeholder {text-align:center;}
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
 .dateTime {color:#487858; font-size: 85%;}
 #matchdays li{list-style-type:none;}
