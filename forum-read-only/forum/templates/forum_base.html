@@ -1,16 +1,15 @@
-{% extends "base.html" %}
-{% load i18n %}
-{% block html_head %}
-<link rel="stylesheet" href="{{ MEDIA_URL }}base.css" type="text/css" media="screen">
+{% load i18n %}<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
 <link rel="alternate" type="application/rss+xml" title="{% trans "All Latest Posts via RSS" %}" href="{% url forum_index %}rss/" />
 <link rel="alternate" type="application/atom+xml" title="{% trans "All Latest Posts via ATOM" %}" href="{% url forum_index %}atom/" />
 {% block extrahead %}{% endblock %}
-
+</head>
 <style type='text/css'><!--
 body {
     font-family: Verdana;
     font-size: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 #djangoForumBody {
@@ -73,11 +72,8 @@ body {
     font-size: 110%;
     font-weight: bold;
     display: block;
-    padding: 4px;    
+    padding: 4px;
 }
-#container label {
-    margin-right: 2px;
-} 
 
 #djangoForumThreadPostDetail {
     width: 20%;
@@ -86,9 +82,11 @@ body {
     display: inline;
 }
 --></style>
-{% endblock %}
+<body>
 <div id='djangoForumBody'>
-{% block forum_header %}
 <h1>{% block pagetitle %}{% trans "Welcome to the Forums" %}{% endblock %}</h1>
 <div id='djangoForumBreadcrumbs'><a href='/'>{% trans "Home" %}</a> &raquo; <a href='{% url forum_index %}'>{% trans "Forums" %}</a>{% block breadcrumbs %}{% endblock %}</div>
-{% endblock %}
+{% block content %}{% endblock %}
+</div>
+</body>
+</html>
