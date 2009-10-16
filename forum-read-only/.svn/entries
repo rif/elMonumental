@@ -25,15 +25,6 @@ has-props
 
 
 8fd21cde-4a2f-0410-9917-19c3686e4e0c
-
-
-
-
-
-
-
-
-((conflict templates dir update deleted edited (version http://django-forum.googlecode.com/svn 2 52 trunk/templates dir) (version http://django-forum.googlecode.com/svn 2 54 trunk/templates none)))
 
 LICENSE.TXT
 file
@@ -41,7 +32,7 @@ file
 
 
 
-2009-08-26T11:02:59.000000Z
+2009-10-16T09:13:01.000000Z
 c7292dcec1b896c18f7b93f9f7065250
 2007-05-01T02:52:00.984658Z
 7
@@ -75,7 +66,7 @@ file
 
 
 
-2009-09-08T07:26:05.000000Z
+2009-10-16T09:13:01.000000Z
 c9ac74958a092543e099c16d4afb0593
 2009-09-03T13:20:35.107215Z
 54
@@ -112,7 +103,7 @@ file
 
 
 
-2009-08-31T07:02:48.000000Z
+2009-10-16T09:13:01.000000Z
 b9be1fb689016820d9571dace2a63e20
 2009-08-27T10:07:37.957749Z
 52
@@ -139,27 +130,4 @@ ross@Rossp.org
 
 
 3166
-
-templates
-dir
-
-
-
-add
-
-
-
-
-
-
-
-
-
-
-
-
-
-copied
-http://django-forum.googlecode.com/svn/trunk/templates
-52
 
