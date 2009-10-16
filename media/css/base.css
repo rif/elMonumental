@@ -35,9 +35,9 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   position: absolute;
   z-index:2;
   top:9%;
-  right:1%;    
+  right:1%;
   width: 25%;
-  font-size: 88%;  
+  font-size: 88%;
   display:none;
 }
 #messages_block {position:relative;}
@@ -69,6 +69,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 .list tbody tr:hover {background: #234f32; }
 #userlist td {border-collapse: separate; border-spacing: 3px;border: 1px dotted gray; }
 .right {text-align: right;}
+.left {text-align: left;}
 .pagination {color: #9aef3f; margin-left:3px;}
 .commentingUser {color:#9aef3f;}
 .team {background: #487858; position: relative; float: right; margin: 1px; padding:5px; width: 50%;}
