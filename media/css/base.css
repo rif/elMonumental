@@ -12,7 +12,7 @@ body, th, td { font:12px/1.4em Verdana,sans-serif; }
   color: #487858;
   font-size:90%;
   text-align: center;
-  width: 100%;
+  /*width: 100%;*/
   position: fixed;
   margin: 0;
   padding: 0;
