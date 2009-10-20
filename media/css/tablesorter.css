@@ -6,12 +6,10 @@ table.tablesorter {
 }
 table.tablesorter th {
     text-align: left;
-    padding: 5px;
     background-color: #6E6E6E;
 }
 table.tablesorter td {
     color: #FFF;
-    padding: 5px;
 }
 table.tablesorter .even {
     background-color: #3D3D3D;
