@@ -21,6 +21,9 @@ EMAIL_HOST = 'smtp.oce.net'
 EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
 ACCOUNT_ACTIVATION_DAYS = 7
+
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
 MEDIA_ROOT = rel('media')
@@ -50,7 +53,9 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
