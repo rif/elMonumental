@@ -1,5 +1,7 @@
 from django.conf.urls.defaults import *
 from scheduler import views
+from django.views.generic import list_detail
+from django.views.generic.simple import direct_to_template
 from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
@@ -9,26 +11,26 @@ feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 proposal_info = {'queryset': Proposal.objects.all()}
 
-urlpatterns = patterns('django.views.generic.list_detail',
-    url(r'^$', 'object_list',
+urlpatterns = patterns('',
+    url(r'^$', list_detail.object_list,
         dict(md_info, paginate_by = 10),
         name='sch_matchday_list'),
     url(r'^matchday/(?P<object_id>\d+)/$',
-        never_cache('object_detail'),
+        never_cache(list_detail.object_detail),
         md_info,
         name='sch_matchday_detail'),
     url(r'^matchday/(?P<object_id>\d+)/rss/$',
-        'object_detail',
+        list_detail.object_detail,
         dict(md_info, template_name = 'feeds/matchday_rssdetail.html'),
         name='sch_rss_detail'),
     url(r'^getemailform/(?P<object_id>\d+)/$',
-        'object_detail',
+        list_detail.object_detail,
         dict(md_info, template_name = 'scheduler/send_email_form.html'),
         name='sch_email_ajax'),
     url(r'^proposal/(?P<object_id>\d+)/$',
-    'object_detail',
-    dict(proposal_info, template_name = 'scheduler/proposal_detail.html'),
-    name='sch_proposal_ajax'),
+        list_detail.object_detail,
+        dict(proposal_info, template_name = 'scheduler/proposal_detail.html'),
+        name='sch_proposal_ajax'),
 )
 
 urlpatterns += patterns('',
@@ -48,7 +50,7 @@ urlpatterns += patterns('',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}),
     url(r'^messages/$',
-        never_cache('django.views.generic.simple.direct_to_template'),
+        never_cache(direct_to_template),
         {'template': 'scheduler/messages.html'})
 )
 
