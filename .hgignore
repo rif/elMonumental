@@ -7,4 +7,4 @@ django-debug-toolbar
 django-evolution-read-only
 django-registration
 django-profiles
-django-forum-readonly
+django-forum-read-only
