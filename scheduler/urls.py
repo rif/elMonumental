@@ -3,6 +3,7 @@ from scheduler import views
 from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
+from django.views.decorators.cache import never_cache
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
@@ -13,7 +14,7 @@ urlpatterns = patterns('django.views.generic.list_detail',
         dict(md_info, paginate_by = 10),
         name='sch_matchday_list'),
     url(r'^matchday/(?P<object_id>\d+)/$',
-        'object_detail',
+        never_cache('object_detail'),
         md_info,
         name='sch_matchday_detail'),
     url(r'^matchday/(?P<object_id>\d+)/rss/$',
@@ -47,7 +48,7 @@ urlpatterns += patterns('',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}),
     url(r'^messages/$',
-        'django.views.generic.simple.direct_to_template',
+        never_cache('django.views.generic.simple.direct_to_template'),
         {'template': 'scheduler/messages.html'})
 )
 
