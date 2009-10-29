@@ -5,18 +5,19 @@ from django.views.generic.simple import direct_to_template
 from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
-from django.views.decorators.cache import never_cache
+from django.views.decorators.cache import cache_page
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 proposal_info = {'queryset': Proposal.objects.all()}
 
 urlpatterns = patterns('',
-    url(r'^$', list_detail.object_list,
+    url(r'^$', 
+        cache_page(list_detail.object_list),
         dict(md_info, paginate_by = 10),
         name='sch_matchday_list'),
     url(r'^matchday/(?P<object_id>\d+)/$',
-        never_cache(list_detail.object_detail),
+        list_detail.object_detail,
         md_info,
         name='sch_matchday_detail'),
     url(r'^matchday/(?P<object_id>\d+)/rss/$',
@@ -50,14 +51,14 @@ urlpatterns += patterns('',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}),
     url(r'^messages/$',
-        never_cache(direct_to_template),
+        direct_to_template,
         {'template': 'scheduler/messages.html'})
 )
 
 urlpatterns += patterns('',
     url(r'^attend/(?P<md_id>\d+)/$', views.attend, name='sch_matchday_attend'),
     url(r'^abandon/(?P<md_id>\d+)/$', views.abandon, name='sch_matchday_abandon'),
-    url(r'^links/$', views.linkQuerry, name='sch_request-ajax'),
+    url(r'^links/$', cache_page(views.linkQuerry), name='sch_request-ajax'),
     url(r'^addguest/(?P<md_id>\d+)/$', views.addGuest, name='sch_guest_add'),
     url(r'^delguest/(?P<md_id>\d+)/$', views.delGuest, name='sch_guest_del'),
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_guest_ajax_del'),
