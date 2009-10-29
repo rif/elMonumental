@@ -13,7 +13,7 @@ proposal_info = {'queryset': Proposal.objects.all()}
 
 urlpatterns = patterns('',
     url(r'^$', 
-        cache_page(list_detail.object_list),
+        list_detail.object_list,
         dict(md_info, paginate_by = 10),
         name='sch_matchday_list'),
     url(r'^matchday/(?P<object_id>\d+)/$',
