@@ -5,7 +5,6 @@ from django.views.generic.simple import direct_to_template
 from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
-from django.views.decorators.cache import cache_page
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
@@ -58,7 +57,7 @@ urlpatterns += patterns('',
 urlpatterns += patterns('',
     url(r'^attend/(?P<md_id>\d+)/$', views.attend, name='sch_matchday_attend'),
     url(r'^abandon/(?P<md_id>\d+)/$', views.abandon, name='sch_matchday_abandon'),
-    url(r'^links/$', cache_page(views.linkQuerry), name='sch_request-ajax'),
+    url(r'^links/$', views.linkQuerry), name='sch_request-ajax',
     url(r'^addguest/(?P<md_id>\d+)/$', views.addGuest, name='sch_guest_add'),
     url(r'^delguest/(?P<md_id>\d+)/$', views.delGuest, name='sch_guest_del'),
     url(r'^links/delguest/$', views.delGuestCallback, name='sch_guest_ajax_del'),
