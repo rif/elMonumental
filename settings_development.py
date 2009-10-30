@@ -22,7 +22,7 @@ EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
 ACCOUNT_ACTIVATION_DAYS = 7
 
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -60,6 +60,9 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
+if DEBUG:
+    MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+
 INTERNAL_IPS = ('127.0.0.1',)
 
 ROOT_URLCONF = 'elMonumental.urls'
@@ -77,13 +80,23 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.comments',
     'django.contrib.markup',
-    'scheduler',
-    'registration',
-    'profiles',
-    'news',
+    # Third party apps
     'forum',
     'django_evolution',
+    'registration',
+    'profiles',
+    # My apps
+    'scheduler',
+    'news',
 )
+
+if DEBUG:
+    INSTALLED_APPS += ('debug_toolbar',)
 
 FORUM_BASE = '/forum'
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+    'HIDE_DJANGO_SQL': True,
+}
+INTERNAL_IPS = ('127.0.0.1',)
