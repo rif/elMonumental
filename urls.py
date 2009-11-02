@@ -6,7 +6,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     (r'^', include('scheduler.urls')),
     (r'^admin/', include(admin.site.urls)),
-    (r'^accounts/', include('registration.urls')),
+    (r'^accounts/', include('registration.backends.default.urls')),
     (r'^profiles/', include('profiles.urls')),
     (r'^news/', include('news.urls')),
     (r'^comments/', include('django.contrib.comments.urls')),
