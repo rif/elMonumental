@@ -6,6 +6,11 @@ def ci():
     local('hg ci -m "%s"' % comment)
     local('hg push')
 
+"""
+For running sudo on remote machine:
+    vi /etc/sudoers (EDIT: please use visudo instead)
+    comment out: #Default requiretty
+"""
 @hosts('10.40.8.206')
 def deploy():
     'Deploy the app to the target environment'
