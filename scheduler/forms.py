@@ -3,7 +3,7 @@ from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
 from scheduler.models import GuestPlayer, Team, PlayerProfile, MatchDay
 from registration.backends.default import DefaultBackend
-import logging
+
 
 attrs_dict = { 'class': 'required' }
 
@@ -16,8 +16,6 @@ class PlayerRegistrationBackend(DefaultBackend):
           new_user.first_name = kwargs['first_name']
           new_user.last_name = kwargs['last_name']
           new_user.save()
-          print('Hello: ', new_user.first_name)
-          logging.debug('Hello: ', new_user.first_name)
           return new_user
 
 class PlayerRegistrationForm(RegistrationFormUniqueEmail):
