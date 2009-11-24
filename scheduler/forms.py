@@ -2,21 +2,27 @@ from django import forms
 from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
 from scheduler.models import GuestPlayer, Team, PlayerProfile, MatchDay
+from registration.backends.default import DefaultBackend
+import logging
 
 attrs_dict = { 'class': 'required' }
+
+class PlayerRegistrationBackend(DefaultBackend):
+     def get_form_class(self, request):
+         return PlayerRegistrationForm
+
+     def register(self, request, **kwargs):
+          new_user = super(PlayerRegistrationBackend, self).register(request, **kwargs)
+          new_user.first_name = kwargs['first_name']
+          new_user.last_name = kwargs['last_name']
+          new_user.save()
+          print('Hello: ', new_user.first_name)
+          logging.debug('Hello: ', new_user.first_name)
+          return new_user
 
 class PlayerRegistrationForm(RegistrationFormUniqueEmail):
     first_name = forms.CharField(max_length=30)
     last_name = forms.CharField(max_length=30)
-
-    def save(self):
-        new_user = RegistrationProfile.objects.create_inactive_user(username=self.cleaned_data['username'],
-                                                                    password=self.cleaned_data['password1'],
-                                                                    email=self.cleaned_data['email'])
-        new_user.first_name = self.cleaned_data['first_name']
-        new_user.last_name = self.cleaned_data['last_name']
-        new_user.save()
-        return new_user
 
 class PlayerProfileForm(forms.ModelForm):
     alias_name = forms.CharField(max_length=50, help_text='Name of a sport star of monumental proportions (e.g. Mutu).')
