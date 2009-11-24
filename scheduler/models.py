@@ -33,15 +33,13 @@ class PlayerProfile(models.Model):
             return self.user.username
 
     def __get_attendance_rate(self, sport):
-        count = 0
-        mds = MatchDay.objects.filter(sport = sport)
-        for md in mds:
-            if self.user in md.participants.iterator():
-                count += 1
+        mds = MatchDay.objects.filter(sport= sport)
+        count = mds.filter(participants__username= self.user.username).count()
+        mdsCount = mds.count()
         procentage = "NA"
-        if mds.count() > 0:
-            procentage = str(count*100/mds.count()) + "%"
-        return (str(count) + "/" + str(mds.count()), '<span class="procentage">'+ procentage + '</span>')
+        if mdsCount > 0:
+            procentage = str(count*100/mdsCount) + "%"
+        return (str(count) + "/" + str(mdsCount), '<span class="procentage">'+ procentage + '</span>')
 
     def get_football_attendance_procentage(self):
         return self.__get_attendance_rate(MatchDay.FOOTBALL)[1]
