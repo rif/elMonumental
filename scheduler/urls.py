@@ -6,12 +6,15 @@ from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
+from profiles.views import profile_list
+from django.views.decorators.cache import cache_page
+
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 proposal_info = {'queryset': Proposal.objects.all()}
 
 urlpatterns = patterns('',
-    url(r'^$', 
+    url(r'^$',
         list_detail.object_list,
         dict(md_info, paginate_by = 10),
         name='sch_matchday_list'),
@@ -44,7 +47,7 @@ urlpatterns += patterns('',
         {'form_class' : PlayerProfileForm},
         name='profiles_edit_profile'),
     url(r'^profiles/$',
-        'profiles.views.profile_list',
+        cache_page(profile_list, 3600 * 1) ,//1 HOUR
        {'paginate_by': 20},
         name='profiles_profile_list'),
     url(r'^feeds/(?P<url>.*)/$',

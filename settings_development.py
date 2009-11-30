@@ -22,7 +22,7 @@ EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
 ACCOUNT_ACTIVATION_DAYS = 7
 
-#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
