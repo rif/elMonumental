@@ -22,7 +22,7 @@ EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
 ACCOUNT_ACTIVATION_DAYS = 7
 
-CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+#CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
@@ -57,6 +57,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 

@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse
 from django.views.generic import list_detail
 from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
 from scheduler.forms import GuestPlayerForm, TeamForm
+from django.core.context_processors import csrf
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():

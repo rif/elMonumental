@@ -7,7 +7,6 @@ from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
 from profiles.views import profile_list
-from django.views.decorators.cache import cache_page
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
@@ -47,7 +46,7 @@ urlpatterns += patterns('',
         {'form_class' : PlayerProfileForm},
         name='profiles_edit_profile'),
     url(r'^profiles/$',
-        cache_page(profile_list, 60 * 15),
+        profile_list,
         name='profiles_profile_list'),
     url(r'^feeds/(?P<url>.*)/$',
         'django.contrib.syndication.views.feed',
