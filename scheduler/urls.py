@@ -6,8 +6,6 @@ from scheduler.models import MatchDay, Proposal
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
-from profiles.views import profile_list
-
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 proposal_info = {'queryset': Proposal.objects.all()}
@@ -46,7 +44,8 @@ urlpatterns += patterns('',
         {'form_class' : PlayerProfileForm},
         name='profiles_edit_profile'),
     url(r'^profiles/$',
-        profile_list,
+        'profiles.views.profile_list',
+        {'paginate_by': 20},
         name='profiles_profile_list'),
     url(r'^feeds/(?P<url>.*)/$',
         'django.contrib.syndication.views.feed',
