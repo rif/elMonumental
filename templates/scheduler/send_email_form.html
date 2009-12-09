@@ -1,5 +1,5 @@
 {% load humanize %}
-<form method="POST" action="{% url sch_email_send object.id %}">{% csrf_token %}
+<form method="POST" action="{% url sch_email_send object.id %}">
     <h4>Subject:</h4>
     <input type="text" name="subject" value="{{ object.get_sport_display }} invitation"/>
     <h4>Sport: {{ object.get_sport_display }}</h4>
