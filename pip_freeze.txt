@@ -1,0 +1,7 @@
+Django==1.1.1
+Markdown==2.0.3
+django-debug-toolbar==0.8.1
+django-evolution==0.0.0
+django-forum==r53
+django-profiles==0.2
+django-registration==0.7
