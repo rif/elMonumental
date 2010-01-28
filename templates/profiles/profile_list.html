@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load scheduler_tags %}
 {% block title %}View All Users{% endblock %}
 {% block html_head %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" media="screen">
@@ -20,7 +21,7 @@ $(document).ready(function()
 {% endblock %}
 {% block content %}
 <h2>Users</h2>
-<div  style="height: 600px; overflow: auto"> 
+<div  style="height: 600px; overflow: auto">
 <table id="usersTable" class="list tablesorter" cellspacing="1" id="userlist">
 <thead>
     <tr>
@@ -51,7 +52,7 @@ $(document).ready(function()
         <td>{{ profile.get_stamina_display }}</td>
         <td>{{ profile.get_ball_controll_display }}</td>
 	<td>{{ profile.get_shot_power_display }}</td>
-        <td>{{ profile.get_football_attendance_rate|safe }}</td>
+        <td>{% get_atendance_procentage user FB %}</td>
         <td>{{ profile.get_football_attendance_procentage|safe }}</td>
 	<td>{{ profile.get_basketball_attendance_rate|safe }}</td>
         <td>{{ profile.get_basketball_attendance_procentage|safe }}</td>
