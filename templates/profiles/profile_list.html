@@ -42,6 +42,7 @@ $(document).ready(function()
     </tr>
 </thead>
 <tbody>
+    {% query_matchdays %}
     {% for profile in object_list %}
     {% get_atendance %}
     <tr>
