@@ -1,6 +1,7 @@
 from django import template
 from scheduler.models import MatchDay
 import logging
+from datetime import datetime
 
 def do_atendance(parser, token):
     return AtendanceNode()
@@ -21,6 +22,8 @@ class AtendanceNode(template.Node):
         username = context['profile'].user.username
         for sport in (MatchDay.FOOTBALL, MatchDay.VOLLEYBALL, MatchDay.BASKETBALL):
             mds = context[sport + '_query']
+            """if context['filter_date'] != None:
+                mds = mds.filter(start_date__gte=datetime(2009, 7, 29))"""
             mdsCount = context[sport + '_counter']
             count = mds.filter(participants__username=username).count()
             procentage = "NA"
