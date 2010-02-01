@@ -3,9 +3,13 @@
 {% block title %}View All Users{% endblock %}
 {% block html_head %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" media="screen">
+<link type="text/css" href="{{ MEDIA_URL }}css/cupertino/jquery-ui.custom.css" rel="stylesheet"/>
 {% endblock %}
 {% block scripts %}
+<script type="text/javascript" src="{{ MEDIA_URL }}js/dateFiltering.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/ui/i18n/jquery.ui.datepicker-ro.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function()
      {
@@ -19,7 +23,12 @@ $(document).ready(function()
 );
 </script>
 {% endblock %}
+
 {% block content %}
+<p class="right">
+    De la: <input id="de_la" type="text"/>
+    <a id="filtru" href="#">Filtrează</a>
+</p>
 <h2>Users</h2>
 <div  style="height: 600px; overflow: auto">
 <table id="usersTable" class="list tablesorter" cellspacing="1" id="userlist">
