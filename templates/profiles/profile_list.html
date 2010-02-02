@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load scheduler_tags %}
+
 {% block title %}View All Users{% endblock %}
 {% block html_head %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" media="screen">
@@ -26,8 +26,8 @@ $(document).ready(function()
 
 {% block content %}
 <p class="right">
-    De la: <input id="de_la" type="text"/>
-    <a id="filtru" href="#">Filtrează</a>
+    <label for="since">Atendance since:</label><input id="since" type="text"/>
+    <a id="filter" href="#">Filter</a>
 </p>
 <h2>Users</h2>
 <div  style="height: 600px; overflow: auto">
@@ -51,29 +51,7 @@ $(document).ready(function()
     </tr>
 </thead>
 <tbody>
-    {% query_matchdays %}
-    {% for profile in object_list %}
-    {% get_atendance %}
-    <tr>
-       <td>{{ forloop.counter }}</td>
-        <td>{{ profile.user.first_name }}</td>
-        <td>{{ profile.alias_name }}</td>
-        <td>{{ profile.user.last_name }}</td>
-        <td>{{ profile.get_speed_display }}</td>
-        <td>{{ profile.get_stamina_display }}</td>
-        <td>{{ profile.get_ball_controll_display }}</td>
-    	<td>{{ profile.get_shot_power_display }}</td>
-        <td>{{ FB_count }}</td>
-        <td><span class="procentage">{{ FB_procentage }}</span></td>
-        <td>{{ BB_count }}</td>
-        <td><span class="procentage">{{ BB_procentage }}</span></td>
-        <td>{{ VB_count }}</td>
-        <td><span class="procentage">{{ VB_procentage }}</span></td>
-        <td>
-            <a href="{% url profiles_profile_detail profile.user%}">View</a>
-        </td>
-    </tr>
-    {% endfor %}
+{% include "profiles/profile_table.html"%}
 </tbody>
 </table>
 </div>

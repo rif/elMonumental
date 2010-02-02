@@ -1,0 +1,26 @@
+{% load scheduler_tags %}
+
+{% query_matchdays %}
+    {% for profile in object_list %}
+    {% get_atendance %}
+    <tr>
+       <td>{{ forloop.counter }}</td>
+        <td>{{ profile.user.first_name }}</td>
+        <td>{{ profile.alias_name }}</td>
+        <td>{{ profile.user.last_name }}</td>
+        <td>{{ profile.get_speed_display }}</td>
+        <td>{{ profile.get_stamina_display }}</td>
+        <td>{{ profile.get_ball_controll_display }}</td>
+    	<td>{{ profile.get_shot_power_display }}</td>
+        <td>{{ FB_count }}</td>
+        <td><span class="procentage">{{ FB_procentage }}</span></td>
+        <td>{{ BB_count }}</td>
+        <td><span class="procentage">{{ BB_procentage }}</span></td>
+        <td>{{ VB_count }}</td>
+        <td><span class="procentage">{{ VB_procentage }}</span></td>
+        <td>
+            <a href="{% url profiles_profile_detail profile.user%}">View</a>
+        </td>
+    </tr>
+    {% endfor %}
+
