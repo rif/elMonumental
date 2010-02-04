@@ -1,9 +1,9 @@
-from scheduler.models import MatchDay, PlayerProfile, Team, GuestPlayer, Proposal
+from scheduler.models import MatchDay, PlayerProfile, Team, GuestPlayer, Proposal, Sport
 from django.contrib import admin
 
 class MatchDayAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['start_date', 'location', 'sport']}),
+        (None,               {'fields': ['start_date', 'location', 'sport_name']}),
         ('Participants', {'fields': ['participants', 'guest_stars'], 'classes': ['collapse']}),
     ]
     list_display = ('start_date', 'sport','location', 'isFuture')
@@ -34,4 +34,6 @@ admin.site.register(GuestPlayer, GuestPlayerAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Proposal)
 admin.site.unregister(MatchDay)
+admin.site.unregister(Sport)
 admin.site.register(MatchDay, MatchDayAdminWithTeams)
+
