@@ -13,12 +13,17 @@
     <tr><td>Shot power:</td><td>{{ profile.get_shot_power_display }}</td></tr>
 </table>
 <h2>Attendance Rates</h2>
+{% load scheduler_tags %}
+
+{% query_matchdays %}
+{% get_atendance %}
 <ul>
-  <li>Football: {{ profile.get_football_attendance_rate|safe }}</li>
-  <li>Basketball: {{ profile.get_basketball_attendance_rate|safe }}</li>
-  <li>Volleyball: {{ profile.get_volleyball_attendance_rate|safe }}</li>
+  <li>Football: <span class="procentage">{{ FB_procentage }}</span></li>
+  <li>Basketball: <span class="procentage">{{ BB_procentage }}</span></li>
+  <li>Volleyball: <span class="procentage">{{ VB_procentage }}</span></li>
 </ul>
 {% endblock %}
 {% block navbar %}
   <a href="{% url profiles_edit_profile %}">Edit</a>
 {% endblock %}
+

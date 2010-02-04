@@ -1,6 +1,5 @@
 from django import template
 from scheduler.models import MatchDay
-import logging
 
 def do_atendance(parser, token):
     return AtendanceNode()
@@ -10,10 +9,11 @@ def do_query_matchdays(parser, token):
 
 class MatchdayQueryNode(template.Node):
     def render(self, context):
-         for sport in (MatchDay.FOOTBALL, MatchDay.VOLLEYBALL, MatchDay.BASKETBALL):
+        for sport in (MatchDay.FOOTBALL, MatchDay.VOLLEYBALL, MatchDay.BASKETBALL):
             mds = MatchDay.objects.filter(sport=sport)
             context[sport + '_query'] = mds
             context[sport + '_counter'] = mds.count()
+        return ''
 
 
 class AtendanceNode(template.Node):
@@ -21,6 +21,8 @@ class AtendanceNode(template.Node):
         username = context['profile'].user.username
         for sport in (MatchDay.FOOTBALL, MatchDay.VOLLEYBALL, MatchDay.BASKETBALL):
             mds = context[sport + '_query']
+            if context.has_key('since'):
+                mds = mds.filter(start_date__gte=context['since'])
             mdsCount = context[sport + '_counter']
             count = mds.filter(participants__username=username).count()
             procentage = "NA"
