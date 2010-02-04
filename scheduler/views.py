@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.views.generic import list_detail
-from scheduler.models import MatchDay, GuestPlayer, Team, Proposal
+from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfile
 from scheduler.forms import GuestPlayerForm, TeamForm
 
 def __isMatchdayInFuture(request, md):
@@ -15,7 +15,6 @@ def __isMatchdayInFuture(request, md):
     return md.isFuture()
 
 def matchday_by_sport(request, sport):
-    # Use the object_list view for the heavy lifting.
     return list_detail.object_list(
         request,
         queryset = MatchDay.objects.filter(sport=sport),
@@ -93,7 +92,7 @@ def addGuest(request, md_id):
     return render_to_response('scheduler/add_guest.html',
                               {'form': form, 'md_id': md_id})
 
-def delGuest(request, md_id):    
+def delGuest(request, md_id):
     if not request.user.is_authenticated():
         return HttpResponse('<div class="message">Please login!</div>')
     md = get_object_or_404(MatchDay, pk=md_id)
@@ -333,3 +332,16 @@ def delProposal(request, pid):
         return redirect('sch_matchday_list')
     prop.delete()
     return HttpResponse('Proposal deleted!')
+
+def filterProfiles(request):
+    from datetime import datetime
+    if request.method == 'POST':
+        since = datetime.strptime(request.POST['since'], "%d-%m-%Y")
+        response = list_detail.object_list(
+            request,
+            extra_context = {'since': since},
+            queryset=PlayerProfile.objects.all(),
+            template_name="profiles/profile_table.html",
+            )
+        return response
+
