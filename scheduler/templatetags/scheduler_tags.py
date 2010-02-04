@@ -12,7 +12,7 @@ class MatchdayQueryNode(template.Node):
         for sport in (MatchDay.FOOTBALL, MatchDay.VOLLEYBALL, MatchDay.BASKETBALL):
             mds = MatchDay.objects.filter(sport=sport)
             context[sport + '_query'] = mds
-            context[sport + '_counter'] = v
+            context[sport + '_counter'] = mds.count()
         return ''
 
 
@@ -24,7 +24,7 @@ class AtendanceNode(template.Node):
             mdsCount = context[sport + '_counter']
             if context.has_key('since'):
                 mds = mds.filter(start_date__gte=context['since'])
-                mdsCount = mds.count()
+                mdsCount =  mds.count()
             count = mds.filter(participants__username=username).count()
             procentage = "NA"
             if mdsCount > 0:
