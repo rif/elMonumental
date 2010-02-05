@@ -6,22 +6,10 @@
 <link type="text/css" href="{{ MEDIA_URL }}css/cupertino/jquery-ui.custom.css" rel="stylesheet"/>
 {% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/dateFiltering.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/i18n/jquery.ui.datepicker-ro.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.custom.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function()
-     {
-          $("#usersTable").tablesorter(
-                    {headers: { 8: { sorter: false},
-                                10: {sorter: false},
-                                12: {sorter: false} }
-                    }
-          );
-     }
-);
-</script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/dateFiltering.js"></script>
 {% endblock %}
 
 {% block content %}
