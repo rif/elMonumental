@@ -2,12 +2,12 @@ from django.conf.urls.defaults import *
 from scheduler import views
 from django.views.generic import list_detail
 from django.views.generic.simple import direct_to_template
-from scheduler.models import MatchDay, Proposal
+from scheduler.models import MatchDay, Proposal, Sport
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
 
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
-md_info = {'queryset': MatchDay.objects.all()}
+md_info = {'queryset': MatchDay.objects.all(), 'extra_context': {'sport_list': Sport.objects.all()}}
 proposal_info = {'queryset': Proposal.objects.all()}
 
 urlpatterns = patterns('',
@@ -46,6 +46,10 @@ urlpatterns += patterns('',
     url(r'^profiles/$',
         'profiles.views.profile_list',
         name='profiles_profile_list'),
+    url(r'^profiles/(?P<username>\w+)/$',
+        'profiles.views.profile_detail',
+        {'extra_context': {'sport_list': Sport.objects.all()}},
+        name='profiles_profile_detail'),
     url(r'^feeds/(?P<url>.*)/$',
         'django.contrib.syndication.views.feed',
         {'feed_dict': feeds}),

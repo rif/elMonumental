@@ -10,7 +10,7 @@ class PlayerProfile(models.Model):
     SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
     user = models.ForeignKey(User, null=True, unique=True)
     alias_name = models.CharField(max_length=50)
-    email_subscriptions = models.CharField(help_text='Subscription (FB-football,BB-basket,VB-volley):', max_length=50, default='FB')
+    email_subscriptions = models.CharField(help_text='Sport email notification subscription', max_length=50, default='Fotbal')
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
@@ -49,11 +49,14 @@ class GuestPlayer(models.Model):
 class Sport(models.Model):
     name =  models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return self.name
+
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
     #sport = models.CharField(max_length=3, choices=SPORT_CHOICES, default=u'FB')
-    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport', default=u'FB')
+    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport')
     participants = models.ManyToManyField(User, null=True, blank=True)
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
