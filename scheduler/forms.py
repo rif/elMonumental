@@ -1,7 +1,7 @@
 from django import forms
 from registration.forms import RegistrationFormUniqueEmail
 from registration.models import RegistrationProfile
-from scheduler.models import GuestPlayer, Team, PlayerProfile, MatchDay
+from scheduler.models import GuestPlayer, Team, PlayerProfile, MatchDay, Sport
 from registration.backends.default import DefaultBackend
 
 
@@ -24,8 +24,7 @@ class PlayerRegistrationForm(RegistrationFormUniqueEmail):
 
 class PlayerProfileForm(forms.ModelForm):
     alias_name = forms.CharField(max_length=50, help_text='Name of a sport star of monumental proportions (e.g. Mutu).')
-    #email_subscriptions = forms.CharField(
-     #           widget=forms.CheckboxSelectMultiple(choices=MatchDay.SPORT_CHOICES))
+    email_subscriptions = forms.ModelMultipleChoiceField(queryset = Sport.objects.all())
     class Meta:
         model = PlayerProfile
         exclude = ('user',)
