@@ -12,12 +12,10 @@
         <td>{{ profile.get_stamina_display }}</td>
         <td>{{ profile.get_ball_controll_display }}</td>
     	<td>{{ profile.get_shot_power_display }}</td>
+        {% for sport_name in sport_list %}
         <td>{{ FB_count }}</td>
         <td><span class="procentage">{{ FB_procentage }}</span></td>
-        <td>{{ BB_count }}</td>
-        <td><span class="procentage">{{ BB_procentage }}</span></td>
-        <td>{{ VB_count }}</td>
-        <td><span class="procentage">{{ VB_procentage }}</span></td>
+        {% endfor %}
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>
         </td>

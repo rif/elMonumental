@@ -17,7 +17,7 @@ def __isMatchdayInFuture(request, md):
 def matchday_by_sport(request, sport):
     return list_detail.object_list(
         request,
-        queryset = MatchDay.objects.filter(sport=sport),
+        queryset = MatchDay.objects.filter(sport_name__name=sport),
         paginate_by = 10,
         template_name = "scheduler/filtered_matchday_list.html",
         extra_context = {"sport" : sport}
@@ -339,7 +339,7 @@ def filterProfiles(request):
         since = datetime.strptime(request.POST['since'], "%d-%m-%Y")
         response = list_detail.object_list(
             request,
-            extra_context = {'since': since},
+            extra_context = {'since': since, 'sport_list': Sport.objects.all()},
             queryset=PlayerProfile.objects.all(),
             template_name="profiles/profile_table.html",
             )
