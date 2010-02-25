@@ -5,7 +5,7 @@
     <tr><td>First name:</td><td>{{ profile.user.first_name }}</td></tr>
     <tr><td>Last name:</td><td>{{ profile.user.last_name }}</td></tr>
     <tr><td>Email:</td><td>{{ profile.user.email }}</td></tr>
-    <tr><td>Email subscriptions:</td><td>{{ profile.email_subscriptions }}</td></tr>
+    <tr><td>Email subscriptions:</td><td>{% for subsc in profile.email_subscription.all %}{{ subsc.name }} {% endfor %}</td></tr>
     <tr><td>Alias name:</td><td>{{ profile.alias_name }}</td></tr>
     <tr><td>Speed:</td><td>{{ profile.get_speed_display }}</td></tr>
     <tr><td>Stamina:</td><td>{{ profile.get_stamina_display }}</td></tr>
