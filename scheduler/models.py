@@ -3,14 +3,21 @@ from datetime import datetime
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
+class Sport(models.Model):
+    name =  models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return self.name
+
 class PlayerProfile(models.Model):
     SPEED_CHOICES = ((u'SN', u'Snail'), (u'PD', u'Pedestrian'), (u'SP', u'Sprinter'), (u'RK', u'Rocket'),)
     STAMINA_CHOICES = ((u'SL', u'Sleep Walker'), (u'PR', u'Programmer'), (u'PD', u'Paladin LV7'), (u'MR', u'Marathonist'),)
     CONTROLL_CHOICES = ((u'LP', u'Light Post'), (u'EV', u'Evitationist'), (u'NW', u'Needle Worker'), (u'RN', u'Ronaldinho'),)
     SHOT_CHOICES = ((u'DP', u'Delicate'), (u'KK', u'Kicker'), (u'GD', u'Gigi Duru'), (u'GN', u'Gunner'),)
     user = models.ForeignKey(User, null=True, unique=True)
-    alias_name = models.CharField(max_length=50)
-    email_subscriptions = models.CharField(help_text='Sport email notification subscription', max_length=50, default='Fotbal')
+    alias_name = models.CharField(max_length=50, help_text='Name of a sport star of monumental proportions (e.g. Mutu).')
+    #email_subscriptions = models.CharField(help_text='Sport email notification subscription', max_length=50)
+    email_subscription = models.ManyToManyField(Sport, null=True, blank=True, help_text='Sport email notification subscription')
     speed = models.CharField(null=True,blank=True, max_length=3, choices=SPEED_CHOICES)
     stamina = models.CharField(null=True,blank=True, max_length=3, choices=STAMINA_CHOICES)
     ball_controll = models.CharField(null=True,blank=True, max_length=3, choices=CONTROLL_CHOICES)
@@ -45,12 +52,6 @@ class GuestPlayer(models.Model):
 
     class Meta:
         unique_together = ('friend_user', 'first_name', 'last_name')
-
-class Sport(models.Model):
-    name =  models.CharField(max_length=50)
-
-    def __unicode__(self):
-        return self.name
 
 class MatchDay(models.Model):
     #FOOTBALL = u'FB'

@@ -23,8 +23,6 @@ class PlayerRegistrationForm(RegistrationFormUniqueEmail):
     last_name = forms.CharField(max_length=30)
 
 class PlayerProfileForm(forms.ModelForm):
-    alias_name = forms.CharField(max_length=50, help_text='Name of a sport star of monumental proportions (e.g. Mutu).')
-    email_subscriptions = forms.ModelMultipleChoiceField(queryset = Sport.objects.all())
     class Meta:
         model = PlayerProfile
         exclude = ('user',)
