@@ -53,10 +53,14 @@ class Sport(models.Model):
         return self.name
 
 class MatchDay(models.Model):
+    FOOTBALL = u'FB'
+    VOLLEYBALL = u'VB'
+    BASKETBALL = u'BB'
+    SPORT_CHOICES = ((FOOTBALL, u'Football'), (VOLLEYBALL, u'Volleyball'), (BASKETBALL, u'Basketball'),)
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
-    #sport = models.CharField(max_length=3, choices=SPORT_CHOICES, default=u'FB')
-    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport')
+    sport = models.CharField(max_length=3, choices=SPORT_CHOICES, default=u'FB')
+    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport', null=True)
     participants = models.ManyToManyField(User, null=True, blank=True)
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 

@@ -83,7 +83,7 @@ INSTALLED_APPS = (
     'django.contrib.markup',
     # Third party apps
     'forum',
-    'south'
+    'south',
     'registration',
     'profiles',
     # My apps

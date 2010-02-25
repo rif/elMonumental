@@ -3,8 +3,4 @@ syntax: glob
 
 *.pyc
 nbproject
-django-debug-toolbar
-django-evolution-read-only
-django-registration
-django-profiles
-django-forum-read-only
+migrations
