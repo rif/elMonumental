@@ -18,8 +18,8 @@
 {% query_matchdays %}
 {% get_atendance %}
 <ul>
-    {% for sport_name in sport_list %}
-        <li>{{ sport_name }}: <span class="procentage">{{ sport_name_procentage }}</span></li>
+    {% for sport, values in atendance_dict.items %}
+        <li>{{ sport }}: <span class="procentage">{{ values.1 }}</span></li>
     {% endfor %}
 </ul>
 {% endblock %}

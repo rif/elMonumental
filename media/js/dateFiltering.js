@@ -5,7 +5,8 @@ $(function() {
                             filtrare();
                 }
     });
-    $("a#filter").click(function(e){
+    $("a#reset").click(function(e){
+                $("#since").val('');
                 filtrare();
                 e.preventDefault();
     });
@@ -28,3 +29,4 @@ function sortTable(){
                     }
      );
 }
+

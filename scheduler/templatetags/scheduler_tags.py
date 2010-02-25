@@ -1,5 +1,6 @@
 from django import template
 from scheduler.models import MatchDay, Sport
+import logging
 
 def do_atendance(parser, token):
     return AtendanceNode()
@@ -19,6 +20,7 @@ class MatchdayQueryNode(template.Node):
 class AtendanceNode(template.Node):
     def render(self, context):
         username = context['profile'].user.username
+        result_dict = {}
         for sport in Sport.objects.iterator():
             mds = context[sport.name + '_query']
             mdsCount = context[sport.name + '_counter']
@@ -29,8 +31,11 @@ class AtendanceNode(template.Node):
             procentage = "NA"
             if mdsCount > 0:
                 procentage = str(count*100/mdsCount) + "%"
-            context[sport.name + '_count'] = str(count) + "/" + str(mdsCount)
-            context[sport.name + '_procentage'] = procentage
+#            context[sport.name + '_count'] = str(count) + "/" + str(mdsCount)
+#            context[sport.name + '_procentage'] = procentage
+            result_dict[sport.name] = (str(count) + "/" + str(mdsCount), procentage)
+        context['atendance_dict'] = result_dict
+        logging.debug(result_dict)
         return ''
 
 register = template.Library()
