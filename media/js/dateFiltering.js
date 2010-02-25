@@ -23,7 +23,7 @@ function filtrare(){
 
 function sortTable(){
      $("#usersTable").tablesorter(
-                    {headers: { 8: { sorter: false},
+                    {headers: { 8:  {sorter: false},
                                 10: {sorter: false},
                                 12: {sorter: false} }
                     }
