@@ -12,9 +12,8 @@
         <td>{{ profile.get_stamina_display }}</td>
         <td>{{ profile.get_ball_controll_display }}</td>
     	<td>{{ profile.get_shot_power_display }}</td>
-        {% for sport_name in sport_list %}
-        <td>{{ FB_count }}</td>
-        <td><span class="procentage">{{ FB_procentage }}</span></td>
+        {% for sport_name, values in atendance_dict.items %}
+          <td>{{ values.0 }}</td><td><span class="procentage">{{ values.1 }}</span></td>
         {% endfor %}
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>

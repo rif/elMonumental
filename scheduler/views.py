@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.views.generic import list_detail
-from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfile
+from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfile, Sport
 from scheduler.forms import GuestPlayerForm, TeamForm
 
 def __isMatchdayInFuture(request, md):
@@ -336,10 +336,14 @@ def delProposal(request, pid):
 def filterProfiles(request):
     from datetime import datetime
     if request.method == 'POST':
-        since = datetime.strptime(request.POST['since'], "%d-%m-%Y")
+        since = request.POST['since']
+        extra_context = {'sport_list': Sport.objects.all()}
+        if since != '':
+            since = datetime.strptime(since, "%d-%m-%Y")
+            extra_context['since'] = since
         response = list_detail.object_list(
             request,
-            extra_context = {'since': since, 'sport_list': Sport.objects.all()},
+            extra_context = extra_context,
             queryset=PlayerProfile.objects.all(),
             template_name="profiles/profile_table.html",
             )

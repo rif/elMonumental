@@ -15,7 +15,7 @@
 {% block content %}
 <p class="right">
     <label for="since">Atendance since:</label><input id="since" type="text"/>
-    <a id="filter" href="#">Filter</a>
+    <a id="reset" href="#">Reset</a>
 </p>
 <h2>Users</h2>
 <div  style="height: 600px; overflow: auto">
@@ -30,12 +30,9 @@
         <th>Stamina</th>
         <th>BallControl</th>
         <th>ShotPower</th>
-	    <th>Football</th>
-        <th>%</th>
-    	<th>Basketball</th>
-        <th>%</th>
-    	<th>Volleyball</th>
-        <th>%</th>
+        {% for sport_name in sport_list %}
+    	    <th>{{ sport_name }}</th><th>%</th>
+    	  {% endfor %}
     </tr>
 </thead>
 <tbody>
