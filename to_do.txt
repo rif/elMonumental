@@ -32,3 +32,4 @@ for md in mds:
 ...
 >>> for pp in pps:
 ...  print pp.email_subscription.all()
+-scot email_subscriptions
