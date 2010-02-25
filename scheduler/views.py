@@ -146,7 +146,7 @@ def sendEmail(request, md_id):
             toList = []
             for user in User.objects.iterator():
                 try:
-                    if md.sport_name in user.get_profile().email_subscriptions:
+                    if md.sport_name in user.get_profile().email_subscription.all():
                         toList.append(user.email)
                 except:
                     request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
