@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="" />
+<title>attendTest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">attendTest</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>/</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Attend</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_username</td>
+	<td>rif</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id_password</td>
+	<td>test</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>//input[@value='Log in']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>test_mes</td>
+	<td>You have joined the matchday #15 held on Tue, 01 Sep 2099 at Sport starting from 15:50.</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=View</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>//div[@id='placeholder']/h2</td>
+	<td>Matchday Information</td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td>Radu Buru Fericean</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
