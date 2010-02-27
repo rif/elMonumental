@@ -66,7 +66,8 @@ class MatchDay(models.Model):
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
     def __unicode__(self):
-        return self.start_date.strftime('%d-%B-%Y')\
+        return self.sport_name
+        + ' ' + self.start_date.strftime('%d-%B-%Y')\
         + ' ' + self.location\
         + ' ' + self.start_date.strftime('%H:%M')
 

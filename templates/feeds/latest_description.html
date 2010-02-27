@@ -1,7 +1,7 @@
 {% load humanize %}
 <h2>Information</h2>
 <ul>
-  <li>Sport: {{ obj.get_sport_display }}</li>
+  <li>Sport: {{ obj.sport_name }}</li>
   {% if not obj.isFuture %}
     <li>Date: Opened {{ obj.start_date|timesince }} ago</li>
     {% endif %}

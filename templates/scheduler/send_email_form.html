@@ -1,11 +1,11 @@
 {% load humanize %}
 <form method="POST" action="{% url sch_email_send object.id %}">
     <h4>Subject:</h4>
-    <input type="text" name="subject" value="{{ object.get_sport_display }} invitation"/>
-    <h4>Sport: {{ object.get_sport_display }}</h4>
+    <input type="text" name="subject" value="{{ object.sport_name }} invitation"/>
+    <h4>Sport: {{ object.sport_name }}</h4>
     <h4>Body:</h4>
     <textarea rows="5" cols="30" name="message">
-You are invited to come to the {{ object.get_sport_display }} matchday starting at
+You are invited to come to the {{ object.sport_name }} matchday starting at
 {{ object.start_date|time:"H:i" }} - {{ object.start_date|date:"D, d M Y"|naturalday }}
 which will take place at {{ object.location }} arena.
 Click at http://elMonumental.sro.oce.net/ to attend.

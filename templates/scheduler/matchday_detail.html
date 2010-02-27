@@ -1,7 +1,7 @@
 {% load humanize %}
 <h2>Matchday Information</h2>
 <ul>
-<li>Sport: {{ object.get_sport_display }}</li>
+<li>Sport: {{ object.sport_name }}</li>
 {% if not object.isFuture %}
     <li>Date: Opened {{ object.start_date|timesince }} ago</li>
 {% endif %}
