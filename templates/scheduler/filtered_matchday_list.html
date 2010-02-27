@@ -6,7 +6,7 @@
     <li>
     {#{ matchday.id|ordinal }#}
 	<img src="{{ MEDIA_URL }}images/{{ matchday.sport_name }}.png" height="16" width="16"/>
-	<span class="sport">{{ matchday.get_sport_display }}</span>
+	<span class="sport">{{ matchday.sport_name }}</span>
         {{ matchday.start_date|date:"D d M Y"|naturalday }} -
         {{ matchday.location }} -
         {{ matchday.start_date|time:"H:i" }}
