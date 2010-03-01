@@ -1,48 +1,43 @@
+/* tables */
 table.tablesorter {
-    font-size: 12px;
-    background-color: #4D4D4D;
-    width: 1024px;
-    border: 1px solid #000;
+	font-family:arial;
+	background-color: #CDCDCD;
+	margin:10px 0pt 15px;
+	font-size: 8pt;
+	width: 60%;
+	text-align: left;
 }
-table.tablesorter th {
-    text-align: left;
-    background-color: #6E6E6E;
+table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+	background-color: #33AA33;
+	font-size: 8pt;
+	padding: 4px;
 }
-table.tablesorter td {
-    color: #FFF;
+table.tablesorter {
+	background-color: #33AA33;
 }
-table.tablesorter .even {
-    background-color: #3D3D3D;
-}
-table.tablesorter .odd {
-    background-color: #6E6E6E;
-}
-table.tablesorter .header {
-    background-image: url(../images/bg.png);
-    background-repeat: no-repeat;
-    border-left: 1px solid #FFF;
-    border-right: 1px solid #000;
-    border-top: 1px solid #FFF;
-    padding-left: 30px;
-    padding-top: 8px;
-    height: auto;
+
+table.tablesorter thead tr .header {
+	background-image: url(../images/bg.gif);
+	background-repeat: no-repeat;
+	background-position: center right;
+	cursor: pointer;
     color:black;
 }
-table.tablesorter th {
-    background-image: url(../images/nosortbg.png);
-    background-repeat: no-repeat;
-    border-left: 1px solid #FFF;
-    border-right: 1px solid #000;
-    border-top: 1px solid #FFF;
-    padding-top: 8px;
-    height: auto;
-    color:black;
+table.tablesorter tbody td {
+	color: #FFF;
+	background-color: #487858;
+	vertical-align: top;
 }
-table.tablesorter .headerSortUp {
-    background-image: url(../images/asc.png);
-    background-repeat: no-repeat;
+table.tablesorter tbody tr.odd td {
+	background-color:#F0F0F6;
 }
-table.tablesorter .headerSortDown {
-    background-image: url(images/desc.png);
-    background-repeat: no-repeat;
+table.tablesorter thead tr .headerSortUp {
+	background-image: url(../images/asc.gif);
 }
+table.tablesorter thead tr .headerSortDown {
+	background-image: url(../images/desc.gif);
+}
+table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+background-color: #9AEF3F;
+}
+
