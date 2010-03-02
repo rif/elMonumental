@@ -7,6 +7,8 @@ from django.core.urlresolvers import reverse
 from django.views.generic import list_detail
 from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfile, Sport
 from scheduler.forms import GuestPlayerForm, TeamForm
+from datetime import datetime
+from profiles.views import profile_list
 
 def __isMatchdayInFuture(request, md):
     if not md.isFuture():
@@ -333,11 +335,10 @@ def delProposal(request, pid):
     prop.delete()
     return HttpResponse('Proposal deleted!')
 
-def filterProfiles(request):
-    from datetime import datetime
+def profileList(request):
+    extra_context = {'sport_list': Sport.objects.all()}
     if request.method == 'POST':
         since = request.POST['since']
-        extra_context = {'sport_list': Sport.objects.all()}
         if since != '':
             since = datetime.strptime(since, "%d-%m-%Y")
             extra_context['since'] = since
@@ -345,7 +346,13 @@ def filterProfiles(request):
             request,
             extra_context = extra_context,
             queryset=PlayerProfile.objects.all(),
-            template_name="profiles/profile_table.html",
+            template_name="profiles/profile_list.html",
             )
-        return response
+    else:
+        response = profile_list(
+            request,
+            extra_context = extra_context,
+            queryset=PlayerProfile.objects.all(),
+            )
+    return response
 

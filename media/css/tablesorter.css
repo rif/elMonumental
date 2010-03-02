@@ -4,13 +4,13 @@ table.tablesorter {
 	background-color: #CDCDCD;
 	margin:10px 0pt 15px;
 	font-size: 8pt;
-	width: 60%;
+	width: 100%;
 	text-align: left;
 }
 table.tablesorter thead tr th, table.tablesorter tfoot tr th {
 	background-color: #33AA33;
 	font-size: 8pt;
-	padding: 4px;
+	padding-right: 15px;
 }
 table.tablesorter {
 	background-color: #33AA33;

@@ -3,20 +3,25 @@
 {% block title %}View All Users{% endblock %}
 {% block html_head %}
 <link rel="stylesheet" href="{{ MEDIA_URL }}css/tablesorter.css" type="text/css" media="screen">
-<link type="text/css" href="{{ MEDIA_URL }}css/cupertino/jquery-ui.custom.css" rel="stylesheet"/>
+<link rel="stylesheet" href="{{ MEDIA_URL }}css/jquery.tablesorter.pager.css" type="text/css" media="screen">
+<link type="text/css" href="{{ MEDIA_URL }}css/south-street/jquery-ui.custom.css" rel="stylesheet"/>
 {% endblock %}
 {% block scripts %}
 <script type="text/javascript" src="{{ MEDIA_URL }}js/ui/i18n/jquery.ui.datepicker-ro.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.tablesorter.pager.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.custom.min.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/dateFiltering.js"></script>
 {% endblock %}
 
 {% block content %}
-<p class="right">
-    <label for="since">Atendance since:</label><input id="since" type="text"/>
-    <a id="reset" href="#">Reset</a>
-</p>
+<div class="right">
+<form method="POST" action=".">
+    <label for="since">Atendance since:</label><input name="since" id="since" type="text"/>
+    <input type="submit" value="Filter" />
+    <!--a id="reset" href="#">Reset</a-->
+</form>
+</div>
 <h2>Users</h2>
 <div  style="height: 600px; overflow: auto">
 <table id="usersTable" class="list tablesorter" cellspacing="1" id="userlist">
@@ -35,10 +40,12 @@
     	  {% endfor %}
     </tr>
 </thead>
+
 <tbody>
 {% include "profiles/profile_table.html"%}
 </tbody>
 </table>
+<div id="pager"></div>
 </div>
 {% endblock %}
 
