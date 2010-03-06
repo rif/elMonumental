@@ -16,9 +16,9 @@
 {% load scheduler_tags %}
 
 {% query_matchdays %}
-{% get_atendance %}
+{% get_attendance %}
 <ul>
-    {% for sport, values in atendance_dict.items %}
+    {% for sport, values in attendance_dict.items %}
         <li>{{ sport }}: <span class="procentage">{{ values.1 }}</span></li>
     {% endfor %}
 </ul>
