@@ -16,7 +16,7 @@
           <td>{{ values.0 }}</td><td><span class="procentage">{{ values.1 }}</span></td>
         {% endfor %}-->
         {% for sport_name in sport_list %}
-             <td>{{ attendance_dict|dict_get:sport_name.name }}</td><td><span class="procentage">{{ values.1 }}</span></td>
+             <td>{{ attendance_dict|attendance:sport_name }}</td><td><span class="procentage">{{ attendance_dict|procentage:sport_name }}</span></td>
         {% endfor %}
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>
