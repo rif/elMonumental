@@ -16,7 +16,9 @@
           <td>{{ values.0 }}</td><td><span class="procentage">{{ values.1 }}</span></td>
         {% endfor %}-->
         {% for sport_name in sport_list %}
+            {% if sport_name.active %}
              <td>{{ attendance_dict|attendance:sport_name }}</td><td><span class="procentage">{{ attendance_dict|procentage:sport_name }}</span></td>
+            {% endif %}
         {% endfor %}
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>
