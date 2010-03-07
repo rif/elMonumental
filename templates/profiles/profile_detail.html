@@ -19,7 +19,9 @@
 {% get_attendance %}
 <ul>
     {% for sport, values in attendance_dict.items %}
-        <li>{{ sport }}: <span class="procentage">{{ values.1 }}</span></li>
+        {% if sport.active %}
+            <li>{{ sport }}: <span class="procentage">{{ values.1 }}</span></li>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endblock %}
