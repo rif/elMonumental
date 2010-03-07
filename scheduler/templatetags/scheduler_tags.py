@@ -6,11 +6,20 @@ register = template.Library()
 
 @register.tag('get_attendance')
 def do_attendance(parser, token):
-    return AtendanceNode()
+    return AttendanceNode()
 
 @register.tag('query_matchdays')
 def do_query_matchdays(parser, token):
     return MatchdayQueryNode()
+
+@register.filter('dict_get')
+def dict_get(value, arg):
+    #custom template tag used like so:
+    #{{dictionary|dict_get:var}}
+    #where dictionary is duh a dictionary and var is a variable representing
+    #one of it's keys
+
+    return value[arg]
 
 class MatchdayQueryNode(template.Node):
     def render(self, context):
@@ -21,7 +30,7 @@ class MatchdayQueryNode(template.Node):
         return ''
 
 """ Depends on MatchdayQueryNode being executed for efficiency """
-class AtendanceNode(template.Node):
+class AttendanceNode(template.Node):
     def render(self, context):
         username = context['profile'].user.username
         result_dict = {}
@@ -40,4 +49,3 @@ class AtendanceNode(template.Node):
             result_dict[sport.name] = (str(count) + "/" + str(mdsCount), procentage)
         context['attendance_dict'] = result_dict
         return ''
-
