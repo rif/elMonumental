@@ -1,5 +1,0 @@
-Django==1.2-beta-1
-South==0.6.2.1
-django-debug-toolbar==0.8.2
-django-extensions==0.4
-wsgiref==0.1.2
