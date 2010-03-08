@@ -4,12 +4,12 @@ import logging
 
 register = template.Library()
 
-@register.tag('get_attendance')
-def do_attendance(parser, token):
+@register.tag
+def get_attendance(parser, token):
     return AttendanceNode()
 
-@register.tag('query_matchdays')
-def do_query_matchdays(parser, token):
+@register.tag
+def query_matchdays(parser, token):
     return MatchdayQueryNode()
 
 @register.filter
