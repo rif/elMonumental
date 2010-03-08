@@ -52,7 +52,7 @@ h5 { font-size:1em; font-weight:bold; margin-top:1.5em; margin-bottom:3px; }
 /* LISTS */
 ul { padding-left:2em; }
 ol { padding-left:30px; }
-ul li { list-style-type:square; margin-bottom:.4em; }
+ul li { list-style-type:none; margin-bottom:.4em; }
 ul ul { padding-left:1.2em; }
 ul ul ul { padding-left:1em; }
 table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: #487858; border: 1px #234f32 dotted;padding:1px;}
