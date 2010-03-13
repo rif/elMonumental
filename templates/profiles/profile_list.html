@@ -37,8 +37,10 @@
         <th>BallControl</th>
         <th>ShotPower</th>
         {% for sport_name in sport_list %}
-    	    <th>{{ sport_name }}</th><th>%</th>
-    	  {% endfor %}
+            {% if sport_name.active %}
+             <th>{{ sport_name }}</th><th>%</th>
+            {% endif %}
+    	{% endfor %}
     </tr>
 </thead>
 
