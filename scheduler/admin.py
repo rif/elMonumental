@@ -20,6 +20,9 @@ class TeamAdmin(admin.ModelAdmin):
 class GuestPlayerAdmin(admin.ModelAdmin):
     search_fields = ['first_name', 'last_name']
 
+class SportAdmin(admin.ModelAdmin):
+    list_display = ('name', 'active')
+
 class TeamsInline(admin.TabularInline):
     model = Team
     max_num = 2
@@ -33,7 +36,7 @@ admin.site.register(PlayerProfile)
 admin.site.register(GuestPlayer, GuestPlayerAdmin)
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Proposal)
-admin.site.register(Sport)
+admin.site.register(Sport, SportAdmin)
 admin.site.unregister(MatchDay)
 admin.site.register(MatchDay, MatchDayAdminWithTeams)
 
