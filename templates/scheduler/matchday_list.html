@@ -2,13 +2,12 @@
 {% load forum_tags %}
 {% block title %}View MatchDays{% endblock %}
 {% block scripts %}
-<script type="text/javascript" src="{{ MEDIA_URL }}js/shadedborder.js"></script>
 <script type="text/javascript" src="{{ MEDIA_URL }}js/matchdayFunctions.js"></script>
 {% endblock %}
 {% block content %}
 <a  href="/"><img style="float:right;" src="{{ MEDIA_URL }}images/trophy.png"/></a>
 <h2>Matchdays</h2>
-<div id="matchdays">
+<div id="matchdays" class="rounded-corners">
   <div id="md-filters">
     <a href="{% url sch_matchday_list %}">All</a>
     {% for sport_name in sport_list %}

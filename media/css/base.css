@@ -79,3 +79,4 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #md-filters {text-align:right; margin-right:3px;}
 #md-placeholder .sport {color: #9aef3f;}
 .procentage {color: #9aef3f;}
+.rounded-corners {-webkit-border-radius: 10px; -khtml-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;}

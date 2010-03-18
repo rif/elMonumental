@@ -2,7 +2,6 @@
 {% load humanize %}
 {% block title %}Create Teams{% endblock %}
 {% block scripts %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/shadedborder.js"></script>
    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui.custom.min.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/teamFunctions.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/proposalFunctions.js"></script>
@@ -51,7 +50,7 @@ Guest Stars:
     </ul>
 <div id="teams" md_id="{{ object.id }}">
     {% for team in object.team_set.all %}
-        <div class="team" tm_id="{{ team.id }}">
+        <div class="team rounded-corners" tm_id="{{ team.id }}">
             <h4 id="team_title">Team {{ team }} Players: <span class="count">0</span></h4>
             <ol class="sortable">
                 <li class="drop-message">Drop players here!</li>
