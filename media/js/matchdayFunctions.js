@@ -1,6 +1,4 @@
 $(document).ready(function() {
-    var myBorder = RUZEE.ShadedBorder.create({ corner:8, shadow:16});
-    myBorder.render('matchdays');
     prepareLinks();
     $("a.md-filter").click(function(e){
 	$("#md-placeholder").load("/mdbysport/" + $(this).attr("id") + "/", prepareLinks);
