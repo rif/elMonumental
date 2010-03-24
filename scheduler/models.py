@@ -57,7 +57,7 @@ class GuestPlayer(models.Model):
 class MatchDay(models.Model):
     start_date = models.DateTimeField()
     location = models.CharField(max_length=50)
-    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport')
+    sport_name = models.ForeignKey(Sport, related_name='%(class)s_sport', limit_choices_to = {'active': True})
     participants = models.ManyToManyField(User, null=True, blank=True)
     guest_stars = models.ManyToManyField(GuestPlayer, null=True, blank=True)
 
