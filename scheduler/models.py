@@ -67,10 +67,10 @@ class MatchDay(models.Model):
         + ' ' + self.location\
         + ' ' + self.start_date.strftime('%H:%M')
 
-    def isFuture(self):
+    def is_future(self):
         return datetime.today() < self.start_date
-    isFuture.short_description = 'Is in the future?'
-    isFuture.boolean = True
+    is_future.short_description = 'Is in the future?'
+    is_future.boolean = True
 
     class Meta:
         ordering = ["-start_date"]

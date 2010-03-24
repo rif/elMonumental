@@ -85,17 +85,17 @@ class MatchDayTest(TestCase):
     def test_is_future_future(self):
         future = datetime(2080, 07, 10)
         md = MatchDay(start_date = future)
-        self.assertTrue(md.isFuture())
+        self.assertTrue(md.is_future())
 
     def test_is_future_past(self):
         past = datetime(2009, 06, 12)
         md = MatchDay(start_date = past)
-        self.assertFalse(md.isFuture())
+        self.assertFalse(md.is_future())
 
     def test_is_future_today(self):
         today = datetime.today()
         md = MatchDay(start_date = today)
-        self.assertFalse(md.isFuture())
+        self.assertFalse(md.is_future())
 
     def test_have_matchdays(self):
         today = datetime.today()
@@ -117,10 +117,6 @@ class AdminTest(TestCase):
         self.old_md = MatchDay.objects.create(start_date = past, sport_name = self.sport)
         self.team = Team.objects.create(name='A', matchday=self.md)
         self.client.login(username='admin', password='test')
-
-    def test_index(self):
-        response = self.client.get('/')
-        self.failUnlessEqual(response.status_code, 200)
 
     def test_send_mail(self):
         user = User.objects.create_user('test', 'test@test.ad', 'test')
