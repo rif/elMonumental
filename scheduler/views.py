@@ -11,10 +11,10 @@ from datetime import datetime
 from profiles.views import profile_list
 
 def __isMatchdayInFuture(request, md):
-    if not md.isFuture():
+    if not md.is_future():
         request.user.message_set.create(message='Selected matchday was played on %s.'
                                         % md.start_date.strftime('%a, %d %b %Y'))
-    return md.isFuture()
+    return md.is_future()
 
 def matchday_by_sport(request, sport):
     return list_detail.object_list(
@@ -55,7 +55,7 @@ def linkQuerry(request):
     if request.method == 'POST':
         md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
         href = ''
-        if md.isFuture():
+        if md.is_future():
             if request.user in md.participants.all():
                 href += '<a href="%s">Abandon</a>' % reverse('sch_matchday_abandon', args=[md.id])
             else:
