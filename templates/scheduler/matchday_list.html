@@ -11,7 +11,9 @@
   <div id="md-filters">
     <a href="{% url sch_matchday_list %}">All</a>
     {% for sport_name in sport_list %}
-        <a class="md-filter" id="{{ sport_name }}" href="{% url sch_matchday_by_sport sport_name %}">{{ sport_name }}</a>
+		{% if sport_name.active %}
+        	<a class="md-filter" id="{{ sport_name }}" href="{% url sch_matchday_by_sport sport_name %}">{{ sport_name }}</a>
+		{% endif %}
     {% endfor %}
   </div>
   <div id="md-placeholder">
