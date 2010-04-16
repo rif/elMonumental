@@ -2,7 +2,7 @@
 <h2>Matchday Information</h2>
 <ul>
 <li>Sport: {{ object.sport_name }}</li>
-{% if not object.isFuture %}
+{% if not object.is_future %}
     <li>Date: Opened {{ object.start_date|timesince }} ago</li>
 {% endif %}
 <li>Location: {{ object.location }}</li>
@@ -42,8 +42,9 @@ Guest Stars:
 </div>
 <div>
     <a href="{% url sch_team_management object.id %}">Teams Management</a>
-    {% if user.is_staff and object.isFuture %}
+    {% if user.is_staff and object.is_future %}
         <div type="hidden" id="email_form"></div>
         <a class="right" id="send_email" onclick="showEmailForm({{ object.id }})" href="#">Send invite email!</a>
     {% endif %}
 </div>
+

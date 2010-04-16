@@ -21,10 +21,10 @@
 
 {% endfor %}
 </ul>
-{% if object.isFuture %}
+{% if object.is_future %}
 <h2>Matchday Information</h2>
 <ul>
-{% if not object.isFuture %}
+{% if not object.is_future %}
     <li>Date: Opened {{ object.start_date|timesince }} ago</li>
 {% endif %}
 <li>Location: {{ object.location }}</li>
@@ -62,7 +62,7 @@ Guest Stars:
 {% endblock %}
 {% block navbar%}
     <a href="{% url sch_team_management object.id %}">Reset</a>
-    {% if object.isFuture %}
+    {% if object.is_future %}
         {% if user.is_staff %}
             <a id="save_teams_link" href="#">Save team</a>
         {% else %}
@@ -70,3 +70,4 @@ Guest Stars:
         {% endif %}
     {% endif %}
 {% endblock %}
+
