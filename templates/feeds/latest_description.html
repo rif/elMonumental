@@ -2,9 +2,10 @@
 <h2>Information</h2>
 <ul>
   <li>Sport: {{ obj.sport_name }}</li>
-  {% if not obj.isFuture %}
+  {% if not obj.is_future %}
     <li>Date: Opened {{ obj.start_date|timesince }} ago</li>
     {% endif %}
   <li>Date: {{ obj.start_date|date:"D d M Y"|naturalday }} {{ obj.start_date|time:"H:i" }}</li>
   <li>Location: {{ obj.location }}</li>
 </ul>
+

@@ -6,7 +6,7 @@ class MatchDayAdmin(admin.ModelAdmin):
         (None,               {'fields': ['start_date', 'location', 'sport_name']}),
         ('Participants', {'fields': ['participants', 'guest_stars'], 'classes': ['collapse']}),
     ]
-    list_display = ('start_date', 'sport_name','location', 'isFuture')
+    list_display = ('start_date', 'sport_name','location', 'is_future')
     list_filter = ['start_date', 'sport_name']
     search_fields = ['location', 'sport_name']
     date_hierarchy = 'start_date'
