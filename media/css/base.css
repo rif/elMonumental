@@ -74,6 +74,7 @@ table {border-collapse: collapse; border-spacing: 0; margin: 1em 0; background: 
 #news-placeholder {text-align:center;}
 #latest-posts {text-align:center;}
 #news ul li { list-style-type:none; margin-bottom:1px; margin-top:1px;}
+.fresh {background: red;}
 .dateTime {color:#487858; font-size: 85%;}
 #matchdays li{list-style-type:none;}
 #md-filters {text-align:right; margin-right:3px;}
