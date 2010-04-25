@@ -6,7 +6,11 @@
     <li><a class="news-link" href="{% url news_news_detail news.slug %}">
       <b>{{ news.title }}</b>
       [{{ news.pub_date|date:"D d M Y"|naturalday }} -
-      {{ news.pub_date|time:"H:i" }}]</a></li>
+      {{ news.pub_date|time:"H:i" }}]</a>
+	  {% if news.is_fresh %}
+	  	<span class="fresh">fresh!</span>
+	  {% endif %}
+	  </li>
   </ul>
   {% empty %}
   <li>Sorry, no news yet.</li>
