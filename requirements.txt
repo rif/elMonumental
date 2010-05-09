@@ -2,7 +2,7 @@ Django==1.1.1
 Markdown==2.0.3
 PIL==1.1.7
 South==0.6.2
-django-debug-toolbar==0.8.2
+django-debug-toolbar==0.8.3
 -e svn+http://django-forum.googlecode.com/svn/trunk/@53#egg=django-forum
 django-profiles==0.2
 -f http://bitbucket.org/ubernostrum/django-registration/downloads/django-registration-0.8-alpha-1.tar.gz#egg=django-registration
