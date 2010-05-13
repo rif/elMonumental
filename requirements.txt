@@ -1,7 +1,8 @@
-Django==1.1.1
+#pot sa adaug @rev in url sau sa foloses tags/1.1 in loc de trunk
+-e svn+http://code.djangoproject.com/svn/django/trunk/#egg=Django
 Markdown==2.0.3
 PIL==1.1.7
-South==0.6.2
+South==0.7
 django-debug-toolbar==0.8.3
 -e svn+http://django-forum.googlecode.com/svn/trunk/@53#egg=django-forum
 django-profiles==0.2

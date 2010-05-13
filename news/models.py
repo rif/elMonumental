@@ -16,9 +16,9 @@ class News(models.Model):
     def __unicode__(self):
         return self.title
     
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         self.content_html = markdown(self.content)
-        super(News, self).save(force_insert, force_update)
+        super(News, self).save(*args, **kwargs)
     
     def is_fresh(self):
         return (datetime.today() - self.pub_date).days < 14
