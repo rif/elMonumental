@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.core.context_processors import csrf
 from django.views.generic import list_detail
 from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfile, Sport
 from scheduler.forms import GuestPlayerForm, TeamForm
@@ -91,8 +92,9 @@ def addGuest(request, md_id):
             return redirect('sch_matchday_list')
     else:
         form = GuestPlayerForm()
-    return render_to_response('scheduler/add_guest.html',
-                              {'form': form, 'md_id': md_id})
+        c = {'form': form, 'md_id': md_id}
+        c.update(csrf(request))
+    return render_to_response('scheduler/add_guest.html', c)
 
 def delGuest(request, md_id):
     if not request.user.is_authenticated():
@@ -182,8 +184,9 @@ def addTeam(request, md_id):
             return redirect('sch_team_management', md.id)
     else:
         form = TeamForm()
-    return render_to_response('scheduler/add_team.html',
-                              {'form': form, 'md_id': md_id})
+        c = {'form': form, 'md_id': md_id}
+        c.update(csrf(request))
+    return render_to_response('scheduler/add_team.html',c)
 
 def delTeam(request, md_id):
     if not request.user.is_authenticated() and not request.user.is_staff:

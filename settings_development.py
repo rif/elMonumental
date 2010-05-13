@@ -10,8 +10,12 @@ MANAGERS = ADMINS = (
     ('Radu Ioan Fericean', 'radu.fericean@oce.com'),
 )
 
-DATABASE_ENGINE = 'sqlite3'
-DATABASE_NAME = rel('database.sqlite')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':  rel('database.sqlite')
+    }
+}
 
 TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
@@ -56,8 +60,9 @@ MIDDLEWARE_CLASSES = (
     #'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
 )
 

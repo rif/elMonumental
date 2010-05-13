@@ -6,3 +6,4 @@ nbproject
 migrations
 .DS_Store
 
+.idea
