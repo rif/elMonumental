@@ -1,9 +1,7 @@
 {% load scheduler_tags %}
-
-    {% query_matchdays %}
     {% for profile in object_list %}
     {% get_attendance %}
-  <tr>
+    <tr>
         <td>{{ forloop.counter }}</td>
         <td>{{ profile.user.first_name }}</td>
         <td>{{ profile.alias_name }}</td>
@@ -11,18 +9,15 @@
         <td>{{ profile.get_speed_display }}</td>
         <td>{{ profile.get_stamina_display }}</td>
         <td>{{ profile.get_ball_controll_display }}</td>
-    	<td>{{ profile.get_shot_power_display }}</td>
-        <!--{% for sport_name, values in attendance_dict.items %}
-          <td>{{ values.0 }}</td><td><span class="procentage">{{ values.1 }}</span></td>
-        {% endfor %}-->
+        <td>{{ profile.get_shot_power_display }}</td>
         {% for sport_name in sport_list %}
-            {% if sport_name.active %}
-             <td>{{ attendance_dict|attendance:sport_name }}</td><td><span class="procentage">{{ attendance_dict|procentage:sport_name }}</span></td>
-            {% endif %}
+        {% if sport_name.active %}
+        <td>{{ attendance_dict|attendance:sport_name }}</td><td><span class="procentage">{{ attendance_dict|procentage:sport_name }}</span></td>
+        {% endif %}
         {% endfor %}
         <td>
             <a href="{% url profiles_profile_detail profile.user%}">View</a>
         </td>
-  </tr>
-{% endfor %}
+    </tr>
+    {% endfor %}
 

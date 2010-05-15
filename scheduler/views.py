@@ -10,6 +10,7 @@ from scheduler.models import MatchDay, GuestPlayer, Team, Proposal, PlayerProfil
 from scheduler.forms import GuestPlayerForm, TeamForm
 from datetime import datetime
 from profiles.views import profile_list
+from django.db.models import Count
 
 def __isMatchdayInFuture(request, md):
     if not md.is_future():
@@ -339,7 +340,7 @@ def delProposal(request, pid):
     return HttpResponse('Proposal deleted!')
 
 def profileList(request):
-    extra_context = {'sport_list': Sport.objects.all()}
+    extra_context = {'sport_list': Sport.objects.annotate(Count('matchday_sport'))}
     if request.method == 'POST':
         since = request.POST['since']
         if since != '':

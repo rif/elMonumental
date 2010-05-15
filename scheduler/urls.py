@@ -5,8 +5,9 @@ from django.views.generic.simple import direct_to_template
 from scheduler.models import MatchDay, Proposal, Sport
 from scheduler.forms import PlayerRegistrationForm, PlayerProfileForm
 from scheduler.feeds import LatestMatchDays, LatestNews
+from django.db.models import Count
 
-sport_context = {'extra_context': {'sport_list': Sport.objects.all()}}
+sport_context = {'extra_context': {'sport_list': Sport.objects.annotate(Count('matchday_sport'))}}
 feeds = {'latest': LatestMatchDays, 'news': LatestNews}
 md_info = {'queryset': MatchDay.objects.all()}
 md_info.update(sport_context)

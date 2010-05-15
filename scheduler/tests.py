@@ -241,9 +241,10 @@ class ViewsTest(TestCase):
 
     def test_volleyball_atendance(self):
         vmd = MatchDay.objects.create(start_date = self.past, sport_name = Sport.objects.create(name="Volleyball"))
-        vmd.participants.add(self.user)
+        vmd.participants.add(self.user)        
         response = self.client.get('/profiles/')
-        self.failUnlessEqual(response.status_code, 200)
+        self.failUnlessEqual(response.status_code, 200)        
+        self.assertTrue('Volleyball' in response.content)
         self.assertTrue('<td>1/1</td><td><span class="procentage">100%</span></td>' in response.content)
 
     def test_old_attend(self):

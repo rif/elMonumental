@@ -15,7 +15,6 @@
 <h2>Attendance Rates</h2>
 {% load scheduler_tags %}
 
-{% query_matchdays %}
 {% get_attendance %}
 <ul>
     {% for sport, values in attendance_dict.items %}
