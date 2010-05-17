@@ -10,7 +10,16 @@
         {{ matchday.start_date|date:"D d M Y"|naturalday }} -
         {{ matchday.location }} -
         {{ matchday.start_date|time:"H:i" }}
-        <span class="async" md_id="{{ matchday.id }}">
+        <span md_id="{{ matchday.id }}">
+        	{% if matchday.is_future %}
+				{% if user in matchday.participants.all %}
+					<a href="{% url sch_matchday_abandon matchday.id %}">Abandon</a>
+				{% else %}
+					<a href="{% url sch_matchday_attend matchday.id %}" href="#">Attend</a>
+				{% endif %}
+				<a onclick="showAddGuest('{% url sch_guest_add matchday.id %}')" href="#">G++</a>
+				<a onclick="showDelGuest('{% url sch_guest_del matchday.id %}')" href="#">G--</a>
+			{% endif %}
             <a class="md-detail-link" href="#">View</a>
             <a href="{% url sch_comments matchday.id %}">Comment ({{ comment_count }})</a>
         </span>

@@ -269,23 +269,6 @@ class ViewsTest(TestCase):
         self.client.get('/abandon/%s/' % self.md.id)
         self.assertFalse(self.user in self.md.participants.all())
 
-    def test_get_links_attend(self):
-        response = self.client.post('/links/', {'md_id': self.md.id,})
-        self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.content, '<a href="/attend/1/" href="#">Attend</a> <a onclick="showAddGuest(\'/addguest/1/\')" href="#">G++</a> <a onclick="showDelGuest(\'/delguest/1/\')" href="#">G--</a>')
-
-    def test_get_links_abandon(self):
-        self.assertTrue(self.logged_in)
-        self.client.get('/attend/1/')
-        response = self.client.post('/links/', {'md_id': self.md.id,})
-        self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.content, '<a href="/abandon/1/">Abandon</a> <a onclick="showAddGuest(\'/addguest/1/\')" href="#">G++</a> <a onclick="showDelGuest(\'/delguest/1/\')" href="#">G--</a>')
-
-    def test_get_past_links(self):
-        response = self.client.post('/links/', {'md_id': self.old_md.id,})
-        self.failUnlessEqual(response.status_code, 200)
-        self.failUnlessEqual(response.content, '')
-
     def test_del_team_callback(self):
         team = Team.objects.create(name="Bursucii", matchday=self.md)
         self.assertTrue(team in Team.objects.all())
