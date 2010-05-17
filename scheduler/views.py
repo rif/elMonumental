@@ -27,7 +27,6 @@ def matchday_by_sport(request, sport):
         extra_context = {"sport" : sport}
     )
 
-
 @login_required
 def attend(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
@@ -52,19 +51,6 @@ def abandon(request, md_id):
         request.user.message_set.create(message='You are not in the matchday %s participant list.' % md.id)
 
     return redirect('sch_matchday_list')
-
-def linkQuerry(request):
-    if request.method == 'POST':
-        md = get_object_or_404(MatchDay, pk=request.POST['md_id'])
-        href = ''
-        if md.is_future():
-            if request.user in md.participants.all():
-                href += '<a href="%s">Abandon</a>' % reverse('sch_matchday_abandon', args=[md.id])
-            else:
-                href += '<a href="%s" href="#">Attend</a>' % reverse('sch_matchday_attend', args=[md.id])
-            href += ' <a onclick="showAddGuest(%s)" href="#">G++</a>' % repr(reverse('sch_guest_add', args=[md.id]))
-            href += ' <a onclick="showDelGuest(%s)" href="#">G--</a>' % repr(reverse('sch_guest_del', args=[md.id]))
-        return HttpResponse(href)
 
 def addGuest(request, md_id):
     if not request.user.is_authenticated():
