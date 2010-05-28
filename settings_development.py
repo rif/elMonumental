@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # Django settings for elMonumental project.
 import os
 def rel(*x):
@@ -21,6 +22,7 @@ TIME_ZONE = 'Europe/Bucharest'
 LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 USE_I18N = False
+USE_L10N = True
 EMAIL_HOST = 'smtp.oce.net'
 EMAIL_PORT = '25'
 EMAIL_SUBJECT_PREFIX = ' [elMonumental] '
