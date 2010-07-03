@@ -1,8 +1,10 @@
+# -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.core.context_processors import csrf
 from django.views.generic import list_detail
@@ -14,7 +16,7 @@ from django.db.models import Count
 
 def __isMatchdayInFuture(request, md):
     if not md.is_future():
-        request.user.message_set.create(message='Selected matchday was played on %s.'
+        messages.add_message(request, messages.INFO, 'Selected matchday was played on %s.'
                                         % md.start_date.strftime('%a, %d %b %Y'))
     return md.is_future()
 
@@ -32,8 +34,8 @@ def attend(request, md_id):
     md = get_object_or_404(MatchDay, pk=md_id)
     if __isMatchdayInFuture(request, md):
         md.participants.add(request.user)
-        request.user.message_set.create(message='You have joined the matchday #%s held on %s at %s starting from %s.'
-                                        % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+        messages.add_message(request, messages.INFO, 'You have joined the matchday #%s held on %s at %s starting from %s.'
+                              % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
     return redirect('sch_matchday_list')
 
 @login_required
@@ -45,10 +47,10 @@ def abandon(request, md_id):
 
     if request.user in md.participants.all():
         md.participants.remove(request.user)
-        request.user.message_set.create(message='You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
-                                        % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
+        messages.add_message(request, messages.INFO, 'You have cowardly abandoned the matchday #%s held on %s at %s starting from %s.'
+                              % (md.id, md.start_date.strftime('%a, %d %b %Y'), md.location, md.start_date.strftime('%H:%M')))
     else:
-        request.user.message_set.create(message='You are not in the matchday %s participant list.' % md.id)
+        messages.add_message(request, messages.INFO, 'You are not in the matchday %s participant list.' % md.id)
 
     return redirect('sch_matchday_list')
 
@@ -74,7 +76,7 @@ def addGuest(request, md_id):
                 gp.save()
                 md.guest_stars.add(gp)
             md.save()
-            request.user.message_set.create(message='You added guest star %s to the matchday #%s.'
+            messages.add_message(request, messages.INFO, 'You added guest star %s to the matchday #%s.'
                                         % (gp.get_full_name() ,md.id))
             return redirect('sch_matchday_list')
     else:
@@ -117,7 +119,7 @@ def delGuestCallback(request):
                     break
             if not usedByOthers:
                 gp.delete()
-            request.user.message_set.create(message='You removed guest star %s from the matchday #%s.'
+            messages.add_message(request, messages.INFO, 'You removed guest star %s from the matchday #%s.'
                                             % (gp.get_full_name(), md.id))
             return HttpResponse('')
     return redirect('sch_matchday_list')
@@ -140,11 +142,11 @@ def sendEmail(request, md_id):
                     if md.sport_name in user.get_profile().email_subscription.all():
                         toList.append(user.email)
                 except:
-                    request.user.message_set.create(message='The user %s has not defined a profile!' % user.username)
+                    messages.add_message(request, messages.INFO, 'The user %s has not defined a profile!' % user.username)
             send_mail(subject, message, fromEmail, toList)
             request.user.message_set.create(message = 'Email sent to users!')
         else:
-            request.user.message_set.create(message='You do not have permission to send email to the group!')
+            messages.add_message(request, messages.INFO, 'You do not have permission to send email to the group!')
         return redirect('sch_matchday_list')
 
 def comment(request, md_id):
@@ -166,7 +168,7 @@ def addTeam(request, md_id):
             team = form.save(commit=False)
             team.matchday = md
             team.save()
-            request.user.message_set.create(message='You added team %s to the matchday #%s.'
+            messages.add_message(request, messages.INFO, 'You added team %s to the matchday #%s.'
                                         % (team.name, md.id))
             return redirect('sch_team_management', md.id)
     else:
@@ -200,7 +202,7 @@ def delTeamCallback(request):
             pass
         if team != None:
             team.delete()
-            request.user.message_set.create(message='You removed team %s.' % team.name)
+            messages.add_message(request, messages.INFO, 'You removed team %s.' % team.name)
             return HttpResponse('')
     return HttpResponse('Cam aiurea!')
 
@@ -227,7 +229,7 @@ def loadTeam(request):
                         team.guest_stars.add(gp)
                     except: pass
             team.save()
-            request.user.message_set.create(message='Saved team %s.' % team.name)
+            messages.add_message(request, messages.INFO, 'Saved team %s.' % team.name)
     return redirect('sch_matchday_list')
 
 @login_required
@@ -255,7 +257,7 @@ def addProposal(request):
                 prop.save()
             except:
                 prop = Proposal.objects.create(user=request.user, matchday=md, teams=text)
-            request.user.message_set.create(message='Saved proposal %s.' % str(prop))
+            messages.add_message(request, messages.INFO, 'Saved proposal %s.' % str(prop))
     return HttpResponse('Done!')
 
 @login_required
