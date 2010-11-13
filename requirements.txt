@@ -1,5 +1,5 @@
 #pot sa adaug @rev in url sau sa foloses tags/1.1 in loc de trunk
--e svn+http://code.djangoproject.com/svn/django/trunk/#egg=Django
+Django==1.1
 Markdown
 PIL
 South
