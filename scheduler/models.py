@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 class Sport(models.Model):
-    name =  models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     active = models.BooleanField(default=True)
     icon = models.ImageField(upload_to="sport_icons", null=True)
 
