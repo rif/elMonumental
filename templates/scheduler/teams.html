@@ -36,6 +36,16 @@
     <a id="delete_team_link" href="{% url sch_team_del object.id %}">Delete Team</a>
 </div>
 {% endif %}
+<div id="teams" md_id="{{ object.id }}">
+    {% for team in object.team_set.all %}
+        <div class="team rounded-corners" tm_id="{{ team.id }}">
+            <h4 id="team_title">Team {{ team }} Players: <span class="count">0</span></h4>
+            <ol class="sortable">
+                <li class="drop-message">Drop players here!</li>
+            </ol>
+        </div>
+    {% endfor %}
+</div>
 Participants:
     <ul>
     {% for player in object.participants.all %}
@@ -48,16 +58,6 @@ Guest Stars:
             <li class="draggable" gu_id="{{ guest.id }}">{{ guest.get_full_name }}</li>
         {% endfor %}
     </ul>
-<div id="teams" md_id="{{ object.id }}">
-    {% for team in object.team_set.all %}
-        <div class="team rounded-corners" tm_id="{{ team.id }}">
-            <h4 id="team_title">Team {{ team }} Players: <span class="count">0</span></h4>
-            <ol class="sortable">
-                <li class="drop-message">Drop players here!</li>
-            </ol>
-        </div>
-    {% endfor %}
-</div>
 {% endif %}
 {% endblock %}
 {% block navbar%}
