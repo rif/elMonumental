@@ -1,5 +1,5 @@
 #pot sa adaug @rev in url sau sa foloses tags/1.1 in loc de trunk
-Django==1.2.3
+Django==2.2.24
 Markdown
 PIL
 South
